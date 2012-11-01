@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GeometryLib", "GeometryLib\GeometryLib.vcxproj", "{2E1A556E-8490-4273-A47A-B69078DB7E2E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ghjk", "ghjk\ghjk.vcxproj", "{731CF9E3-7B8B-42AD-8CE5-D26EB7E6A3CC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrawEngine", "DrawEngine\DrawEngine.vcxproj", "{FF3C8B14-3EF9-4C2E-B8AF-E96FCFA93ED6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{680B9890-27AC-4472-A901-C94CBD08CD56}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Essential", "Essential\Essential.vcxproj", "{C4FACCDD-07C5-4970-B5DE-21DE6698725C}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E1A556E-8490-4273-A47A-B69078DB7E2E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2E1A556E-8490-4273-A47A-B69078DB7E2E}.Debug|Win32.Build.0 = Debug|Win32
+		{2E1A556E-8490-4273-A47A-B69078DB7E2E}.Release|Win32.ActiveCfg = Release|Win32
+		{2E1A556E-8490-4273-A47A-B69078DB7E2E}.Release|Win32.Build.0 = Release|Win32
+		{731CF9E3-7B8B-42AD-8CE5-D26EB7E6A3CC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{731CF9E3-7B8B-42AD-8CE5-D26EB7E6A3CC}.Debug|Win32.Build.0 = Debug|Win32
+		{731CF9E3-7B8B-42AD-8CE5-D26EB7E6A3CC}.Release|Win32.ActiveCfg = Release|Win32
+		{731CF9E3-7B8B-42AD-8CE5-D26EB7E6A3CC}.Release|Win32.Build.0 = Release|Win32
+		{FF3C8B14-3EF9-4C2E-B8AF-E96FCFA93ED6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FF3C8B14-3EF9-4C2E-B8AF-E96FCFA93ED6}.Debug|Win32.Build.0 = Debug|Win32
+		{FF3C8B14-3EF9-4C2E-B8AF-E96FCFA93ED6}.Release|Win32.ActiveCfg = Release|Win32
+		{FF3C8B14-3EF9-4C2E-B8AF-E96FCFA93ED6}.Release|Win32.Build.0 = Release|Win32
+		{680B9890-27AC-4472-A901-C94CBD08CD56}.Debug|Win32.ActiveCfg = Debug|Win32
+		{680B9890-27AC-4472-A901-C94CBD08CD56}.Debug|Win32.Build.0 = Debug|Win32
+		{680B9890-27AC-4472-A901-C94CBD08CD56}.Release|Win32.ActiveCfg = Release|Win32
+		{680B9890-27AC-4472-A901-C94CBD08CD56}.Release|Win32.Build.0 = Release|Win32
+		{C4FACCDD-07C5-4970-B5DE-21DE6698725C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C4FACCDD-07C5-4970-B5DE-21DE6698725C}.Debug|Win32.Build.0 = Debug|Win32
+		{C4FACCDD-07C5-4970-B5DE-21DE6698725C}.Release|Win32.ActiveCfg = Release|Win32
+		{C4FACCDD-07C5-4970-B5DE-21DE6698725C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
