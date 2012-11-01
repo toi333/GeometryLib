@@ -1,7 +1,9 @@
 #pragma once
 
+#define _USE_MATH_DEFINES
 #include "stdafx.h"
 #include <cmath>
+#include "math.h"
 #include <algorithm>
 
 const double EPS = 10e-7;

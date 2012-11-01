@@ -262,3 +262,21 @@ void Intersection::intersect(const EmptyPS &e, const Ray &r)
 		delete p;
 	p = new EmptyPS();
 }
+void Intersection::intersect(const EmptyPS &e, const Vector &v)
+{
+	if(p)
+		delete p;
+	p = new EmptyPS();
+}
+
+void Intersection::intersect(const Ray &r, const Vector &v)
+{
+	intersect(v, r);
+}
+
+void Intersection::intersect(const Ray &r, const EmptyPS &e)
+{
+	if(p)
+		delete p;
+	p = new EmptyPS();
+}

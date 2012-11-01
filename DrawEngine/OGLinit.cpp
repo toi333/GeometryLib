@@ -94,6 +94,37 @@ void handleMouseMove(int x, int y)
 	SetCursorPos(glutGet(GLUT_WINDOW_X) + windowWidth / 2, glutGet(GLUT_WINDOW_Y) + windowHeight / 2);
 }
 
+void mouseFunc(int button, int state, int x, int y)
+{
+	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	{
+		Vector dir(0, 0, 1);
+		double phix = (*cam).yaw * M_PI / 180.;
+		double phiy = (*cam).pitch * M_PI / 180.;
+		Vector v
+		(
+			dir.x,
+			dir.z * sin(phiy),
+			dir.z * cos(phiy)
+		);
+		v = Vector
+		(
+			v.x * cos(phix) - v.z * sin(phix),
+			v.y,
+			v.x * sin(phix) + v.z * cos(phix)
+		);
+		v = -(v + Vector(0, dir.y, 0)).normalized();
+		Ray *r = new Ray((*cam).p, (v + (*cam).p));
+		addToBuffer(r);
+
+		/*Intersection I;
+		for(std::list<PointSet*>::const_iterator it = PSBuffer.begin(); it != PSBuffer.end(); ++it)
+		{
+		I.intersect(r, PSBuffer);
+		}*/
+	}
+}
+
 void idle(void)
 {
 	glutPostRedisplay();
@@ -129,6 +160,7 @@ void initRendering(int argc, char **argv, void (*drawFunc)(void))
 	glutKeyboardFunc(handleKeyDown);
 	glutKeyboardUpFunc(handleKeyUp);
 	glutPassiveMotionFunc(handleMouseMove);
+	glutMouseFunc(mouseFunc);
 	glutIdleFunc(idle);
 
 	glutMainLoop();
