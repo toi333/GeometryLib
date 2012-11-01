@@ -2,6 +2,8 @@
 #include "GeometryLib.h"
 #include "OGLinit.h"
 
+using namespace std;
+
 int windowHeight = 500;
 int windowWidth = 800;
 double camSpeed = 1.;
@@ -30,22 +32,22 @@ void handleKeyDown(unsigned char key, int x, int y)
 		exit(0);
 		break;
 	case 'w':
-		(*cam).move(Vector(0, 0, -1));
+		cam->move(Vector(0, 0, -1));
 		break;
 	case 's':
-		(*cam).move(Vector(0, 0, 1));
+		cam->move(Vector(0, 0, 1));
 		break;
 	case 'a':
-		(*cam).move(Vector(-1, 0, 0));
+		cam->move(Vector(-1, 0, 0));
 		break;
 	case 'd':
-		(*cam).move(Vector(1, 0, 0));
+		cam->move(Vector(1, 0, 0));
 		break;
 	case 'q':
-		(*cam).move(Vector(0, -1, 0));
+		cam->move(Vector(0, -1, 0));
 		break;
 	case 'e':
-		(*cam).move(Vector(0, 1, 0));
+		cam->move(Vector(0, 1, 0));
 		break;
 	}
 }
@@ -55,22 +57,22 @@ void handleKeyUp(unsigned char key, int x, int y)
 	switch(key)
 	{
 	case 'w':
-		(*cam).move(Vector(0, 0, 1));
+		cam->move(Vector(0, 0, 1));
 		break;
 	case 's':
-		(*cam).move(Vector(0, 0, -1));
+		cam->move(Vector(0, 0, -1));
 		break;
 	case 'a':
-		(*cam).move(Vector(1, 0, 0));
+		cam->move(Vector(1, 0, 0));
 		break;
 	case 'd':
-		(*cam).move(Vector(-1, 0, 0));
+		cam->move(Vector(-1, 0, 0));
 		break;
 	case 'q':
-		(*cam).move(Vector(0, 1, 0));
+		cam->move(Vector(0, 1, 0));
 		break;
 	case 'e':
-		(*cam).move(Vector(0, -1, 0));
+		cam->move(Vector(0, -1, 0));
 		break;
 	}
 }
@@ -90,7 +92,7 @@ void handleMouseMove(int x, int y)
 {
 	if(x == windowWidth / 2 && y == windowHeight / 2)
 		return;
-	(*cam).rotate(x - windowWidth / 2, y - windowHeight / 2);
+	cam->rotate(x - windowWidth / 2, y - windowHeight / 2);
 	SetCursorPos(glutGet(GLUT_WINDOW_X) + windowWidth / 2, glutGet(GLUT_WINDOW_Y) + windowHeight / 2);
 }
 
@@ -98,30 +100,19 @@ void mouseFunc(int button, int state, int x, int y)
 {
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		Vector dir(0, 0, 1);
-		double phix = (*cam).yaw * M_PI / 180.;
-		double phiy = (*cam).pitch * M_PI / 180.;
-		Vector v
-		(
-			dir.x,
-			dir.z * sin(phiy),
-			dir.z * cos(phiy)
-		);
-		v = Vector
-		(
-			v.x * cos(phix) - v.z * sin(phix),
-			v.y,
-			v.x * sin(phix) + v.z * cos(phix)
-		);
-		v = -(v + Vector(0, dir.y, 0)).normalized();
-		Ray *r = new Ray((*cam).p, (v + (*cam).p));
+		Ray *r = new Ray(cam->p, (cam->getCameraDirection() + cam->p));
 		addToBuffer(r);
 
-		/*Intersection I;
-		for(std::list<PointSet*>::const_iterator it = PSBuffer.begin(); it != PSBuffer.end(); ++it)
+		for(list<PointSet*>::const_iterator it = getBuffer().begin(); it != getBuffer().end(); ++it)
 		{
-		I.intersect(r, PSBuffer);
-		}*/
+			if((*it)->type() == TRIANGLE)
+			{
+				Intersection I;
+				I.intersect(*r, *(Triangle*)*it);
+				if(I.get()->type() == VECTOR)
+					addToBuffer(new Vector(*(Vector*)I.get()));
+			}
+		}
 	}
 }
 

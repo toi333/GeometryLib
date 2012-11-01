@@ -5,6 +5,7 @@ using namespace std;
 
 Vector::Vector(void)
 {
+	x = y = z = 0;
 }
 
 Vector::Vector(double _x, double _y, double _z)
@@ -137,7 +138,7 @@ double mixedProduct(const Vector &a, const Vector &b, const Vector &c)
 	return dotProduct(a, crossProduct(b, c));
 }
 
-PSType Vector::type()
+PSType Vector::type() const
 {
 	return VECTOR;
 }

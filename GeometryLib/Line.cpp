@@ -29,7 +29,7 @@ Line::~Line(void)
 {
 }
 
-PSType Line::type()
+PSType Line::type() const
 {
 	return LINE;
 }

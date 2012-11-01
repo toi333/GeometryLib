@@ -11,7 +11,7 @@ public:
 	Ray(const Vector &_a, const Vector &_b);
 	~Ray(void);
 
-	PSType type();
+	PSType type() const;
 
 	Vector a, b;
 private:

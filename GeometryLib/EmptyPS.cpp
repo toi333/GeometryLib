@@ -9,7 +9,7 @@ EmptyPS::~EmptyPS(void)
 {
 }
 
-PSType EmptyPS::type()
+PSType EmptyPS::type() const
 {
 	return EMPTYPS;
 }

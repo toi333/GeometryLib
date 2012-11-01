@@ -11,7 +11,7 @@
 #endif
 
 
-void Camera::transform(void)
+void Camera::transform(void) const
 {
 	glRotated(pitch, 1., 0., 0.);
 	glRotated(yaw, 0., 1., 0.);
@@ -50,4 +50,16 @@ void Camera::rotate(int x, int y)
 void Camera::move(const Vector &_dir)
 {
 	dir += _dir;
+}
+
+Vector Camera::getCameraDirection(void) const
+{
+	double phix = yaw * M_PI / 180.;
+	double phiy = pitch * M_PI / 180.;
+	return Vector
+	(
+		 cos(phiy) * sin(phix),
+		-sin(phiy),
+		-cos(phiy) * cos(phix)
+	);
 }

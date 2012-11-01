@@ -25,7 +25,7 @@ double Segment::length2() const
 	return a.distance2(b);
 }
 
-PSType Segment::type()
+PSType Segment::type() const
 {
 	return SEGMENT;
 }

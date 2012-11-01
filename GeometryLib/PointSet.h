@@ -18,7 +18,7 @@ public:
 	PointSet(void);
 	~PointSet(void);
 
-	virtual PSType type();
+	virtual PSType type() const;
 private:
 };
 

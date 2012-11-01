@@ -68,7 +68,7 @@ Segment Triangle::getSegment(int x) const
 	}
 }
 
-PSType Triangle::type()
+PSType Triangle::type() const
 {
 	return TRIANGLE;
 }

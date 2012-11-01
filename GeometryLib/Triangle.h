@@ -18,7 +18,7 @@ public:
 	void flip(void);
 	Vector getVertex(int x) const;
 	Segment getSegment(int x) const;
-	PSType type();
+	PSType type() const;
 
 	Vector a, b, c;
 };

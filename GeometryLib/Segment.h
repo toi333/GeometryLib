@@ -13,7 +13,7 @@ public:
 
 	double length() const;
 	double length2() const;
-	PSType type();
+	PSType type() const;
 
 	Vector a, b;
 private:

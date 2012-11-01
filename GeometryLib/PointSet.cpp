@@ -9,7 +9,7 @@ PointSet::~PointSet(void)
 {
 }
 
-PSType PointSet::type()
+PSType PointSet::type() const
 {
 	return POINTSET;
 }

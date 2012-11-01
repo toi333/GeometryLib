@@ -47,7 +47,7 @@ double Plane::d() const
 	return -dotProduct(n, p);
 }
 
-PSType Plane::type()
+PSType Plane::type() const
 {
 	return PLANE;
 }

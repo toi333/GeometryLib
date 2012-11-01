@@ -18,7 +18,7 @@ public:
 	double b() const;
 	double c() const;
 	double d() const;
-	PSType type();
+	PSType type() const;
 
 	Vector p, n;
 private:

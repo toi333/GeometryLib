@@ -38,7 +38,7 @@ public:
 	Vector normalized(void) const;
 	Vector normalize(void);
 
-	PSType type();
+	PSType type() const;
 };
 
 double dotProduct(const Vector &a, const Vector &b);

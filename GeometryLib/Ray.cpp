@@ -15,7 +15,7 @@ Ray::~Ray(void)
 {
 }
 
-PSType Ray::type()
+PSType Ray::type() const
 {
 	return RAY;
 }

@@ -26,4 +26,6 @@ void draw(const EmptyPS &a);
 void draw(const PointSet &a);
 
 void addToBuffer(PointSet *a);
+std::list<PointSet*>& getBuffer(void);
+
 void drawBuffer();

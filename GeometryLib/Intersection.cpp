@@ -214,6 +214,9 @@ void Intersection::intersect(const Vector &v, const Vector &u)
 		p = new EmptyPS();
 }
 
+
+#pragma region EmptyPS intersections
+
 void Intersection::intersect(const Vector &v, const EmptyPS &e)
 {
 	if(p)
@@ -269,14 +272,16 @@ void Intersection::intersect(const EmptyPS &e, const Vector &v)
 	p = new EmptyPS();
 }
 
-void Intersection::intersect(const Ray &r, const Vector &v)
-{
-	intersect(v, r);
-}
-
 void Intersection::intersect(const Ray &r, const EmptyPS &e)
 {
 	if(p)
 		delete p;
 	p = new EmptyPS();
+}
+
+#pragma endregion
+
+void Intersection::intersect(const Ray &r, const Vector &v)
+{
+	intersect(v, r);
 }
