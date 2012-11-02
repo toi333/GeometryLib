@@ -104,15 +104,13 @@ void mouseFunc(int button, int state, int x, int y)
 		addToBuffer(r);
 
 		for(list<PointSet*>::const_iterator it = getBuffer().begin(); it != getBuffer().end(); ++it)
-		{
-			if((*it)->type() == TRIANGLE)
+			if((*it)->type() != VECTOR)
 			{
 				Intersection I;
-				I.intersect(*r, *(Triangle*)*it);
+				I.intersect(*r, *it);
 				if(I.get()->type() == VECTOR)
 					addToBuffer(new Vector(*(Vector*)I.get()));
 			}
-		}
 	}
 }
 

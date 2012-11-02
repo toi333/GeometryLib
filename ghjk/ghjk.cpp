@@ -54,7 +54,6 @@ int _tmain(int argc,  char **argv)
 	addToBuffer(&r);
 	addToBuffer(&T);
 	setCam(c);
-	int a;
 
 	initRendering(argc, argv, drawScene);
 	return 0;

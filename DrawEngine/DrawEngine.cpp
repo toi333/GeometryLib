@@ -95,7 +95,6 @@ void draw(PointSet *a)
 void addToBuffer(PointSet *a)
 {
 	PSBuffer.push_back(a);
-	printf("add %d\n", PSBuffer.size());
 }
 
 std::list<PointSet*>& getBuffer(void)
