@@ -79,6 +79,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="EmptyPS.h" />
     <ClInclude Include="GeometryLib.h" />
     <ClInclude Include="Intersection.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="EmptyPS.cpp" />
     <ClCompile Include="GeometryLib.cpp" />
     <ClCompile Include="Intersection.cpp" />

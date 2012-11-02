@@ -11,6 +11,8 @@ public:
 	Intersection(void);
 	~Intersection(void);
 
+	void intersect(const Ray &r, PointSet *ps);
+
 	void intersect(const Vector &v, const Triangle &t);
 	void intersect(const Vector &v, const Plane &pi);
 	void intersect(const Vector &v, const Segment &s);

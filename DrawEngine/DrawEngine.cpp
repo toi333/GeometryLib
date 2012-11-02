@@ -3,18 +3,55 @@
 
 using namespace std;
 
+void draw(const Cube &a)
+{
+	printf("jlkfjdl\n");		
+	glBegin(GL_QUADS);
+		glNormal3d(0., -1., 0.);
+		glVertex3d(a.a.x      , a.a.y      , a.a.z      ); //0
+		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z      ); //1
+		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z - a.d); //3
+		glVertex3d(a.a.x      , a.a.y      , a.a.z - a.d); //2
+		glNormal3d(0., 0., 1.);
+		glVertex3d(a.a.x      , a.a.y      , a.a.z      ); //0
+		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z      ); //1
+		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z      ); //5
+		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z      ); //4
+		glNormal3d(1., 0., 0.);
+		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z      ); //1
+		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z - a.d); //3
+		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z - a.d); //7
+		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z      ); //5
+		glNormal3d(0., 1., 0.);
+		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z      ); //4
+		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z      ); //5
+		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z - a.d); //7
+		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z - a.d); //6
+		glNormal3d(0., 0., -1.);
+		glVertex3d(a.a.x      , a.a.y      , a.a.z - a.d); //2
+		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z - a.d); //3
+		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z - a.d); //7
+		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z - a.d); //6
+		glNormal3d(-1., 0., 0.);
+		glVertex3d(a.a.x      , a.a.y      , a.a.z      ); //0
+		glVertex3d(a.a.x      , a.a.y      , a.a.z - a.d); //2
+		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z - a.d); //6
+		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z      ); //4
+	glEnd();
+}
+
 void draw(const Vector &a)
 {
 	glPushMatrix();
 		glTranslated(a.x, a.y, a.z);
-		glutSolidSphere(.1, 10, 10);
+		glutSolidSphere(.1, 10., 10.);
 	glPopMatrix();
 }
 
 void draw(const Line &a)
 {
-	Vector t1 = a.a + a.b * 1000;
-	Vector t2 = a.a - a.b * 1000;
+	Vector t1 = a.a + a.b * 1000.;
+	Vector t2 = a.a - a.b * 1000.;
 
 	glBegin(GL_LINES);
 		glVertex3d(t1.x, t1.y, t1.z);
@@ -25,7 +62,7 @@ void draw(const Line &a)
 void draw(const Ray &a)
 {
 	const Vector &t1 = a.a;
-	Vector t2 = a.a + a.b * 1000;
+	Vector t2 = a.a + a.b * 1000.;
 
 	glBegin(GL_LINES);
 		glVertex3d(t1.x, t1.y, t1.z);
@@ -43,10 +80,15 @@ void draw(const Segment &a)
 
 void draw(const Triangle &a)
 {
+	Vector n(a.normal());
 	glBegin(GL_TRIANGLES);
+		glColor3f(0., 0.5, 0.);
+		glNormal3d(n.x, n.y, n.z);
 		glVertex3d(a.a.x, a.a.y, a.a.z);
 		glVertex3d(a.b.x, a.b.y, a.b.z);
 		glVertex3d(a.c.x, a.c.y, a.c.z);
+		glColor3f(0.5, 0., 0.);
+
 	glEnd();
 }
 
@@ -87,15 +129,18 @@ void draw(PointSet *a)
 	case EMPTYPS:
 		draw(*((EmptyPS*)a));
 		break;
+	case CUBE:
+		draw(*((Cube*)a));
+		break;
 	case POINTSET:
 		draw(*a);
+		break;
 	}
 }
 
 void addToBuffer(PointSet *a)
 {
 	PSBuffer.push_back(a);
-	printf("add %d\n", PSBuffer.size());
 }
 
 std::list<PointSet*>& getBuffer(void)

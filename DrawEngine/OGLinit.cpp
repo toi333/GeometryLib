@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "GeometryLib.h"
+#include "RayCast.h"
 #include "OGLinit.h"
 
 using namespace std;
@@ -99,21 +100,7 @@ void handleMouseMove(int x, int y)
 void mouseFunc(int button, int state, int x, int y)
 {
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-	{
-		Ray *r = new Ray(cam->p, (cam->getCameraDirection() + cam->p));
-		addToBuffer(r);
-
-		for(list<PointSet*>::const_iterator it = getBuffer().begin(); it != getBuffer().end(); ++it)
-		{
-			if((*it)->type() == TRIANGLE)
-			{
-				Intersection I;
-				I.intersect(*r, *(Triangle*)*it);
-				if(I.get()->type() == VECTOR)
-					addToBuffer(new Vector(*(Vector*)I.get()));
-			}
-		}
-	}
+		RayCast(Ray(cam->p, (cam->getCameraDirection() + cam->p))).cast();
 }
 
 void idle(void)

@@ -5,7 +5,7 @@ using namespace std;
 
 Vector::Vector(void)
 {
-	x = y = z = 0;
+	x = y = z = 0.;
 }
 
 Vector::Vector(double _x, double _y, double _z)
