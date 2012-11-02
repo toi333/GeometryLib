@@ -161,8 +161,6 @@ void Intersection::intersect(const Vector &v, const Segment &s)
 	else
 		t = (s.a.z - v.z) / (s.a.z - s.b.z);
 
-	printf("%.2lf\n", t);
-
 	intersect(v, Line(s)); //TODO: zamjeni s provjerom
 	if(p->type() == EMPTYPS)
 		return;
@@ -235,7 +233,6 @@ void Intersection::intersect(const Vector &v, const Vector &u)
 	else
 		p = new EmptyPS();
 }
-
 
 #pragma region EmptyPS intersections
 

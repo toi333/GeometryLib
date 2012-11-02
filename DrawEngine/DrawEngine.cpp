@@ -43,10 +43,15 @@ void draw(const Segment &a)
 
 void draw(const Triangle &a)
 {
+	Vector n(a.normal());
 	glBegin(GL_TRIANGLES);
+		glColor3f(0., 0.5, 0.);
+		glNormal3d(n.x, n.y, n.z);
 		glVertex3d(a.a.x, a.a.y, a.a.z);
 		glVertex3d(a.b.x, a.b.y, a.b.z);
 		glVertex3d(a.c.x, a.c.y, a.c.z);
+		glColor3f(0.5, 0., 0.);
+
 	glEnd();
 }
 
