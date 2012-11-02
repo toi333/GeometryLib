@@ -9,7 +9,8 @@ enum PSType
 	TRIANGLE,
 	PLANE,
 	EMPTYPS,
-	POINTSET
+	POINTSET,
+	CUBE
 };
 
 class PointSet

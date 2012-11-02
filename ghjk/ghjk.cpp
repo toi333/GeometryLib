@@ -47,13 +47,15 @@ int _tmain(int argc,  char **argv)
 	Ray r(Vector(1., 1., -5.), Vector(1., -1., 0.));
 	Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
 	Plane pi(Vector(0., -5., 0.), Vector(0., 1., 0.));
-
+	Cube cb(Vector(0., 0., 0.), 1.);
+	
 	Intersection I;
 	I.intersect(r, pi);
 	addToBuffer(I.get());
 	addToBuffer(&pi);
 	addToBuffer(&r);
 	addToBuffer(&T);
+	addToBuffer(&cb);
 	setCam(c);
 
 	initRendering(argc, argv, drawScene);
