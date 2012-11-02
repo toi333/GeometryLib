@@ -11,6 +11,28 @@ Intersection::~Intersection(void)
 	delete p;
 }
 
+void Intersection::intersect(const Ray &r, PointSet *ps)
+{
+	switch(ps->type())
+	{
+	case TRIANGLE:
+		intersect(r, *(Triangle*)ps);
+		break;
+	case PLANE:
+		intersect(r, *(Plane*)ps);
+		break;
+	case VECTOR:
+		intersect(r, *(Vector*)ps);
+		break;
+	case EMPTYPS:
+		intersect(r, *(EmptyPS*)ps);
+		break;
+	default:
+		p = new EmptyPS();
+		break;
+	}
+}
+
 void Intersection::intersect(const Line &l, const Triangle &t)
 {
 	intersect(l, Plane(t));
@@ -139,8 +161,6 @@ void Intersection::intersect(const Vector &v, const Segment &s)
 	else
 		t = (s.a.z - v.z) / (s.a.z - s.b.z);
 
-	printf("%.2lf\n", t);
-
 	intersect(v, Line(s)); //TODO: zamjeni s provjerom
 	if(p->type() == EMPTYPS)
 		return;
@@ -213,7 +233,6 @@ void Intersection::intersect(const Vector &v, const Vector &u)
 	else
 		p = new EmptyPS();
 }
-
 
 #pragma region EmptyPS intersections
 

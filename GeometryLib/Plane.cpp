@@ -8,7 +8,7 @@ Plane::Plane(void)
 Plane::Plane(const Vector &_p, const Vector &_n)
 {
 	p = _p;
-	n = _n;
+	n = _n.normalized();
 }
 
 Plane::Plane(const Vector &a, const Vector &b, const Vector &c)

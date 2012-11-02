@@ -6,3 +6,4 @@
 #include "Triangle.h"
 #include "Plane.h"
 #include "EmptyPS.h"
+#include "Cube.h"
