@@ -1,11 +1,10 @@
 #pragma once
 
-#include "PointSet.h"
+#include "Surface.h"
 #include "Triangle.h"
-#include "Vector.h"
 
 class Plane :
-	public PointSet
+	public Surface
 {
 public:
 	Plane(void);
@@ -14,6 +13,8 @@ public:
 	Plane(const Triangle &tri);
 	~Plane(void);
 	
+	Vector normal() const;
+
 	double a() const;
 	double b() const;
 	double c() const;
