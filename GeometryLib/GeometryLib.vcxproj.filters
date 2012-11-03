@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Primitives">
+      <UniqueIdentifier>{e409f286-909b-47f1-8c15-9c65a56a2576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Primitives">
+      <UniqueIdentifier>{e3e948ed-d028-4b68-9290-3d485b70f553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Primitives\Surfaces">
+      <UniqueIdentifier>{58864809-31bb-4d68-887c-2b8f1d026502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Primitives\Surfaces">
+      <UniqueIdentifier>{83a09bfb-9cfb-4f06-a275-f3e094d62f8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -24,41 +36,47 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PointSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EmptyPS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Line.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Segment.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Plane.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeometryLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Intersection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Segment.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
     <ClInclude Include="Primitives.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="PointSet.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="EmptyPS.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Surface.h">
+      <Filter>Header Files\Primitives\Surfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Header Files\Primitives\Surfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Header Files\Primitives\Surfaces</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareAA.h">
+      <Filter>Header Files\Primitives\Surfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -68,35 +86,41 @@
     <ClCompile Include="GeometryLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PointSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EmptyPS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Triangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Line.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Segment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Plane.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Intersection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="EmptyPS.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="PointSet.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Segment.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Surface.cpp">
+      <Filter>Source Files\Primitives\Surfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Source Files\Primitives\Surfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Source Files\Primitives\Surfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="SquareAA.cpp">
+      <Filter>Source Files\Primitives\Surfaces</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

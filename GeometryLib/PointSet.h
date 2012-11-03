@@ -10,7 +10,8 @@ enum PSType
 	PLANE,
 	EMPTYPS,
 	POINTSET,
-	CUBE
+	CUBE,
+	SQUAREAA
 };
 
 class PointSet
