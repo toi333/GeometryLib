@@ -7,3 +7,5 @@
 #include "Plane.h"
 #include "EmptyPS.h"
 #include "Cube.h"
+#include "Surface.h"
+#include "SquareAA.h"

@@ -21,31 +21,31 @@ Vector Cube::getVertex(int index)
 	switch(index)
 	{
 	case 0:
-		return a;
+		return a + Vector(-d, -d, d);
 		break;
 	case 1:
-		return a + Vector(d, 0., 0.);
+		return a + Vector(d, -d, d);
 		break;
 	case 2:
-		return a + Vector(0., 0., -d);
+		return a + Vector(-d, -d, -d);
 		break;
 	case 3:
-		return a + Vector(d, 0., -d);
+		return a + Vector(d, -d, -d);
 		break;
 	case 4:
-		return a + Vector(0, d, 0.);
+		return a + Vector(-d, d, d);
 		break;
 	case 5:
-		return a + Vector(d, d, 0.);
+		return a + Vector(d, d, d);
 		break;
 	case 6:
-		return a + Vector(0., d, -d);
+		return a + Vector(-d, d, -d);
 		break;
 	case 7:
 		return a + Vector(d, d, -d);
 		break;
 	default:
-		return Vector(0., 0., 1.);
+		return a;
 		break;
 	}
 }
@@ -81,4 +81,32 @@ Vector Cube::getNormal(int index)
 PSType Cube::type() const
 {
 	return CUBE;
+}
+
+SquareAA Cube::getSide(int index)
+{
+	switch(index)
+	{
+	case 0:
+		return SquareAA(a - Vector(0., d, 0.), d, YN);
+		break;
+	case 1:
+		return SquareAA(a + Vector(0., 0., d), d, ZP);
+		break;
+	case 2:
+		return SquareAA(a + Vector(d, 0., 0.), d, XP);
+		break;
+	case 3:
+		return SquareAA(a + Vector(0., d, 0.), d, YP);
+		break;
+	case 4:
+		return SquareAA(a - Vector(0., 0., d), d, ZN);
+		break;
+	case 5:
+		return SquareAA(a - Vector(d, 0., 0.), d, XN);
+		break;
+	default:
+		return SquareAA(a, d, XP);
+		break;
+	}
 }

@@ -48,6 +48,7 @@ int _tmain(int argc,  char **argv)
 	Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
 	Plane pi(Vector(0., -5., 0.), Vector(0., 1., 0.));
 	Cube cb(Vector(0., 0., 0.), 1.);
+	SquareAA sq(Vector(), 10., XP);
 	
 	Intersection I;
 	I.intersect(r, pi);
@@ -56,6 +57,7 @@ int _tmain(int argc,  char **argv)
 	addToBuffer(&r);
 	addToBuffer(&T);
 	addToBuffer(&cb);
+	addToBuffer(&sq);
 	setCam(c);
 
 	initRendering(argc, argv, drawScene);

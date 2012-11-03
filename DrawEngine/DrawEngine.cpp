@@ -4,39 +4,38 @@
 using namespace std;
 
 void draw(const Cube &a)
-{
-	printf("jlkfjdl\n");		
+{	
 	glBegin(GL_QUADS);
 		glNormal3d(0., -1., 0.);
-		glVertex3d(a.a.x      , a.a.y      , a.a.z      ); //0
-		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z      ); //1
-		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z - a.d); //3
-		glVertex3d(a.a.x      , a.a.y      , a.a.z - a.d); //2
+		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z + a.d); //0-
+		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z + a.d); //1-
+		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z - a.d); //3
+		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z - a.d); //2
 		glNormal3d(0., 0., 1.);
-		glVertex3d(a.a.x      , a.a.y      , a.a.z      ); //0
-		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z      ); //1
-		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z      ); //5
-		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z      ); //4
+		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z + a.d); //0-
+		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z + a.d); //1-
+		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z + a.d); //5-
+		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z + a.d); //4-
 		glNormal3d(1., 0., 0.);
-		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z      ); //1
-		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z - a.d); //3
+		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z + a.d); //1-
+		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z - a.d); //3
 		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z - a.d); //7
-		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z      ); //5
+		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z + a.d); //5-
 		glNormal3d(0., 1., 0.);
-		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z      ); //4
-		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z      ); //5
+		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z + a.d); //4-
+		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z + a.d); //5-
 		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z - a.d); //7
-		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z - a.d); //6
+		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z - a.d); //6
 		glNormal3d(0., 0., -1.);
-		glVertex3d(a.a.x      , a.a.y      , a.a.z - a.d); //2
-		glVertex3d(a.a.x + a.d, a.a.y      , a.a.z - a.d); //3
+		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z - a.d); //2
+		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z - a.d); //3
 		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z - a.d); //7
-		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z - a.d); //6
+		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z - a.d); //6
 		glNormal3d(-1., 0., 0.);
-		glVertex3d(a.a.x      , a.a.y      , a.a.z      ); //0
-		glVertex3d(a.a.x      , a.a.y      , a.a.z - a.d); //2
-		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z - a.d); //6
-		glVertex3d(a.a.x      , a.a.y + a.d, a.a.z      ); //4
+		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z + a.d); //0-
+		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z - a.d); //2
+		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z - a.d); //6
+		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z + a.d); //4-
 	glEnd();
 }
 
@@ -88,7 +87,6 @@ void draw(const Triangle &a)
 		glVertex3d(a.b.x, a.b.y, a.b.z);
 		glVertex3d(a.c.x, a.c.y, a.c.z);
 		glColor3f(0.5, 0., 0.);
-
 	glEnd();
 }
 
@@ -112,30 +110,46 @@ void draw(PointSet *a)
 		draw(*(Vector*)a);
 		break;
 	case LINE:
-		draw(*((Line*)a));
+		draw(*(Line*)a);
 		break;
 	case RAY:
-		draw(*((Ray*)a));
+		draw(*(Ray*)a);
 		break;
 	case SEGMENT:
-		draw(*((Segment*)a));
+		draw(*(Segment*)a);
 		break;
 	case TRIANGLE:
-		draw(*((Triangle*)a));
+		draw(*(Triangle*)a);
 		break;
 	case PLANE:
-		draw(*((Plane*)a));
+		draw(*(Plane*)a);
 		break;
 	case EMPTYPS:
-		draw(*((EmptyPS*)a));
+		draw(*(EmptyPS*)a);
 		break;
 	case CUBE:
-		draw(*((Cube*)a));
+		draw(*(Cube*)a);
+		break;
+	case SQUAREAA:
+		draw(*(SquareAA*)a);
 		break;
 	case POINTSET:
 		draw(*a);
 		break;
 	}
+}
+
+void draw(const SquareAA &a)
+{
+	glBegin(GL_QUADS);
+		glColor3f(0.0f, 0.0f, 0.7f);
+		for(int i = 0; i < 4; ++i)
+		{
+			const Vector &v = a.getVertex(i);
+			glVertex3d(v.x, v.y, v.z);
+		}
+		glColor3f(0.5f, 0.0f, 0.0f);
+	glEnd();
 }
 
 void addToBuffer(PointSet *a)

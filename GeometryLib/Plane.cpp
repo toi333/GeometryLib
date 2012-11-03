@@ -27,6 +27,12 @@ Plane::~Plane(void)
 {
 }
 
+Vector Plane::normal() const
+{
+	return n;
+}
+
+
 double Plane::a() const
 {
 	return n.x;

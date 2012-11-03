@@ -1,11 +1,10 @@
 #pragma once
 
-#include "PointSet.h"
-#include "Vector.h"
+#include "Surface.h"
 #include "Segment.h"
 
 class Triangle :
-	public PointSet
+	public Surface
 {
 public:
 	Triangle(void);
