@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "DrawEngine.h"
 #include "GeometryLib.h"
+#include "CubePH.h"
 
 void setCam(Camera &c);
 

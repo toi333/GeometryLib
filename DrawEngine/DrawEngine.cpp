@@ -3,6 +3,8 @@
 
 using namespace std;
 
+list<PointSet*> PSBuffer; 
+
 void draw(const Cube &a)
 {	
 	glBegin(GL_QUADS);
@@ -136,11 +138,6 @@ void draw(const SquareAA &a)
 void addToBuffer(PointSet *a)
 {
 	PSBuffer.push_back(a);
-}
-
-std::list<PointSet*>& getBuffer(void)
-{
-	return PSBuffer;
 }
 
 void drawBuffer()

@@ -101,6 +101,13 @@ void mouseFunc(int button, int state, int x, int y)
 {
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		RayCast(Ray(cam->p, (cam->getCameraDirection() + cam->p))).cast();
+	else if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+	{
+		CubePH *cph = new CubePH(Cube(cam->p, 0.3), cam->getCameraDirection() * 3);
+		PhysicsObject::phList.push_back(cph);
+		addToBuffer(cph);
+	}
+
 }
 
 void idle(void)

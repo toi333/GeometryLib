@@ -20,11 +20,13 @@ void drawScene()
 
 	glColor3f(0.5, 0., 0.);
 
+	PhysicsObject::updateList(dt);
 	drawBuffer();
 	//glutSolidCube(5);
 
 	glutSwapBuffers();
 }
+
 
 
 int _tmain(int argc,  char **argv)
@@ -49,6 +51,11 @@ int _tmain(int argc,  char **argv)
 	Plane pi(Vector(0., -5., 0.), Vector(0., 1., 0.));
 	Cube cb(Vector(0., 0., 0.), 1.);
 	SquareAA sq(Vector(), 10., XP);
+
+	CubePH cph;
+	cph.vel = Vector(1, 1, 0);
+	addToBuffer(&cph);
+	PhysicsObject::phList.push_back(&cph);
 	
 	Intersection I;
 	I.intersect(r, pi);

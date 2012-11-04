@@ -108,7 +108,7 @@ void RayCast::cast(int maxBounces)
 		return;
 	double mn = INF;
 	Vector n;
-	for(list<PointSet*>::const_iterator it = getBuffer().begin(); it != getBuffer().end(); ++it)
+	for(list<PointSet*>::const_iterator it = PSBuffer.begin(); it != PSBuffer.end(); ++it)
 	{
 		if((*it)->type() == PLANE || (*it)->type() == TRIANGLE || (*it)->type() == SQUAREAA)
 		{
