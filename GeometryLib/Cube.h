@@ -10,14 +10,17 @@ public:
 	Vector a;
 	double d;
 
-
-	Vector getVertex(int index);
-	Vector getNormal(int index);
-	SquareAA getSide(int index);
-
-	PSType type() const;
-
 	Cube(void);
 	Cube(const Vector &_a, double _d);
 	~Cube(void);
+
+	Vector getVertex(int index) const;
+	Vector getNormal(int index) const;
+	SquareAA getSide(int index) const;
+
+	PSType type() const;
+
+private:
+	static const Vector normals[6];
+	static const Vector vertices[8];
 };

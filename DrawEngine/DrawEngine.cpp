@@ -6,36 +6,17 @@ using namespace std;
 void draw(const Cube &a)
 {	
 	glBegin(GL_QUADS);
-		glNormal3d(0., -1., 0.);
-		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z + a.d); //0-
-		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z + a.d); //1-
-		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z - a.d); //3
-		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z - a.d); //2
-		glNormal3d(0., 0., 1.);
-		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z + a.d); //0-
-		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z + a.d); //1-
-		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z + a.d); //5-
-		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z + a.d); //4-
-		glNormal3d(1., 0., 0.);
-		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z + a.d); //1-
-		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z - a.d); //3
-		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z - a.d); //7
-		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z + a.d); //5-
-		glNormal3d(0., 1., 0.);
-		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z + a.d); //4-
-		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z + a.d); //5-
-		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z - a.d); //7
-		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z - a.d); //6
-		glNormal3d(0., 0., -1.);
-		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z - a.d); //2
-		glVertex3d(a.a.x + a.d, a.a.y - a.d, a.a.z - a.d); //3
-		glVertex3d(a.a.x + a.d, a.a.y + a.d, a.a.z - a.d); //7
-		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z - a.d); //6
-		glNormal3d(-1., 0., 0.);
-		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z + a.d); //0-
-		glVertex3d(a.a.x - a.d, a.a.y - a.d, a.a.z - a.d); //2
-		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z - a.d); //6
-		glVertex3d(a.a.x - a.d, a.a.y + a.d, a.a.z + a.d); //4-
+		for(int i = 0; i < 6; ++i)
+		{
+			const Vector &n = a.getNormal(i);
+			glNormal3d(n.x, n.y, n.z);
+			const SquareAA sq(a.getSide(i));
+			for(int j = 0; j < 4; ++j)
+			{
+				const Vector v(sq.getVertex(j));
+				glVertex3d(v.x, v.y, v.z);
+			}
+		}
 	glEnd();
 }
 

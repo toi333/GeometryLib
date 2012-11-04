@@ -1,6 +1,23 @@
 #include "StdAfx.h"
 #include "Cube.h"
 
+const Vector Cube::normals[6] = 
+{
+	Vector( 1.,  0.,  0.),
+	Vector( 0.,  1.,  0.),
+	Vector( 0.,  0.,  1.),
+	Vector(-1.,  0.,  0.),
+	Vector( 0., -1.,  0.),
+	Vector( 0.,  0., -1.)
+};
+
+const Vector Cube::vertices[8] =
+{
+	Vector( 1.,  1.,  1.), Vector( 1.,  1., -1.),
+	Vector( 1., -1.,  1.), Vector( 1., -1., -1.),
+	Vector(-1.,  1.,  1.), Vector(-1.,  1., -1.),
+	Vector(-1., -1.,  1.), Vector(-1., -1., -1.)
+};
 
 Cube::Cube(void)
 {
@@ -16,97 +33,22 @@ Cube::~Cube(void)
 {
 }
 
-Vector Cube::getVertex(int index)
+Vector Cube::getVertex(int index) const
 {
-	switch(index)
-	{
-	case 0:
-		return a + Vector(-d, -d, d);
-		break;
-	case 1:
-		return a + Vector(d, -d, d);
-		break;
-	case 2:
-		return a + Vector(-d, -d, -d);
-		break;
-	case 3:
-		return a + Vector(d, -d, -d);
-		break;
-	case 4:
-		return a + Vector(-d, d, d);
-		break;
-	case 5:
-		return a + Vector(d, d, d);
-		break;
-	case 6:
-		return a + Vector(-d, d, -d);
-		break;
-	case 7:
-		return a + Vector(d, d, -d);
-		break;
-	default:
-		return a;
-		break;
-	}
+	return a + vertices[index] * d;
 }
 
-Vector Cube::getNormal(int index)
+Vector Cube::getNormal(int index) const
 {
-	switch(index)
-	{
-	case 0:
-		return Vector(0., -1., 0.);
-		break;
-	case 1:
-		return Vector(0., 0., 1.);
-		break;
-	case 2:
-		return Vector(1., 0., 0.);
-		break;
-	case 3:
-		return Vector(0., 1., 0.);
-		break;
-	case 4:
-		return Vector(0., 0., -1.);
-		break;
-	case 5:
-		return Vector(-1., 0., 0.);
-		break;
-	default:
-		return Vector(0., 0., 1.);
-		break;
-	}
+	return normals[index];
+}
+
+SquareAA Cube::getSide(int index) const
+{
+	return SquareAA(a + normals[index] * d, d, (AxisDirection)index);
 }
 
 PSType Cube::type() const
 {
 	return CUBE;
-}
-
-SquareAA Cube::getSide(int index)
-{
-	switch(index)
-	{
-	case 0:
-		return SquareAA(a - Vector(0., d, 0.), d, YN);
-		break;
-	case 1:
-		return SquareAA(a + Vector(0., 0., d), d, ZP);
-		break;
-	case 2:
-		return SquareAA(a + Vector(d, 0., 0.), d, XP);
-		break;
-	case 3:
-		return SquareAA(a + Vector(0., d, 0.), d, YP);
-		break;
-	case 4:
-		return SquareAA(a - Vector(0., 0., d), d, ZN);
-		break;
-	case 5:
-		return SquareAA(a - Vector(d, 0., 0.), d, XN);
-		break;
-	default:
-		return SquareAA(a, d, XP);
-		break;
-	}
 }
