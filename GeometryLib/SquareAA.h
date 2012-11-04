@@ -26,6 +26,7 @@ public:
 
 	Vector normal() const;
 	Vector getVertex(int index) const;
+
 	PSType type() const;
 
 private:
