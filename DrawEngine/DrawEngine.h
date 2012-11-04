@@ -12,7 +12,7 @@
 #include <GL/glut.h>
 #endif
 
-static std::list<PointSet*> PSBuffer; 
+extern std::list<PointSet*> PSBuffer; 
 
 void draw(PointSet *a);
 
@@ -28,6 +28,4 @@ void draw(const EmptyPS &a);
 void draw(const PointSet &a);
 
 void addToBuffer(PointSet *a);
-std::list<PointSet*>& getBuffer(void);
-
 void drawBuffer();
