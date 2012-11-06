@@ -4,16 +4,16 @@
 #include "DrawEngine.h"
 #include "GeometryLib.h"
 #include "CubePH.h"
+#include "Camera.h"
 
-void setCam(Camera &c);
-
-void handleKeyDown(unsigned char key, int x, int y);
-
-void handleKeyUp(unsigned char key, int x, int y);
+#ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
 void handleResize(int w, int h);
-
-void handleMouseMove(int x, int y);
 
 void idle(void);
 

@@ -14,7 +14,6 @@ public:
 	~Plane(void);
 	
 	Vector normal() const;
-
 	double a() const;
 	double b() const;
 	double c() const;

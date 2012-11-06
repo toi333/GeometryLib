@@ -147,16 +147,3 @@ Vector operator*(double t, const Vector &v)
 {
 	return v * t;
 }
-
-//ostream& operator<<(ostream &os, const Vector &v)
-//{
-//	return os << v.x << ' ' << v.y << ' ' << v.z;
-//}
-//
-//istream& operator>>(istream &is, Vector &v)
-//{
-//	double a, b, c;
-//	is >> a >> b >> c;
-//	v = Vector(a, b, c);
-//	return is;
-//}
