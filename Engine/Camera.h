@@ -5,6 +5,10 @@
 class Camera
 {
 public:
+	Vector p, dir;
+	double pitch;
+	double yaw;
+
 	void transform(void) const;
 
 	void update(double t);
@@ -12,9 +16,5 @@ public:
 	void move(const Vector &_dir);
 
 	Vector getCameraDirection(void) const;
-
-	Vector p, dir;
-	double pitch;
-	double yaw;
 private:
 };

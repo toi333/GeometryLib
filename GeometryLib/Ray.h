@@ -7,12 +7,12 @@ class Ray :
 	public PointSet
 {
 public:
+	Vector a, b;
+
 	Ray(void);
 	Ray(const Vector &_a, const Vector &_b);
 	~Ray(void);
 
 	PSType type() const;
-
-	Vector a, b;
 private:
 };

@@ -6,7 +6,6 @@ class EmptyPS :
 	public PointSet
 {
 public:
-
 	EmptyPS(void);
 	~EmptyPS(void);
 

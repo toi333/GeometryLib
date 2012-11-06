@@ -49,4 +49,3 @@ PSType SquareAA::type() const
 {
 	return SQUAREAA;
 }
-

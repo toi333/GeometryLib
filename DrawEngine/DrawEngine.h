@@ -2,7 +2,6 @@
 
 #include <math.h>
 #include "GeometryLib.h"
-#include "Camera.h"
 #include <list>
 
 #ifdef __APPLE__
@@ -12,20 +11,26 @@
 #include <GL/glut.h>
 #endif
 
-extern std::list<PointSet*> PSBuffer; 
+class DrawEngine
+{
+public:
+	std::list<PointSet*> PSBuffer; 
 
-void draw(PointSet *a);
+	DrawEngine();
+	~DrawEngine();
 
-void draw(const Cube &a);
-void draw(const SquareAA &a);
-void draw(const Vector &a);
-void draw(const Line &a);
-void draw(const Ray &a);
-void draw(const Segment &a);
-void draw(const Triangle &a);
-void draw(const Plane &a);
-void draw(const EmptyPS &a);
-void draw(const PointSet &a);
+	void draw(PointSet *a);
+	void draw(const Cube &a);
+	void draw(const SquareAA &a);
+	void draw(const Vector &a);
+	void draw(const Line &a);
+	void draw(const Ray &a);
+	void draw(const Segment &a);
+	void draw(const Triangle &a);
+	void draw(const Plane &a);
+	void draw(const EmptyPS &a);
+	void draw(const PointSet &a);
 
-void addToBuffer(PointSet *a);
-void drawBuffer();
+	void addToBuffer(PointSet *a);
+	void drawBuffer();
+};
