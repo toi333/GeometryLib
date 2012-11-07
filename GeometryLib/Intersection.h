@@ -37,6 +37,5 @@ public:
 	void intersect(const Line &l, const Plane &pi);
 	void intersect(const Line &l, const Triangle &t);
 
-
 	PointSet *get();
 };

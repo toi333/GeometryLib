@@ -46,6 +46,3 @@ Vector crossProduct(const Vector &a, const Vector &b);
 double mixedProduct(const Vector &a, const Vector &b, const Vector &c);
 
 Vector operator*(double t, const Vector &v);
-
-//ostream& operator<<(ostream &os, const Vector &v);
-//istream& operator>>(istream &is, const Vector &v);

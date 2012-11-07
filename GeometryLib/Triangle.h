@@ -7,6 +7,8 @@ class Triangle :
 	public Surface
 {
 public:
+	Vector a, b, c;
+
 	Triangle(void);
 	Triangle(Vector &_a, Vector &_b, Vector &_c);
 	~Triangle(void);
@@ -18,7 +20,5 @@ public:
 	Vector getVertex(int x) const;
 	Segment getSegment(int x) const;
 	PSType type() const;
-
-	Vector a, b, c;
 };
 

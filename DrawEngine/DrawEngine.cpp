@@ -3,9 +3,17 @@
 
 using namespace std;
 
-list<PointSet*> PSBuffer; 
+DrawEngine::DrawEngine()
+{
 
-void draw(const Cube &a)
+}
+
+DrawEngine::~DrawEngine()
+{
+
+}
+
+void DrawEngine::draw(const Cube &a)
 {	
 	glBegin(GL_QUADS);
 		for(int i = 0; i < 6; ++i)
@@ -22,7 +30,7 @@ void draw(const Cube &a)
 	glEnd();
 }
 
-void draw(const Vector &a)
+void DrawEngine::draw(const Vector &a)
 {
 	glPushMatrix();
 		glTranslated(a.x, a.y, a.z);
@@ -30,7 +38,7 @@ void draw(const Vector &a)
 	glPopMatrix();
 }
 
-void draw(const Line &a)
+void DrawEngine::draw(const Line &a)
 {
 	Vector t1 = a.a + a.b * 1000.;
 	Vector t2 = a.a - a.b * 1000.;
@@ -41,7 +49,7 @@ void draw(const Line &a)
 	glEnd();
 }
 
-void draw(const Ray &a)
+void DrawEngine::draw(const Ray &a)
 {
 	const Vector &t1 = a.a;
 	Vector t2 = a.a + a.b * 1000.;
@@ -52,7 +60,7 @@ void draw(const Ray &a)
 	glEnd();
 }
 
-void draw(const Segment &a)
+void DrawEngine::draw(const Segment &a)
 {
 	glBegin(GL_LINES);
 		glVertex3d(a.a.x, a.a.y, a.a.z);
@@ -60,7 +68,7 @@ void draw(const Segment &a)
 	glEnd();
 }
 
-void draw(const Triangle &a)
+void DrawEngine::draw(const Triangle &a)
 {
 	Vector n(a.normal());
 	glBegin(GL_TRIANGLES);
@@ -73,19 +81,32 @@ void draw(const Triangle &a)
 	glEnd();
 }
 
-void draw(const Plane &a)
+void DrawEngine::draw(const Plane &a)
 {
 }
 
-void draw(const EmptyPS &a)
+void DrawEngine::draw(const EmptyPS &a)
 {
 }
 
-void draw(const PointSet &a)
+void DrawEngine::draw(const PointSet &a)
 {
 }
 
-void draw(PointSet *a)
+void DrawEngine::draw(const SquareAA &a)
+{
+	glBegin(GL_QUADS);
+		glColor3f(0.0f, 0.0f, 0.7f);
+		for(int i = 0; i < 4; ++i)
+		{
+			const Vector &v = a.getVertex(i);
+			glVertex3d(v.x, v.y, v.z);
+		}
+		glColor3f(0.5f, 0.0f, 0.0f);
+	glEnd();
+}
+
+void DrawEngine::draw(PointSet *a)
 {
 	switch(a->type())
 	{
@@ -116,31 +137,15 @@ void draw(PointSet *a)
 	case SQUAREAA:
 		draw(*(SquareAA*)a);
 		break;
-	case POINTSET:
-		draw(*a);
-		break;
 	}
 }
 
-void draw(const SquareAA &a)
-{
-	glBegin(GL_QUADS);
-		glColor3f(0.0f, 0.0f, 0.7f);
-		for(int i = 0; i < 4; ++i)
-		{
-			const Vector &v = a.getVertex(i);
-			glVertex3d(v.x, v.y, v.z);
-		}
-		glColor3f(0.5f, 0.0f, 0.0f);
-	glEnd();
-}
-
-void addToBuffer(PointSet *a)
+void DrawEngine::addToBuffer(PointSet *a)
 {
 	PSBuffer.push_back(a);
 }
 
-void drawBuffer()
+void DrawEngine::drawBuffer()
 {
 	for(list<PointSet*>::iterator i = PSBuffer.begin(); i != PSBuffer.end(); ++i)
 		draw(*i);

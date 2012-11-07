@@ -9,7 +9,6 @@ enum PSType
 	TRIANGLE,
 	PLANE,
 	EMPTYPS,
-	POINTSET,
 	CUBE,
 	SQUAREAA
 };
@@ -18,9 +17,8 @@ class PointSet
 {
 public:
 	PointSet(void);
-	~PointSet(void);
+	virtual ~PointSet(void);
 
-	virtual PSType type() const;
+	virtual PSType type() const = 0;
 private:
 };
-

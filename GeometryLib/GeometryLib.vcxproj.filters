@@ -78,6 +78,9 @@
     <ClInclude Include="SquareAA.h">
       <Filter>Header Files\Primitives\Surfaces</Filter>
     </ClInclude>
+    <ClInclude Include="RayCast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -121,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="SquareAA.cpp">
       <Filter>Source Files\Primitives\Surfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="RayCast.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

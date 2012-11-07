@@ -6,7 +6,7 @@
 //	return x < 0 ? -x : x;
 //}
 
-double sgn(double x)
+int sgn(double x)
 {
 	return abs(x) < EPS ? 0 : (x < 0 ? -1 : 1);
 }

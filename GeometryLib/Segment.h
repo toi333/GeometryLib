@@ -7,6 +7,8 @@ class Segment :
 	public PointSet
 {
 public:
+	Vector a, b;
+
 	Segment(void);
 	Segment(const Vector &_a, const Vector &_b);
 	~Segment(void);
@@ -14,7 +16,5 @@ public:
 	double length() const;
 	double length2() const;
 	PSType type() const;
-
-	Vector a, b;
 private:
 };
