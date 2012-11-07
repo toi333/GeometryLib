@@ -26,11 +26,9 @@ public:
 
 	Vector normal() const;
 	Vector getVertex(int index) const;
-
 	PSType type() const;
 
 private:
 	static const Vector normals[6];
 	static const Vector vertices[6][4];
 };
-

@@ -2,7 +2,6 @@
 
 #include "GeometryLib.h"
 #include "Essential.h"
-#include "DrawEngine.h"
 
 class RayCast
 {
@@ -17,5 +16,5 @@ public:
 	double hit(const Triangle &t);
 	double hit(const SquareAA &sq);
 	double hit(PointSet *p);
-	void cast(int maxBounces = 100);
+	//void cast(int maxBounces = 100);
 };

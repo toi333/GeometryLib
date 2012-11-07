@@ -7,7 +7,7 @@ class Surface :
 	public PointSet
 {
 public:
-	virtual Vector normal() const;
+	virtual Vector normal() const = 0;
 
 	Surface(void);
 	~Surface(void);
