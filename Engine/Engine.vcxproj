@@ -79,17 +79,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="CubePH.h" />
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="OGLinit.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CubePH.cpp" />
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="OGLinit.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
