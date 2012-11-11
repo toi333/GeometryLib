@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Engine.h"
 
+using namespace std;
+
 const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
 const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
 const GLfloat light_specular[] = { 0.7f, 0.7f, 0.7f, 1.0f };
@@ -163,12 +165,53 @@ void Engine::handleMouseMove(int x, int y)
 
 void Engine::mouseFunc(int button, int state, int x, int y)
 {
-	/*if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-		RayCast(Ray(cam->p, (cam->getCameraDirection() + cam->p))).cast();
-	else */if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		fireRay(Ray(c.p, (c.getCameraDirection() + c.p)));
+	else if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
 		CubePH *cph = new CubePH(Cube(c.p, 0.3), c.getCameraDirection() * 3);
 		PhysicsObject::phList.push_back(cph);
 		de.addToBuffer(cph);
 	}
+}
+
+void Engine::fireRay(Ray r, int maxBounces)
+{
+	if(maxBounces < 0)
+		return;
+	double mn = INF;
+	RayCast rc(r);
+	Vector n;
+	for(list<PointSet*>::const_iterator it = de.PSBuffer.begin(); it != de.PSBuffer.end(); ++it)
+	{
+		if(Surface *sf = dynamic_cast<Surface*>(*it))
+		{
+			double a = rc.hit(sf);
+			if(a < mn && a > EPS)
+			{
+				n = sf->normal();
+				mn = a;
+			}
+		}
+		else if((*it)->type() == CUBE)
+		{	
+			for(int i = 0; i < 6; ++i)
+			{
+				double a = rc.hit(((Cube*)*it)->getSide(i));
+				if(mn > a && a > EPS)
+				{
+					mn = a;
+					n = ((Cube*)*it)->getNormal(i);
+				}
+			}
+		}
+	}
+	if(mn != INF)
+	{
+		Vector x(r.a + r.b * mn);
+		de.addToBuffer(new Segment(r.a, x));
+		fireRay(Ray(x, r.b - 2 * dotProduct(n, r.b) * n + x), maxBounces - 1);
+	}
+	else
+		de.addToBuffer(new Ray(r));
 }

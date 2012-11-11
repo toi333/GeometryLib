@@ -75,9 +75,9 @@ double RayCast::hit(const SquareAA &sq)
 	double d = hit(Plane(sq.a, sq.normal()));
 	if(d == INF)
 		return INF;
+	Vector v(r.a + r.b * d);
 	if(sq.dir == XP || sq.dir == XN)
 	{
-		Vector v(r.a + r.b * d);
 		if(sq.a.y - sq.d <= v.y && v.y <= sq.a.y + sq.d &&
 			sq.a.z - sq.d <= v.z && v.z <= sq.a.z + sq.d)
 			return d;
@@ -85,7 +85,6 @@ double RayCast::hit(const SquareAA &sq)
 	}
 	if(sq.dir == YP || sq.dir == YN)
 	{
-		Vector v(r.a + r.b * d);
 		if(sq.a.x - sq.d <= v.x && v.x <= sq.a.x + sq.d &&
 			sq.a.z - sq.d <= v.z && v.z <= sq.a.z + sq.d)
 			return d;
@@ -93,7 +92,6 @@ double RayCast::hit(const SquareAA &sq)
 	}
 	if(sq.dir == ZP || sq.dir == ZN)
 	{
-		Vector v(r.a + r.b * d);
 		if(sq.a.y - sq.d <= v.y && v.y <= sq.a.y + sq.d &&
 			sq.a.x - sq.d <= v.x && v.x <= sq.a.x + sq.d)
 			return d;
@@ -101,43 +99,3 @@ double RayCast::hit(const SquareAA &sq)
 	}
 	return INF;
 }
-
-//void RayCast::cast(int maxBounces)
-//{
-//	if(maxBounces < 0)
-//		return;
-//	double mn = INF;
-//	Vector n;
-//	for(list<PointSet*>::const_iterator it = PSBuffer.begin(); it != PSBuffer.end(); ++it)
-//	{
-//		if((*it)->type() == PLANE || (*it)->type() == TRIANGLE || (*it)->type() == SQUAREAA)
-//		{
-//			double a = hit(*it);
-//			if(a < mn && a > EPS)
-//			{
-//				n = ((Surface*)*it)->normal();
-//				mn = a;
-//			}
-//		}
-//		else if((*it)->type() == CUBE)
-//		{	
-//			for(int i = 0; i < 6; ++i)
-//			{
-//				double a = hit(((Cube*)*it)->getSide(i));
-//				if(mn > a && a > EPS)
-//				{
-//					mn = a;
-//					n = ((Cube*)*it)->getNormal(i);
-//				}
-//			}
-//		}
-//	}
-//	if(mn != INF)
-//	{
-//		Vector x(r.a + r.b * mn);
-//		addToBuffer(new Segment(r.a, x));
-//		RayCast(Ray(x, r.b - 2 * dotProduct(n, r.b) * n + x)).cast(--maxBounces);
-//	}
-//	else
-//		addToBuffer(new Ray(r));
-//}

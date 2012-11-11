@@ -7,6 +7,8 @@ class Plane :
 	public Surface
 {
 public:
+	Vector p, n;
+
 	Plane(void);
 	Plane(const Vector &_p, const Vector &_n);
 	Plane(const Vector &a, const Vector &b, const Vector &c);
@@ -18,9 +20,7 @@ public:
 	double b() const;
 	double c() const;
 	double d() const;
-	PSType type() const;
 
-	Vector p, n;
-private:
+	PSType type() const;
 };
 

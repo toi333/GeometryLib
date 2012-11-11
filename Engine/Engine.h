@@ -30,4 +30,6 @@ namespace Engine
 	void handleKeyUp(unsigned char key, int x, int y);
 	void handleMouseMove(int x, int y);
 	void mouseFunc(int button, int state, int x, int y);
+
+	void fireRay(Ray r, int maxBounces = 100);
 }
