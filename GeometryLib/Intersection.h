@@ -11,6 +11,8 @@ public:
 	Intersection(void);
 	~Intersection(void);
 
+	PointSet *get();
+
 	void intersect(const Ray &r, PointSet *ps);
 
 	void intersect(const Vector &v, const Triangle &t);
@@ -36,6 +38,4 @@ public:
 
 	void intersect(const Line &l, const Plane &pi);
 	void intersect(const Line &l, const Triangle &t);
-
-	PointSet *get();
 };

@@ -194,11 +194,11 @@ void Engine::fireRay(Ray r, int maxBounces)
 			}
 		}
 		else if((*it)->type() == CUBE)
-		{	
+		{
 			for(int i = 0; i < 6; ++i)
 			{
 				double a = rc.hit(((Cube*)*it)->getSide(i));
-				if(mn > a && a > EPS)
+				if(a < mn && a > EPS)
 				{
 					mn = a;
 					n = ((Cube*)*it)->getNormal(i);

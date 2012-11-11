@@ -49,3 +49,31 @@ PSType SquareAA::type() const
 {
 	return SQUAREAA;
 }
+
+bool SquareAA::containsPoint(const Vector &v) const
+{
+	return
+		(dir == XP || dir == XN) && abs(v.x - a.x) <= EPS &&
+		isBetween(v.y, a.y - d, a.y + d) &&
+		isBetween(v.z, a.z - d, a.z + d) ||
+		(dir == YP || dir == YN) && abs(v.y - a.y) <= EPS &&
+		isBetween(v.z, a.z - d, a.z + d) &&
+		isBetween(v.x, a.x - d, a.x + d) ||
+		(dir == ZP || dir == ZN) && abs(v.z - a.z) <= EPS &&
+		isBetween(v.x, a.x - d, a.x + d) &&
+		isBetween(v.y, a.y - d, a.y + d);
+}
+
+bool SquareAA::containsPointInPlane(const Vector &v) const
+{
+	return
+		(dir == XP || dir == XN) &&
+		isBetween(v.y, a.y - d, a.y + d) &&
+		isBetween(v.z, a.z - d, a.z + d) ||
+		(dir == YP || dir == YN) &&
+		isBetween(v.z, a.z - d, a.z + d) &&
+		isBetween(v.x, a.x - d, a.x + d) ||
+		(dir == ZP || dir == ZN) &&
+		isBetween(v.x, a.x - d, a.x + d) &&
+		isBetween(v.y, a.y - d, a.y + d);
+}

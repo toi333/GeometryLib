@@ -30,3 +30,8 @@ double max(double x, double y, double z)
 {
 	return x > y ? (x > z ? x : z) : (y > z ? y : z);
 }
+
+bool isBetween(double x, double a, double b)
+{
+	return a <= x && x <= b;
+}

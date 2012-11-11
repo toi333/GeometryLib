@@ -11,6 +11,11 @@ Intersection::~Intersection(void)
 	delete p;
 }
 
+PointSet* Intersection::get()
+{
+	return p;
+}
+
 void Intersection::intersect(const Ray &r, PointSet *ps)
 {
 	switch(ps->type())
@@ -31,51 +36,6 @@ void Intersection::intersect(const Ray &r, PointSet *ps)
 		p = new EmptyPS();
 		break;
 	}
-}
-
-void Intersection::intersect(const Line &l, const Triangle &t)
-{
-	intersect(l, Plane(t));
-	if(p->type() == EMPTYPS)
-		return;
-	else if(p->type() == LINE)
-	{
-		//TODO: finish
-	}
-	else
-	{
-		Vector v(*(Vector*)p);
-		double a = sgn(t.ccw(crossProduct(t.a - t.c, v - t.c)));
-		double b = sgn(t.ccw(crossProduct(t.b - t.a, v - t.a)));
-		double c = sgn(t.ccw(crossProduct(t.c - t.b, v - t.b)));
-		if(min(a, b, c) == -max(a, b, c))
-		{
-			if(p)
-				delete p;
-			p = new EmptyPS();
-		}
-	}
-}
-
-void Intersection::intersect(const Line &l, const Plane &pi)
-{
-	if(p)
-		delete p;
-
-	double t0 = dotProduct(pi.n, pi.p - l.a);
-	double t1 = dotProduct(l.b, pi.n);
-
-	if(abs(t0) <= EPS && abs(t1) <= EPS)
-		p = new Line(l);
-	else if(abs(t1) <= EPS)
-		p = new EmptyPS();
-	else
-		p = new Vector((t0 / t1) * l.b + l.a);
-}
-
-PointSet* Intersection::get()
-{
-	return p;
 }
 
 void Intersection::intersect(const Ray &r, const Plane &pi)
@@ -103,27 +63,58 @@ void Intersection::intersect(const Ray &r, const Triangle &t)
 	{
 		//TODO: finish
 	}
-	else
+	else if(!t.containsPointInPlane(Vector(*(Vector*)p)))
 	{
-		Vector v(*(Vector*)p);
-		double a = sgn(t.ccw(crossProduct(t.a - t.c, v - t.c)));
-		double b = sgn(t.ccw(crossProduct(t.b - t.a, v - t.a)));
-		double c = sgn(t.ccw(crossProduct(t.c - t.b, v - t.b)));
-		if(min(a, b, c) == -max(a, b, c))
-		{
-			if(p)
-				delete p;
-			p = new EmptyPS();
-		}
+		if(p)
+			delete p;
+		p = new EmptyPS();
 	}
 }
 
+void Intersection::intersect(const Ray &r, const Vector &v)
+{
+	intersect(v, r);
+}
+
+void Intersection::intersect(const Line &l, const Triangle &t)
+{
+	intersect(l, Plane(t));
+	if(p->type() == EMPTYPS)
+		return;
+	else if(p->type() == LINE)
+	{
+		//TODO: finish
+	}
+	else if(!t.containsPointInPlane(Vector(*(Vector*)p)))
+	{
+		if(p)
+			delete p;
+		p = new EmptyPS();
+	}
+}
+
+void Intersection::intersect(const Line &l, const Plane &pi)
+{
+	if(p)
+		delete p;
+
+	double t0 = dotProduct(pi.n, pi.p - l.a);
+	double t1 = dotProduct(l.b, pi.n);
+
+	if(abs(t0) <= EPS && abs(t1) <= EPS)
+		p = new Line(l);
+	else if(abs(t1) <= EPS)
+		p = new EmptyPS();
+	else
+		p = new Vector((t0 / t1) * l.b + l.a);
+}
 
 void Intersection::intersect(const Vector &v, const Plane &pi)
 {
 	if(p)
 		delete p;
-	if(abs(dotProduct(v - pi.p, pi.n)) <= EPS)
+
+	if(pi.containsPoint(v))
 		p = new Vector(v);
 	else
 		p = new EmptyPS();
@@ -133,17 +124,9 @@ void Intersection::intersect(const Vector &v, const Triangle &t)
 {
 	if(p)
 		delete p;
-	Plane pi(t);
-	if(abs(dotProduct(v - pi.p, pi.n)) <= EPS)
-	{
-		double a = sgn(t.ccw(crossProduct(t.a - t.c, v - t.c)));
-		double b = sgn(t.ccw(crossProduct(t.b - t.a, v - t.a)));
-		double c = sgn(t.ccw(crossProduct(t.c - t.b, v - t.b)));
-		if(min(a, b, c) != -max(a, b, c))
-			p = new Vector(v);
-		else
-			p = new EmptyPS();
-	}
+
+	if(t.containsPoint(v))
+		p = new Vector(v);
 	else
 		p = new EmptyPS();
 }
@@ -178,7 +161,7 @@ void Intersection::intersect(const Vector &v, const Ray &r)
 	double b = (v.y - r.a.y) / r.b.y;
 	double c = (v.z - r.a.z) / r.b.z;
 
-	if(abs(r.b.x) < EPS && abs(r.b.y) < EPS)
+	if     (abs(r.b.x) < EPS && abs(r.b.y) < EPS)
 		a = b = c;
 	else if(abs(r.b.x) < EPS && abs(r.b.z) < EPS)
 		a = c = b;
@@ -299,8 +282,3 @@ void Intersection::intersect(const Ray &r, const EmptyPS &e)
 }
 
 #pragma endregion
-
-void Intersection::intersect(const Ray &r, const Vector &v)
-{
-	intersect(v, r);
-}

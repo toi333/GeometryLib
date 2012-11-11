@@ -5,12 +5,10 @@ using namespace std;
 
 DrawEngine::DrawEngine()
 {
-
 }
 
 DrawEngine::~DrawEngine()
 {
-
 }
 
 void DrawEngine::draw(const Cube &a)
