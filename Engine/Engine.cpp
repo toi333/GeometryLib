@@ -88,6 +88,14 @@ void Engine::initRendering(int argc, char **argv)
 
 void Engine::start(int argc, char **argv)
 {
+	Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
+	Cube cb(Vector(0., 0., 0.), 1.);
+	SquareAA sq(Vector(), 10., XP);
+
+	de.addToBuffer(&T);
+	de.addToBuffer(&cb);
+	de.addToBuffer(&sq);
+
 	initRendering(argc, argv);
 }
 
