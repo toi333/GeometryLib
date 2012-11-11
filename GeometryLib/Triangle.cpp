@@ -82,7 +82,7 @@ bool Triangle::containsPointInPlane(const Vector &v) const
 	double ccw1 = sgn(ccw(crossProduct(a - c, v - c)));
 	double ccw2 = sgn(ccw(crossProduct(b - a, v - a)));
 	double ccw3 = sgn(ccw(crossProduct(c - b, v - b)));
-	return min(a, b, c) != -max(a, b, c);
+	return min(ccw1, ccw2, ccw3) != -max(ccw1, ccw2, ccw3);
 }
 
 
