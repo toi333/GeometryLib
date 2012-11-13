@@ -12,6 +12,7 @@ public:
 	~Intersection(void);
 
 	PointSet *get();
+	void clear();
 
 	void intersect(const Ray &r, PointSet *ps);
 

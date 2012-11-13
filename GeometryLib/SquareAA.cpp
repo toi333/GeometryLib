@@ -45,11 +45,6 @@ Vector SquareAA::getVertex(int index) const
 	return vertices[dir][index] * d + a;
 }
 
-PSType SquareAA::type() const
-{
-	return SQUAREAA;
-}
-
 bool SquareAA::containsPoint(const Vector &v) const
 {
 	return

@@ -97,36 +97,24 @@ void DrawEngine::draw(const SquareAA &a)
 
 void DrawEngine::draw(PointSet *a)
 {
-	switch(a->type())
-	{
-	case VECTOR:
-		draw(*(Vector*)a);
-		break;
-	case LINE:
-		draw(*(Line*)a);
-		break;
-	case RAY:
-		draw(*(Ray*)a);
-		break;
-	case SEGMENT:
-		draw(*(Segment*)a);
-		break;
-	case TRIANGLE:
-		draw(*(Triangle*)a);
-		break;
-	case PLANE:
-		draw(*(Plane*)a);
-		break;
-	case EMPTYPS:
-		draw(*(EmptyPS*)a);
-		break;
-	case CUBE:
-		draw(*(Cube*)a);
-		break;
-	case SQUAREAA:
-		draw(*(SquareAA*)a);
-		break;
-	}
+	if(Vector *p = dynamic_cast<Vector*>(a))
+		draw(*p);
+	else if(Line *p = dynamic_cast<Line*>(a))
+		draw(*p);
+	else if(Ray *p = dynamic_cast<Ray*>(a))
+		draw(*p);
+	else if(Segment *p = dynamic_cast<Segment*>(a))
+		draw(*p);
+	else if(Triangle *p = dynamic_cast<Triangle*>(a))
+		draw(*p);
+	else if(Plane *p = dynamic_cast<Plane*>(a))
+		draw(*p);
+	else if(EmptyPS *p = dynamic_cast<EmptyPS*>(a))
+		draw(*p);
+	else if(Cube *p = dynamic_cast<Cube*>(a))
+		draw(*p);
+	else if(SquareAA *p = dynamic_cast<SquareAA*>(a))
+		draw(*p);
 }
 
 void DrawEngine::addToBuffer(PointSet *a)

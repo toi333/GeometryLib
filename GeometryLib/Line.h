@@ -17,5 +17,4 @@ public:
 	Line(const Segment &s);
 	~Line(void);
 
-	PSType type() const;
 };

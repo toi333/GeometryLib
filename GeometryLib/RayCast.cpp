@@ -18,21 +18,14 @@ RayCast::~RayCast(void)
 
 double RayCast::hit(PointSet *p)
 {
-	switch(p->type())
-	{
-	case PLANE:
-		return hit(*(Plane*)p);
-		break;
-	case TRIANGLE:
-		return hit(*(Triangle*)p);
-		break;
-	case SQUAREAA:
-		return hit(*(SquareAA*)p);
-		break;
-	default:
+	if(Plane *pp = dynamic_cast<Plane*>(p))
+		return hit(*pp);
+	else if(Triangle *pp = dynamic_cast<Triangle*>(p))
+		return hit(*pp);
+	else if(SquareAA *pp = dynamic_cast<SquareAA*>(p))
+		return hit(*pp);
+	else
 		return INF;
-		break;
-	}
 }
 
 double RayCast::hit(const Plane &pi)
