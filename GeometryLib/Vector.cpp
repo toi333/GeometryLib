@@ -138,11 +138,6 @@ double mixedProduct(const Vector &a, const Vector &b, const Vector &c)
 	return dotProduct(a, crossProduct(b, c));
 }
 
-PSType Vector::type() const
-{
-	return VECTOR;
-}
-
 Vector operator*(double t, const Vector &v)
 {
 	return v * t;

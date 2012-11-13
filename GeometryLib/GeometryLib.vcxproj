@@ -96,6 +96,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cube.cpp" />
@@ -116,6 +117,7 @@
     <ClCompile Include="Surface.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Essential\Essential.vcxproj">

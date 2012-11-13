@@ -193,15 +193,15 @@ void Engine::fireRay(Ray r, int maxBounces)
 				mn = a;
 			}
 		}
-		else if((*it)->type() == CUBE)
+		else if(Cube *cb = dynamic_cast<Cube*>(*it))
 		{
 			for(int i = 0; i < 6; ++i)
 			{
-				double a = rc.hit(((Cube*)*it)->getSide(i));
+				double a = rc.hit(cb->getSide(i));
 				if(a < mn && a > EPS)
 				{
 					mn = a;
-					n = ((Cube*)*it)->getNormal(i);
+					n = cb->getNormal(i);
 				}
 			}
 		}

@@ -15,6 +15,5 @@ public:
 
 	double length() const;
 	double length2() const;
-	PSType type() const;
 private:
 };
