@@ -15,6 +15,7 @@ const GLfloat high_shininess[] = { 100.0f };
 
 DrawEngine Engine::de;
 Camera Engine::c;
+PhysicsProcessor Engine::PP;
 
 void Engine::nextFrame()
 {
@@ -32,7 +33,7 @@ void Engine::nextFrame()
 
 	glColor3f(0.5, 0., 0.);
 
-	PhysicsObject::updateList(dt);
+	PP.updateList(dt);
 	de.drawBuffer();
 
 	glutSwapBuffers();
@@ -170,12 +171,12 @@ void Engine::mouseFunc(int button, int state, int x, int y)
 	else if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
 		CubePH *cph = new CubePH(Cube(c.p, 0.3), c.getCameraDirection() * 3);
-		PhysicsObject::phList.push_back(cph);
+		PP.phList.push_back(cph);
 		de.addToBuffer(cph);
 	}
 }
 
-void Engine::fireRay(Ray r, int maxBounces)
+void Engine::fireRay(const Ray &r, int maxBounces)
 {
 	if(maxBounces < 0)
 		return;

@@ -35,8 +35,3 @@ void CubePH::update(double dt)
 //{
 //	
 //}
-
-//PHType PhysicsObject::phtype() const
-//{
-//	return CUBEPH;
-//}
