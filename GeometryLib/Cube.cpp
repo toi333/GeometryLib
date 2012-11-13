@@ -47,8 +47,3 @@ SquareAA Cube::getSide(int index) const
 {
 	return SquareAA(a + normals[index] * d, d, (AxisDirection)index);
 }
-
-PSType Cube::type() const
-{
-	return CUBE;
-}

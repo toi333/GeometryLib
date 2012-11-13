@@ -68,8 +68,3 @@ bool Plane::containsPointInPlane(const Vector &v) const
 {
 	return true;
 }
-
-PSType Plane::type() const
-{
-	return PLANE;
-}

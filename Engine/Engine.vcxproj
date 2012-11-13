@@ -79,7 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Collision.h" />
+    <ClInclude Include="PhysicsProcessor.h" />
     <ClInclude Include="CubePH.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="PhysicsObject.h" />
@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="PhysicsProcessor.cpp" />
     <ClCompile Include="CubePH.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />

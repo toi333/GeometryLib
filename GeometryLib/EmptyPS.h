@@ -9,7 +9,6 @@ public:
 	EmptyPS(void);
 	~EmptyPS(void);
 
-	PSType type() const;
 private:
 };
 

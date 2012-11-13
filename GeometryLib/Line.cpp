@@ -26,8 +26,3 @@ Line::Line(const Segment &s)
 Line::~Line(void)
 {
 }
-
-PSType Line::type() const
-{
-	return LINE;
-}

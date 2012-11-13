@@ -26,8 +26,6 @@ public:
 
 	Vector normal() const;
 	Vector getVertex(int index) const;
-	PSType type() const;
-
 	bool containsPoint(const Vector &v) const;
 	bool containsPointInPlane(const Vector &v) const;
 

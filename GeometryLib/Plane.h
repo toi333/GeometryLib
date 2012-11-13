@@ -26,6 +26,5 @@ public:
 	bool containsPoint(const Vector &v) const;
 	bool containsPointInPlane(const Vector &v) const;
 
-	PSType type() const;
 };
 

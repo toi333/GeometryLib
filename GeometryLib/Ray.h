@@ -13,6 +13,5 @@ public:
 	Ray(const Vector &_a, const Vector &_b);
 	~Ray(void);
 
-	PSType type() const;
 private:
 };

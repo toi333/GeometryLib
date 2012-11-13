@@ -85,8 +85,3 @@ bool Triangle::containsPointInPlane(const Vector &v) const
 	return min(ccw1, ccw2, ccw3) != -max(ccw1, ccw2, ccw3);
 }
 
-
-PSType Triangle::type() const
-{
-	return TRIANGLE;
-}

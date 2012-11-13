@@ -4,6 +4,7 @@
 #include "GeometryLib.h"
 #include "Camera.h"
 #include "CubePH.h"
+#include "PhysicsProcessor.h"
 
 #include <windows.h>
 #ifdef __APPLE__
@@ -18,6 +19,7 @@ namespace Engine
 {
 	extern DrawEngine de;
 	extern Camera c;
+	extern PhysicsProcessor PP;
 
 	void start(int argc, char **argv);
 	void nextFrame();
@@ -31,5 +33,5 @@ namespace Engine
 	void handleMouseMove(int x, int y);
 	void mouseFunc(int button, int state, int x, int y);
 
-	void fireRay(Ray r, int maxBounces = 100);
+	void fireRay(const Ray &r, int maxBounces = 100);
 }

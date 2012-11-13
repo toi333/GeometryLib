@@ -18,30 +18,24 @@ PointSet* Intersection::get()
 
 void Intersection::intersect(const Ray &r, PointSet *ps)
 {
-	switch(ps->type())
+	if(Triangle *pp = dynamic_cast<Triangle*>(ps))
+		intersect(r, *pp);
+	else if(Plane *pp = dynamic_cast<Plane*>(ps))
+		intersect(r, *pp);
+	else if(Vector *pp = dynamic_cast<Vector*>(ps))
+		intersect(r, *pp);
+	else if(EmptyPS *pp = dynamic_cast<EmptyPS*>(ps))
+		intersect(r, *pp);
+	else
 	{
-	case TRIANGLE:
-		intersect(r, *(Triangle*)ps);
-		break;
-	case PLANE:
-		intersect(r, *(Plane*)ps);
-		break;
-	case VECTOR:
-		intersect(r, *(Vector*)ps);
-		break;
-	case EMPTYPS:
-		intersect(r, *(EmptyPS*)ps);
-		break;
-	default:
-		p = new EmptyPS();
-		break;
+		clear();
+		p = new EmptyPS(); 
 	}
 }
 
 void Intersection::intersect(const Ray &r, const Plane &pi)
 {
-	if(p)
-		delete p;
+	clear();
 
 	double t0 = dotProduct(pi.n, pi.p - r.a);
 	double t1 = dotProduct(r.b, pi.n);
@@ -57,16 +51,15 @@ void Intersection::intersect(const Ray &r, const Plane &pi)
 void Intersection::intersect(const Ray &r, const Triangle &t)
 {
 	intersect(r, Plane(t));
-	if(p->type() == EMPTYPS)
+	if(typeid(*p) == typeid(EmptyPS))
 		return;
-	else if(p->type() == LINE)
+	else if(typeid(*p) == typeid(Ray))
 	{
 		//TODO: finish
 	}
 	else if(!t.containsPointInPlane(Vector(*(Vector*)p)))
 	{
-		if(p)
-			delete p;
+		clear();
 		p = new EmptyPS();
 	}
 }
@@ -79,24 +72,22 @@ void Intersection::intersect(const Ray &r, const Vector &v)
 void Intersection::intersect(const Line &l, const Triangle &t)
 {
 	intersect(l, Plane(t));
-	if(p->type() == EMPTYPS)
+	if(typeid(*p) == typeid(EmptyPS))
 		return;
-	else if(p->type() == LINE)
+	else if(typeid(*p) == typeid(Line))
 	{
 		//TODO: finish
 	}
 	else if(!t.containsPointInPlane(Vector(*(Vector*)p)))
 	{
-		if(p)
-			delete p;
+		clear();
 		p = new EmptyPS();
 	}
 }
 
 void Intersection::intersect(const Line &l, const Plane &pi)
 {
-	if(p)
-		delete p;
+	clear();
 
 	double t0 = dotProduct(pi.n, pi.p - l.a);
 	double t1 = dotProduct(l.b, pi.n);
@@ -111,8 +102,7 @@ void Intersection::intersect(const Line &l, const Plane &pi)
 
 void Intersection::intersect(const Vector &v, const Plane &pi)
 {
-	if(p)
-		delete p;
+	clear();
 
 	if(pi.containsPoint(v))
 		p = new Vector(v);
@@ -122,8 +112,7 @@ void Intersection::intersect(const Vector &v, const Plane &pi)
 
 void Intersection::intersect(const Vector &v, const Triangle &t)
 {
-	if(p)
-		delete p;
+	clear();
 
 	if(t.containsPoint(v))
 		p = new Vector(v);
@@ -133,8 +122,7 @@ void Intersection::intersect(const Vector &v, const Triangle &t)
 
 void Intersection::intersect(const Vector &v, const Segment &s)
 {
-	if(p)
-		delete p;
+	clear();
 
 	double t;
 	if(abs(s.b.x - s.a.x) >= EPS)
@@ -145,7 +133,7 @@ void Intersection::intersect(const Vector &v, const Segment &s)
 		t = (s.a.z - v.z) / (s.a.z - s.b.z);
 
 	intersect(v, Line(s)); //TODO: zamjeni s provjerom
-	if(p->type() == EMPTYPS)
+	if(typeid(*p) == typeid(EmptyPS))
 		return;
 	else if(t <= 1. && t >= 0.)
 		p = new Vector(v);
@@ -155,8 +143,8 @@ void Intersection::intersect(const Vector &v, const Segment &s)
 
 void Intersection::intersect(const Vector &v, const Ray &r)
 {
-	if(p)
-		delete p;
+	clear();
+
 	double a = (v.x - r.a.x) / r.b.x;
 	double b = (v.y - r.a.y) / r.b.y;
 	double c = (v.z - r.a.z) / r.b.z;
@@ -182,8 +170,7 @@ void Intersection::intersect(const Vector &v, const Ray &r)
 
 void Intersection::intersect(const Vector &v, const Line &l)
 {
-	if(p)
-		delete p;
+	clear();
 	double a = (v.x - l.a.x) / l.b.x;
 	double b = (v.y - l.a.y) / l.b.y;
 	double c = (v.z - l.a.z) / l.b.z;
@@ -209,8 +196,7 @@ void Intersection::intersect(const Vector &v, const Line &l)
 
 void Intersection::intersect(const Vector &v, const Vector &u)
 {
-	if(p)
-		delete p;
+	clear();
 	if(abs(v.x) - abs(u.x) < EPS && abs(v.y) - abs(u.y) < EPS && abs(v.z) - abs(u.z) < EPS)
 		p = new Vector(v);
 	else
@@ -221,64 +207,61 @@ void Intersection::intersect(const Vector &v, const Vector &u)
 
 void Intersection::intersect(const Vector &v, const EmptyPS &e)
 {
-	if(p)
-		delete p;
+	clear();
 	p = new EmptyPS();
 }
 
 void Intersection::intersect(const EmptyPS &e, const EmptyPS &f)
 {
-	if(p)
-		delete p;
+	clear();
 	p = new EmptyPS();
 }
 
 void Intersection::intersect(const EmptyPS &e, const Triangle &t)
 {
-	if(p)
-		delete p;
+	clear();
 	p = new EmptyPS();
 }
 
 void Intersection::intersect(const EmptyPS &e, const Plane &pi)
 {
-	if(p)
-		delete p;
+	clear();
 	p = new EmptyPS();
 }
 
 void Intersection::intersect(const EmptyPS &e, const Line &l)
 {
-	if(p)
-		delete p;
+	clear();
 	p = new EmptyPS();
 }
 
 void Intersection::intersect(const EmptyPS &e, const Segment &s)
 {
-	if(p)
-		delete p;
+	clear();
 	p = new EmptyPS();
 }
 
 void Intersection::intersect(const EmptyPS &e, const Ray &r)
 {
-	if(p)
-		delete p;
+	clear();
 	p = new EmptyPS();
 }
 void Intersection::intersect(const EmptyPS &e, const Vector &v)
 {
-	if(p)
-		delete p;
+	clear();
 	p = new EmptyPS();
 }
 
 void Intersection::intersect(const Ray &r, const EmptyPS &e)
 {
+	clear();
+	p = new EmptyPS();
+}
+
+void Intersection::clear()
+{
 	if(p)
 		delete p;
-	p = new EmptyPS();
 }
 
 #pragma endregion
