@@ -11,10 +11,9 @@ public:
 	RayCast(void);
 	RayCast(const Ray &_r);
 	~RayCast(void);
-	
+
+	double hit(PointSet *p);
 	double hit(const Plane &pi);
 	double hit(const Triangle &t);
 	double hit(const SquareAA &sq);
-	double hit(PointSet *p);
-	//void cast(int maxBounces = 100);
 };

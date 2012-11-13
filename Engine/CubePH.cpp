@@ -25,18 +25,18 @@ void CubePH::update(double dt)
 	a += vel * dt;
 }
 
-bool CubePH::collide(const PhysicsObject *p, Vector &n) const
-{
-	if(p->phtype() == CUBEPH)
-		return collide((CubePH*)p, n);
-}
+//bool CubePH::collide(const PhysicsObject *p, Vector &n) const
+//{
+//	if(p->phtype() == CUBEPH)
+//		return collide((CubePH*)p, n);
+//}
+//
+//bool CubePH::collide(const CubePH *p, Vector &n) const
+//{
+//	
+//}
 
-bool CubePH::collide(const CubePH *p, Vector &n) const
-{
-	
-}
-
-PHType PhysicsObject::phtype() const
-{
-	return CUBEPH;
-}
+//PHType PhysicsObject::phtype() const
+//{
+//	return CUBEPH;
+//}

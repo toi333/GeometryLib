@@ -5,29 +5,16 @@ using namespace std;
 
 DrawEngine::DrawEngine()
 {
-
 }
 
 DrawEngine::~DrawEngine()
 {
-
 }
 
 void DrawEngine::draw(const Cube &a)
 {	
-	glBegin(GL_QUADS);
-		for(int i = 0; i < 6; ++i)
-		{
-			const Vector &n = a.getNormal(i);
-			glNormal3d(n.x, n.y, n.z);
-			const SquareAA sq(a.getSide(i));
-			for(int j = 0; j < 4; ++j)
-			{
-				const Vector v(sq.getVertex(j));
-				glVertex3d(v.x, v.y, v.z);
-			}
-		}
-	glEnd();
+	for(int i = 0; i < 6; ++i)
+		draw(a.getSide(i));
 }
 
 void DrawEngine::draw(const Vector &a)
@@ -97,6 +84,8 @@ void DrawEngine::draw(const SquareAA &a)
 {
 	glBegin(GL_QUADS);
 		glColor3f(0.0f, 0.0f, 0.7f);
+		const Vector &n = a.normal();
+		glNormal3d(n.x, n.y, n.z);
 		for(int i = 0; i < 4; ++i)
 		{
 			const Vector &v = a.getVertex(i);

@@ -19,6 +19,10 @@ public:
 	void flip(void);
 	Vector getVertex(int x) const;
 	Segment getSegment(int x) const;
+
+	bool containsPoint(const Vector &v) const;
+	bool containsPointInPlane(const Vector &v) const;
+
 	PSType type() const;
 };
 

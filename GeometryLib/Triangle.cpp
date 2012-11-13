@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "Triangle.h"
+#include "Essential.h"
+#include "Plane.h"
 
 using namespace std;
 
@@ -67,6 +69,22 @@ Segment Triangle::getSegment(int x) const
 		return Segment(Vector(), Vector(1, 0, 0));
 	}
 }
+
+bool Triangle::containsPoint(const Vector &v) const
+{
+	if(!Plane(*this).containsPoint(v))
+		return false;
+	return containsPointInPlane(v);
+}
+
+bool Triangle::containsPointInPlane(const Vector &v) const
+{
+	double ccw1 = sgn(ccw(crossProduct(a - c, v - c)));
+	double ccw2 = sgn(ccw(crossProduct(b - a, v - a)));
+	double ccw3 = sgn(ccw(crossProduct(c - b, v - b)));
+	return min(ccw1, ccw2, ccw3) != -max(ccw1, ccw2, ccw3);
+}
+
 
 PSType Triangle::type() const
 {

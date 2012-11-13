@@ -20,7 +20,13 @@ Plane::Plane(const Vector &a, const Vector &b, const Vector &c)
 Plane::Plane(const Triangle &tri)
 {
 	p = tri.a;
-	n = crossProduct(tri.b - tri.a, tri.c - tri.a).normalize();
+	n = tri.normal();
+}
+
+Plane::Plane(const SquareAA &sq)
+{
+	p = sq.a;
+	n = sq.normal();
 }
 
 Plane::~Plane(void)
@@ -51,6 +57,16 @@ double Plane::c() const
 double Plane::d() const
 {
 	return -dotProduct(n, p);
+}
+
+bool Plane::containsPoint(const Vector &v) const
+{
+	return abs(dotProduct(v - p, n)) <= EPS;
+}
+
+bool Plane::containsPointInPlane(const Vector &v) const
+{
+	return true;
 }
 
 PSType Plane::type() const

@@ -17,3 +17,5 @@ double min(double x, double y);
 double max(double x, double y);
 double min(double x, double y, double z);
 double max(double x, double y, double z);
+
+bool isBetween(double x, double a, double b);
