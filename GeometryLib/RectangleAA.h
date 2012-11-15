@@ -2,27 +2,18 @@
 
 #include "Surface.h"
 
-enum AxisDirection
-{
-	XP,
-	YP,
-	ZP,
-	XN,
-	YN,
-	ZN
-};
+enum AxisDirection;
 
-class SquareAA :
+class RectangleAA :
 	public Surface
 {
 public:
-	Vector a;
-	double d;
+	Vector a, d;
 	AxisDirection dir;
 
-	SquareAA(void);
-	SquareAA(const Vector &_a, double _d, AxisDirection _dir);
-	~SquareAA(void);
+	RectangleAA(void);
+	RectangleAA(const Vector &_a, const Vector &_d, AxisDirection _dir);
+	~RectangleAA(void);
 
 	Vector normal() const;
 	Vector getVertex(int index) const;

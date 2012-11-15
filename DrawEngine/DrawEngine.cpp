@@ -17,6 +17,12 @@ void DrawEngine::draw(const Cube &a)
 		draw(a.getSide(i));
 }
 
+void DrawEngine::draw(const Box &a)
+{
+	for(int i = 0; i < 6; ++i)
+		draw(a.getSide(i));
+}
+
 void DrawEngine::draw(const Vector &a)
 {
 	glPushMatrix();
@@ -95,6 +101,21 @@ void DrawEngine::draw(const SquareAA &a)
 	glEnd();
 }
 
+void DrawEngine::draw(const RectangleAA &a)
+{
+	glBegin(GL_QUADS);
+		glColor3f(0.0f, 0.0f, 0.7f);
+		const Vector &n = a.normal();
+		glNormal3d(n.x, n.y, n.z);
+		for(int i = 0; i < 4; ++i)
+		{
+			const Vector &v = a.getVertex(i);
+			glVertex3d(v.x, v.y, v.z);
+		}
+		glColor3f(0.5f, 0.0f, 0.0f);
+	glEnd();
+}
+
 void DrawEngine::draw(PointSet *a)
 {
 	if(Vector *p = dynamic_cast<Vector*>(a))
@@ -113,7 +134,11 @@ void DrawEngine::draw(PointSet *a)
 		draw(*p);
 	else if(Cube *p = dynamic_cast<Cube*>(a))
 		draw(*p);
+	else if(Box *p = dynamic_cast<Box*>(a))
+		draw(*p);
 	else if(SquareAA *p = dynamic_cast<SquareAA*>(a))
+		draw(*p);
+	else if(RectangleAA *p = dynamic_cast<RectangleAA*>(a))
 		draw(*p);
 }
 

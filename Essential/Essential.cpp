@@ -35,3 +35,8 @@ bool isBetween(double x, double a, double b)
 {
 	return a <= x && x <= b;
 }
+
+double intervalIntersection(double a1, double a2, double b1, double b2)
+{
+	return max(min(a2, b2) - max(a1, b1), 0);
+}

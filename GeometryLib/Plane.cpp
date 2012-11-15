@@ -17,16 +17,10 @@ Plane::Plane(const Vector &a, const Vector &b, const Vector &c)
 	n = crossProduct(b - a, c - a).normalize();
 }
 
-Plane::Plane(const Triangle &tri)
+Plane::Plane(const Surface &sf)
 {
-	p = tri.a;
-	n = tri.normal();
-}
-
-Plane::Plane(const SquareAA &sq)
-{
-	p = sq.a;
-	n = sq.normal();
+	p = sf.pos();
+	n = sf.normal();
 }
 
 Plane::~Plane(void)
@@ -67,4 +61,9 @@ bool Plane::containsPoint(const Vector &v) const
 bool Plane::containsPointInPlane(const Vector &v) const
 {
 	return true;
+}
+
+Vector Plane::pos() const
+{
+	return p;
 }

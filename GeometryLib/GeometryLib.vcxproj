@@ -79,6 +79,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="EmptyPS.h" />
     <ClInclude Include="GeometryLib.h" />
@@ -88,17 +89,20 @@
     <ClInclude Include="PointSet.h" />
     <ClInclude Include="Primitives.h" />
     <ClInclude Include="Ray.h" />
-    <ClInclude Include="RayCast.h" />
+    <ClInclude Include="RectangleAA.h" />
     <ClInclude Include="Segment.h" />
     <ClInclude Include="SquareAA.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Surface.h" />
+    <ClInclude Include="Surfaces.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="VolumetricObject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="EmptyPS.cpp" />
     <ClCompile Include="GeometryLib.cpp" />
@@ -107,7 +111,7 @@
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PointSet.cpp" />
     <ClCompile Include="Ray.cpp" />
-    <ClCompile Include="RayCast.cpp" />
+    <ClCompile Include="RectangleAA.cpp" />
     <ClCompile Include="Segment.cpp" />
     <ClCompile Include="SquareAA.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -118,6 +122,7 @@
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vertex.cpp" />
+    <ClCompile Include="VolumetricObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Essential\Essential.vcxproj">

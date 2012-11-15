@@ -1,5 +1,5 @@
 #include "PointSet.h"
-#include "Vector.h"
+#include "Vertex.h"
 #include "Line.h"
 #include "Segment.h"
 #include "Ray.h"
@@ -9,3 +9,5 @@
 #include "Cube.h"
 #include "Surface.h"
 #include "SquareAA.h"
+#include "RectangleAA.h"
+#include "Box.h"
