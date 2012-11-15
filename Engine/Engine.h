@@ -3,7 +3,6 @@
 #include "DrawEngine.h"
 #include "GeometryLib.h"
 #include "Camera.h"
-#include "CubePH.h"
 #include "PhysicsProcessor.h"
 
 #include <windows.h>

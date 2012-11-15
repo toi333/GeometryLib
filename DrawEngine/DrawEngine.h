@@ -21,7 +21,9 @@ public:
 
 	void draw(PointSet *a);
 	void draw(const Cube &a);
+	void draw(const Box &a);
 	void draw(const SquareAA &a);
+	void draw(const RectangleAA &a);
 	void draw(const Vector &a);
 	void draw(const Line &a);
 	void draw(const Ray &a);

@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Primitives\Surfaces">
       <UniqueIdentifier>{83a09bfb-9cfb-4f06-a275-f3e094d62f8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Primitives\VolumetricObjects">
+      <UniqueIdentifier>{020894aa-6f78-4284-96ea-ad2230327494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Primitives\VolumetricObjects">
+      <UniqueIdentifier>{15a1f9e4-233c-412d-b2b8-5ad358235ec9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -41,9 +47,6 @@
     </ClInclude>
     <ClInclude Include="Intersection.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>Header Files\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="Segment.h">
       <Filter>Header Files\Primitives</Filter>
@@ -72,17 +75,29 @@
     <ClInclude Include="Triangle.h">
       <Filter>Header Files\Primitives\Surfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Cube.h">
-      <Filter>Header Files\Primitives</Filter>
-    </ClInclude>
     <ClInclude Include="SquareAA.h">
       <Filter>Header Files\Primitives\Surfaces</Filter>
     </ClInclude>
-    <ClInclude Include="RayCast.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleAA.h">
+      <Filter>Header Files\Primitives\Surfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\Primitives\VolumetricObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Header Files\Primitives\VolumetricObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="VolumetricObject.h">
+      <Filter>Header Files\Primitives\VolumetricObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Surfaces.h">
+      <Filter>Source Files\Primitives\Surfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -94,9 +109,6 @@
     </ClCompile>
     <ClCompile Include="Intersection.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Cube.cpp">
-      <Filter>Source Files\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="EmptyPS.cpp">
       <Filter>Source Files\Primitives</Filter>
@@ -113,9 +125,6 @@
     <ClCompile Include="Segment.cpp">
       <Filter>Source Files\Primitives</Filter>
     </ClCompile>
-    <ClCompile Include="Vector.cpp">
-      <Filter>Source Files\Primitives</Filter>
-    </ClCompile>
     <ClCompile Include="Surface.cpp">
       <Filter>Source Files\Primitives\Surfaces</Filter>
     </ClCompile>
@@ -128,11 +137,23 @@
     <ClCompile Include="SquareAA.cpp">
       <Filter>Source Files\Primitives\Surfaces</Filter>
     </ClCompile>
-    <ClCompile Include="RayCast.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Vertex.cpp">
       <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangleAA.cpp">
+      <Filter>Source Files\Primitives\Surfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Source Files\Primitives\VolumetricObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Source Files\Primitives\VolumetricObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="VolumetricObject.cpp">
+      <Filter>Source Files\Primitives\VolumetricObjects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

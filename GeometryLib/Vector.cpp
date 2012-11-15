@@ -133,6 +133,11 @@ Vector crossProduct(const Vector &a, const Vector &b)
 	);
 }
 
+Vector pairwiseProduct(const Vector &a, const Vector &b)
+{
+	return Vector(a.x * b.x, a.y * b.y, a.z * b.z);
+}
+
 double mixedProduct(const Vector &a, const Vector &b, const Vector &c)
 {
 	return dotProduct(a, crossProduct(b, c));

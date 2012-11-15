@@ -8,7 +8,8 @@ class CubePH :
 {
 public:
 	CubePH(void);
-	CubePH(Cube cb, Vector _vel);
+	CubePH(const Cube &cb, const Vector &_vel);
+	CubePH(const Cube &cb, const Vector &_vel, double _mass, bool _frozen);
 	~CubePH(void);
 
 	Vector pos();

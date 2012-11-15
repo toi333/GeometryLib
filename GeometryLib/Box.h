@@ -1,22 +1,21 @@
 #pragma once
 
 #include "VolumetricObject.h"
-#include "SquareAA.h"
+#include "RectangleAA.h"
 
-class Cube :
+class Box :
 	public VolumetricObject
 {
 public:
-	Vector a;
-	double d;
+	Vector a, d;
 
-	Cube(void);
-	Cube(const Vector &_a, double _d);
-	~Cube(void);
+	Box(void);
+	Box(const Vector &_a, const Vector &_d);
+	virtual ~Box(void);
 
 	Vector getVertex(int index) const;
 	Vector getNormal(int index) const;
-	SquareAA getSide(int index) const;
+	RectangleAA getSide(int index) const;
 
 	Vector pos() const;
 	double volume() const;
@@ -27,3 +26,4 @@ private:
 	static const Vector normals[6];
 	static const Vector vertices[8];
 };
+
