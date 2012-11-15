@@ -1,10 +1,8 @@
 #pragma once
 
-#include "PointSet.h"
 #include "Essential.h"
 
-class Vector :
-	public PointSet
+class Vector
 {
 public:
 	double x, y, z;
@@ -37,11 +35,11 @@ public:
 
 	Vector normalized(void) const;
 	Vector normalize(void);
-
 };
 
 double dotProduct(const Vector &a, const Vector &b);
 Vector crossProduct(const Vector &a, const Vector &b);
+Vector pairwiseProduct(const Vector &a, const Vector &b);
 double mixedProduct(const Vector &a, const Vector &b, const Vector &c);
 
 Vector operator*(double t, const Vector &v);

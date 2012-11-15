@@ -24,3 +24,8 @@ double Segment::length2() const
 {
 	return a.distance2(b);
 }
+
+Vector Segment::pos() const
+{
+	return a;
+}

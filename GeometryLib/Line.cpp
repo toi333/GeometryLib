@@ -26,3 +26,8 @@ Line::Line(const Segment &s)
 Line::~Line(void)
 {
 }
+
+Vector Line::pos() const
+{
+	return a;
+}

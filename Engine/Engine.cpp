@@ -93,11 +93,13 @@ void Engine::start(int argc, char **argv)
 {
 	Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
 	Cube cb(Vector(0., 0., 0.), 1.);
-	SquareAA sq(Vector(), 10., XP);
+	SquareAAPH sq(SquareAA(Vector(), 10., XP), Vector(), 1, 1);
+	Box bx(Vector(3, 2, 1), Vector(1, 2, 3));
 
 	de.addToBuffer(&T);
 	de.addToBuffer(&cb);
 	de.addToBuffer(&sq);
+	de.addToBuffer(&bx);
 
 	initRendering(argc, argv);
 }
@@ -171,6 +173,7 @@ void Engine::mouseFunc(int button, int state, int x, int y)
 	else if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
 		CubePH *cph = new CubePH(Cube(c.p, 0.3), c.getCameraDirection() * 3);
+		//SquareAAPH *sph = new SquareAAPH(SquareAA(c.p, 0.3, XP), c.getCameraDirection() * 3);
 		PP.phList.push_back(cph);
 		de.addToBuffer(cph);
 	}
@@ -181,29 +184,25 @@ void Engine::fireRay(const Ray &r, int maxBounces)
 	if(maxBounces < 0)
 		return;
 	double mn = INF;
-	RayCast rc(r);
 	Vector n;
 	for(list<PointSet*>::const_iterator it = de.PSBuffer.begin(); it != de.PSBuffer.end(); ++it)
 	{
 		if(Surface *sf = dynamic_cast<Surface*>(*it))
 		{
-			double a = rc.hit(sf);
+			double a = r.hit(sf);
 			if(a < mn && a > EPS)
 			{
 				n = sf->normal();
 				mn = a;
 			}
 		}
-		else if(Cube *cb = dynamic_cast<Cube*>(*it))
+		else if(VolumetricObject *cb = dynamic_cast<VolumetricObject*>(*it))
 		{
-			for(int i = 0; i < 6; ++i)
+			pair<double, Vector> pdv = cb->reflect(r);
+			if(pdv.first < mn && pdv.first > EPS)
 			{
-				double a = rc.hit(cb->getSide(i));
-				if(a < mn && a > EPS)
-				{
-					mn = a;
-					n = cb->getNormal(i);
-				}
+				mn = pdv.first;
+				n = pdv.second;
 			}
 		}
 	}

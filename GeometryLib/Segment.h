@@ -15,5 +15,8 @@ public:
 
 	double length() const;
 	double length2() const;
+
+	Vector pos() const;
+
 private:
 };

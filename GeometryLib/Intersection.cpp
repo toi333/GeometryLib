@@ -45,7 +45,7 @@ void Intersection::intersect(const Ray &r, const Plane &pi)
 	else if(abs(t1) <= EPS || (t0 / t1) < 0)
 		p = new EmptyPS();
 	else
-		p = new Vector((t0 / t1) * r.b + r.a);
+		p = new Vertex((t0 / t1) * r.b + r.a);
 }
 
 void Intersection::intersect(const Ray &r, const Triangle &t)
@@ -97,7 +97,7 @@ void Intersection::intersect(const Line &l, const Plane &pi)
 	else if(abs(t1) <= EPS)
 		p = new EmptyPS();
 	else
-		p = new Vector((t0 / t1) * l.b + l.a);
+		p = new Vertex((t0 / t1) * l.b + l.a);
 }
 
 void Intersection::intersect(const Vector &v, const Plane &pi)
@@ -105,7 +105,7 @@ void Intersection::intersect(const Vector &v, const Plane &pi)
 	clear();
 
 	if(pi.containsPoint(v))
-		p = new Vector(v);
+		p = new Vertex(v);
 	else
 		p = new EmptyPS();
 }
@@ -115,7 +115,7 @@ void Intersection::intersect(const Vector &v, const Triangle &t)
 	clear();
 
 	if(t.containsPoint(v))
-		p = new Vector(v);
+		p = new Vertex(v);
 	else
 		p = new EmptyPS();
 }
@@ -136,7 +136,7 @@ void Intersection::intersect(const Vector &v, const Segment &s)
 	if(typeid(*p) == typeid(EmptyPS))
 		return;
 	else if(t <= 1. && t >= 0.)
-		p = new Vector(v);
+		p = new Vertex(v);
 	else
 		p = new EmptyPS();
 }
@@ -163,7 +163,7 @@ void Intersection::intersect(const Vector &v, const Ray &r)
 		c = a;
 
 	if(max(a, b, c) - min(a, b, c) < EPS && a >= 0.)
-		p = new Vector(v);
+		p = new Vertex(v);
 	else
 		p = new EmptyPS();
 }
@@ -189,7 +189,7 @@ void Intersection::intersect(const Vector &v, const Line &l)
 		c = a;
 
 	if(max(a, b, c) - min(a, b, c) <= EPS)
-		p = new Vector(v);
+		p = new Vertex(v);
 	else
 		p = new EmptyPS();
 }
@@ -198,7 +198,7 @@ void Intersection::intersect(const Vector &v, const Vector &u)
 {
 	clear();
 	if(abs(v.x) - abs(u.x) < EPS && abs(v.y) - abs(u.y) < EPS && abs(v.z) - abs(u.z) < EPS)
-		p = new Vector(v);
+		p = new Vertex(v);
 	else
 		p = new EmptyPS();
 }

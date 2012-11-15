@@ -1,9 +1,9 @@
 #include "StdAfx.h"
-#include "Cube.h"
+#include "Box.h"
 
 using namespace std;
 
-const Vector Cube::normals[6] = 
+const Vector Box::normals[6] = 
 {
 	Vector( 1.,  0.,  0.),
 	Vector( 0.,  1.,  0.),
@@ -13,7 +13,7 @@ const Vector Cube::normals[6] =
 	Vector( 0.,  0., -1.)
 };
 
-const Vector Cube::vertices[8] =
+const Vector Box::vertices[8] =
 {
 	Vector( 1.,  1.,  1.), Vector( 1.,  1., -1.),
 	Vector( 1., -1.,  1.), Vector( 1., -1., -1.),
@@ -21,46 +21,45 @@ const Vector Cube::vertices[8] =
 	Vector(-1., -1.,  1.), Vector(-1., -1., -1.)
 };
 
-Cube::Cube(void)
+Box::Box(void)
 {
-	d = 1.;
 }
 
-Cube::Cube(const Vector &_a, double _d)
+Box::Box(const Vector &_a, const Vector &_d)
 	: a(_a), d(_d)
 {
 }
 
-Cube::~Cube(void)
+Box::~Box(void)
 {
 }
 
-Vector Cube::getVertex(int index) const
+Vector Box::getVertex(int index) const
 {
-	return a + vertices[index] * d;
+	return a + pairwiseProduct(vertices[index], d);
 }
 
-Vector Cube::getNormal(int index) const
+Vector Box::getNormal(int index) const
 {
 	return normals[index];
 }
 
-SquareAA Cube::getSide(int index) const
+RectangleAA Box::getSide(int index) const
 {
-	return SquareAA(a + normals[index] * d, d, (AxisDirection)index);
+	return RectangleAA(a + pairwiseProduct(normals[index], d), d, (AxisDirection)index);
 }
 
-Vector Cube::pos() const
+Vector Box::pos() const
 {
 	return a;
 }
 
-double Cube::volume() const
+double Box::volume() const
 {
-	return d * d * d * 8.;
+	return d.x * d.y * d.z * 8.;
 }
 
-pair<double, Vector> Cube::reflect(const Ray &r) const
+pair<double, Vector> Box::reflect(const Ray &r) const
 {
 	double mn = INF;
 	Vector n;
