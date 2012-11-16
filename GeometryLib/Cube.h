@@ -12,7 +12,7 @@ public:
 
 	Cube(void);
 	Cube(const Vector &_a, double _d);
-	~Cube(void);
+	virtual ~Cube(void);
 
 	Vector getVertex(int index) const;
 	Vector getNormal(int index) const;

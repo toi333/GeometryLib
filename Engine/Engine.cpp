@@ -94,12 +94,14 @@ void Engine::start(int argc, char **argv)
 	Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
 	Cube cb(Vector(0., 0., 0.), 1.);
 	SquareAAPH sq(SquareAA(Vector(), 10., XP), Vector(), 1, 1);
-	Box bx(Vector(3, 2, 1), Vector(1, 2, 3));
+	BoxPH *bx = new BoxPH(Box(Vector(3, 2, 1), Vector(1, 2, 3)));
+
+	PP.phList.push_back(bx);
 
 	de.addToBuffer(&T);
 	de.addToBuffer(&cb);
 	de.addToBuffer(&sq);
-	de.addToBuffer(&bx);
+	de.addToBuffer(bx);
 
 	initRendering(argc, argv);
 }

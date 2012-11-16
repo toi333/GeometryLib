@@ -2,6 +2,7 @@
 
 #include "Vector.h"
 #include "CubePH.h"
+#include "BoxPH.h"
 #include "SquareAAPH.h"
 #include "PhysicsObject.h"
 #include <list>
@@ -14,6 +15,9 @@ public:
 
 	void collide(PhysicsObject *a, PhysicsObject *b);
 	void collide(CubePH &a, CubePH &b);
+	void collide(BoxPH &a, BoxPH &b);
+	void collide(BoxPH &a, CubePH &b);
+	void collide(CubePH &a, BoxPH &b);
 	void collide(CubePH &a, SquareAAPH &b);
 	void collide(SquareAAPH &a, CubePH &b);
 	void collide(SquareAAPH &b, SquareAAPH &a);

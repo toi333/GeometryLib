@@ -32,5 +32,6 @@ Vector SquareAAPH::pos()
 
 void SquareAAPH::update(double dt)
 {
-	a += vel * dt;
+	if(!frozen)
+		a += vel * dt;
 }
