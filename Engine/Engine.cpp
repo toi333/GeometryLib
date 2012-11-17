@@ -14,7 +14,7 @@ const GLfloat mat_specular[]   = { 0.7f, 0.7f, 0.7f, 1.0f };
 const GLfloat high_shininess[] = { 100.0f };
 
 DrawEngine Engine::de;
-Camera Engine::c;
+Player Engine::c;
 PhysicsProcessor Engine::PP;
 
 void Engine::nextFrame()
@@ -100,6 +100,7 @@ void Engine::start(int argc, char **argv)
 
 	PP.phList.push_back(bx);
 	PP.phList.push_back(flr);
+	//PP.phList.push_back(&c);
 
 	de.addToBuffer(&T);
 	de.addToBuffer(&cb);
@@ -145,6 +146,7 @@ void Engine::handleKeyDown(unsigned char key, int x, int y)
 		break;
 	case 'g':
 		PhysicsObject::gravity = Vector(0, -10, 0) - PhysicsObject::gravity;
+		c.vel = Vector();
 		break;
 	}
 }
