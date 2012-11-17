@@ -13,6 +13,8 @@ public:
 	BoxPH(const Box &bx, const Vector &_vel, double _mass, bool _frozen);
 	~BoxPH(void);
 
-	Vector pos();
+	Vector getPos() const;
+	void setPos(const Vector &_v);
+
 	void update(double dt);
 };

@@ -23,6 +23,7 @@ public:
 	bool containsPoint(const Vector &v) const;
 	bool containsPointInPlane(const Vector &v) const;
 
-	Vector pos() const;
+	Vector getPos() const;
+	void setPos(const Vector &_v);
 };
 

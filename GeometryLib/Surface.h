@@ -13,7 +13,7 @@ public:
 	virtual ~Surface(void);
 
 	virtual Vector normal() const = 0;
-	virtual Vector pos() const = 0;
+	//virtual Vector getPos() const = 0;
 
 	virtual bool containsPoint(const Vector &v) const = 0;
 	virtual bool containsPointInPlane(const Vector &v) const = 0;

@@ -26,16 +26,22 @@ BoxPH::~BoxPH(void)
 {
 }
 
-Vector BoxPH::pos()
+Vector BoxPH::getPos() const
 {
 	return a;
+}
+
+void BoxPH::setPos(const Vector &_v)
+{
+	a = _v;
 }
 
 void BoxPH::update(double dt)
 {
 	if(!frozen)
 	{
-		a += (vel + gravity * dt) / 2. * dt;
+		//a += (vel + gravity * dt) / 2. * dt;
+		a += vel * dt;
 		vel += gravity * dt;
 	}
 }

@@ -11,7 +11,7 @@ public:
 	Vertex(const Vector &v);
 	~Vertex(void);
 
-	Vector pos() const;
-
+	Vector getPos() const;
+	void setPos(const Vector &_v);
 };
 

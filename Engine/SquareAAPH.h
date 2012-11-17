@@ -13,7 +13,9 @@ public:
 	SquareAAPH(const SquareAA &sq, const Vector &_vel, double _mass, bool _frozen);
 	~SquareAAPH(void);
 
-	Vector pos();
+	Vector getPos() const;
+	void setPos(const Vector &_v);
+
 	void update( double dt );
 };
 

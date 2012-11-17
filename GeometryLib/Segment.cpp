@@ -25,7 +25,13 @@ double Segment::length2() const
 	return a.distance2(b);
 }
 
-Vector Segment::pos() const
+Vector Segment::getPos() const
 {
 	return a;
+}
+
+void Segment::setPos(const Vector &_v)
+{
+	b = b - a + _v;
+	a = _v;
 }

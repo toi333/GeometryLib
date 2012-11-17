@@ -25,16 +25,22 @@ CubePH::~CubePH(void)
 {
 }
 
-Vector CubePH::pos()
+Vector CubePH::getPos() const
 {
 	return a;
+}
+
+void CubePH::setPos(const Vector &_v)
+{
+	a = _v;
 }
 
 void CubePH::update(double dt)
 {
 	if(!frozen)
 	{
-		a += (vel + gravity * dt) / 2. * dt;
+		//a += (vel + gravity * dt) / 2. * dt;
+		a += vel * dt;
 		vel += gravity * dt;
 	}
 }

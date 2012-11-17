@@ -20,6 +20,7 @@ public:
 	double hit(const SquareAA &sq) const;
 	double hit(const RectangleAA &sq) const;
 
-	Vector pos() const;
+	Vector getPos() const;
+	void setPos(const Vector &_v);
 private:
 };

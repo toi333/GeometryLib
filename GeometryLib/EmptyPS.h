@@ -9,7 +9,8 @@ public:
 	EmptyPS(void);
 	~EmptyPS(void);
 
-	Vector pos() const;
+	Vector getPos() const;
+	void setPos(const Vector &_v);
 
 private:
 };

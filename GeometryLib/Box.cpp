@@ -49,7 +49,7 @@ RectangleAA Box::getSide(int index) const
 	return RectangleAA(a + pairwiseProduct(normals[index], d), d, (AxisDirection)index);
 }
 
-Vector Box::pos() const
+Vector Box::getPos() const
 {
 	return a;
 }
@@ -73,4 +73,9 @@ pair<double, Vector> Box::reflect(const Ray &r) const
 		}
 	}
 	return pair<double, Vector>(mn, n);
+}
+
+void Box::setPos(const Vector &_v)
+{
+	a = _v;
 }

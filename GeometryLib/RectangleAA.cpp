@@ -83,7 +83,12 @@ bool RectangleAA::containsPointInPlane(const Vector &v) const
 		isBetween(v.y, a.y - d.y, a.y + d.y);
 }
 
-Vector RectangleAA::pos() const
+Vector RectangleAA::getPos() const
 {
 	return a;
+}
+
+void RectangleAA::setPos(const Vector &_v)
+{
+	a = _v;
 }

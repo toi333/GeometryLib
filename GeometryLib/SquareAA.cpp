@@ -73,7 +73,12 @@ bool SquareAA::containsPointInPlane(const Vector &v) const
 		isBetween(v.y, a.y - d, a.y + d);
 }
 
-Vector SquareAA::pos() const
+Vector SquareAA::getPos() const
 {
 	return a;
+}
+
+void SquareAA::setPos(const Vector &_v)
+{
+	a = _v;
 }

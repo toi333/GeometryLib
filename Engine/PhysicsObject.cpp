@@ -20,4 +20,6 @@ PhysicsObject::~PhysicsObject(void)
 {
 }
 
+double PhysicsObject::collisionElasticity = 0.3;
+double PhysicsObject::collisionFriction = 0.1;
 Vector PhysicsObject::gravity = Vector(0, -10, 0);
