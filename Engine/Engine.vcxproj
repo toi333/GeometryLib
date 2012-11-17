@@ -84,6 +84,7 @@
     <ClInclude Include="CubePH.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="PhysicsObject.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SquareAAPH.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
@@ -94,6 +95,7 @@
     <ClCompile Include="CubePH.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SquareAAPH.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -2,7 +2,7 @@
 
 #include "DrawEngine.h"
 #include "GeometryLib.h"
-#include "Camera.h"
+#include "Player.h"
 #include "PhysicsProcessor.h"
 
 #include <windows.h>
@@ -17,7 +17,7 @@
 namespace Engine
 {
 	extern DrawEngine de;
-	extern Camera c;
+	extern Player c;
 	extern PhysicsProcessor PP;
 
 	void start(int argc, char **argv);
