@@ -25,12 +25,18 @@ SquareAAPH::~SquareAAPH(void)
 {
 }
 
-Vector SquareAAPH::pos()
+Vector SquareAAPH::getPos() const
 {
 	return a;
 }
 
+void SquareAAPH::setPos(const Vector &_v)
+{
+	a = _v;
+}
+
 void SquareAAPH::update(double dt)
 {
-	a += vel * dt;
+	if(!frozen)
+		a += vel * dt;
 }

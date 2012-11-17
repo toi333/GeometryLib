@@ -10,6 +10,7 @@ public:
 	PointSet(void);
 	virtual ~PointSet(void);
 
-	virtual Vector pos() const = 0;
+	virtual Vector getPos() const = 0;
+	virtual void setPos(const Vector &_v) = 0;
 private:
 };

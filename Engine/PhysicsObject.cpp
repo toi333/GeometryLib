@@ -2,6 +2,7 @@
 #include "PhysicsObject.h"
 
 PhysicsObject::PhysicsObject(void)
+	: vel(Vector()), mass(1), frozen(0)
 {
 }
 
@@ -18,3 +19,7 @@ PhysicsObject::PhysicsObject(Vector _vel, double _mass, bool _frozen)
 PhysicsObject::~PhysicsObject(void)
 {
 }
+
+double PhysicsObject::collisionElasticity = 0.3;
+double PhysicsObject::collisionFriction = 0.1;
+Vector PhysicsObject::gravity = Vector(0, -10, 0);

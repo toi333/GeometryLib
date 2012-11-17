@@ -27,7 +27,12 @@ Line::~Line(void)
 {
 }
 
-Vector Line::pos() const
+Vector Line::getPos() const
 {
 	return a;
+}
+
+void Line::setPos(const Vector &_v)
+{
+	a = _v;
 }

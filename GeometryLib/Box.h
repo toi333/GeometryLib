@@ -17,7 +17,8 @@ public:
 	Vector getNormal(int index) const;
 	RectangleAA getSide(int index) const;
 
-	Vector pos() const;
+	virtual Vector getPos() const;
+	virtual void setPos(const Vector &_v);
 	double volume() const;
 
 	std::pair<double, Vector> reflect(const Ray &r) const;

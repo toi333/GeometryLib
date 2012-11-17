@@ -94,12 +94,25 @@ void Engine::start(int argc, char **argv)
 	Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
 	Cube cb(Vector(0., 0., 0.), 1.);
 	SquareAAPH sq(SquareAA(Vector(), 10., XP), Vector(), 1, 1);
-	Box bx(Vector(3, 2, 1), Vector(1, 2, 3));
+	BoxPH *bx = new BoxPH(Box(Vector(3, 2, 1), Vector(1, 2, 3)));
+
+	BoxPH *flr = new BoxPH(Box(Vector(0, -20, 0), Vector(20, 1, 20)), Vector(), 1, 1);
+
+	PP.phList.push_back(bx);
+	PP.phList.push_back(flr);
 
 	de.addToBuffer(&T);
 	de.addToBuffer(&cb);
 	de.addToBuffer(&sq);
-	de.addToBuffer(&bx);
+	de.addToBuffer(bx);
+	de.addToBuffer(flr);
+
+	for(int i = 0; i < 10; ++i)
+	{
+		CubePH *q = new CubePH(Cube(Vector(10, 0, i), 0.3));
+		de.addToBuffer(q);
+		PP.phList.push_back(q);
+	}
 
 	initRendering(argc, argv);
 }
@@ -129,6 +142,9 @@ void Engine::handleKeyDown(unsigned char key, int x, int y)
 		break;
 	case 'e':
 		c.move(Vector(0, 1, 0));
+		break;
+	case 'g':
+		PhysicsObject::gravity = Vector(0, -10, 0) - PhysicsObject::gravity;
 		break;
 	}
 }

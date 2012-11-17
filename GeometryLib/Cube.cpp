@@ -50,7 +50,7 @@ SquareAA Cube::getSide(int index) const
 	return SquareAA(a + normals[index] * d, d, (AxisDirection)index);
 }
 
-Vector Cube::pos() const
+Vector Cube::getPos() const
 {
 	return a;
 }
@@ -74,4 +74,9 @@ pair<double, Vector> Cube::reflect(const Ray &r) const
 		}
 	}
 	return pair<double, Vector>(mn, n);
+}
+
+void Cube::setPos(const Vector &_v)
+{
+	a = _v;
 }

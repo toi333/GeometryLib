@@ -85,8 +85,15 @@ bool Triangle::containsPointInPlane(const Vector &v) const
 	return min(ccw1, ccw2, ccw3) != -max(ccw1, ccw2, ccw3);
 }
 
-Vector Triangle::pos() const
+Vector Triangle::getPos() const
 {
 	return a;
+}
+
+void Triangle::setPos(const Vector &_v)
+{
+	c = c - a + _v;
+	b = b - a + _v;
+	a = _v;
 }
 

@@ -19,7 +19,7 @@ Plane::Plane(const Vector &a, const Vector &b, const Vector &c)
 
 Plane::Plane(const Surface &sf)
 {
-	p = sf.pos();
+	p = sf.getPos();
 	n = sf.normal();
 }
 
@@ -63,7 +63,12 @@ bool Plane::containsPointInPlane(const Vector &v) const
 	return true;
 }
 
-Vector Plane::pos() const
+Vector Plane::getPos() const
 {
 	return p;
+}
+
+void Plane::setPos(const Vector &_v)
+{
+	p = _v;
 }

@@ -15,7 +15,12 @@ Vertex::~Vertex(void)
 {
 }
 
-Vector Vertex::pos() const
+Vector Vertex::getPos() const
 {
 	return *this;
+}
+
+void Vertex::setPos(const Vector &_v)
+{
+	*this = _v;
 }

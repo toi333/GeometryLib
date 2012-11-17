@@ -10,7 +10,7 @@ public:
 	VolumetricObject(void);
 	virtual ~VolumetricObject(void);
 
-	virtual Vector pos() const = 0;
+	//virtual Vector getPos() const = 0;
 	virtual double volume() const = 0;
 	virtual std::pair<double, Vector> reflect(const Ray &r) const = 0;
 };

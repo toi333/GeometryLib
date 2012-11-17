@@ -17,6 +17,7 @@ public:
 	Line(const Segment &s);
 	~Line(void);
 
-	Vector pos() const;
+	Vector getPos() const;
+	void setPos(const Vector &_v);
 
 };

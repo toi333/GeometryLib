@@ -73,7 +73,12 @@ double Ray::hit(const RectangleAA &sq) const
 	return INF;
 }
 
-Vector Ray::pos() const
+Vector Ray::getPos() const
 {
 	return a;
+}
+
+void Ray::setPos(const Vector &_v)
+{
+	a = _v;
 }

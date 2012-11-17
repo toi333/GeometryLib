@@ -9,7 +9,12 @@ EmptyPS::~EmptyPS(void)
 {
 }
 
-Vector EmptyPS::pos() const
+Vector EmptyPS::getPos() const
 {
 	return Vector();
+}
+
+void EmptyPS::setPos(const Vector &_v)
+{
+	return;
 }

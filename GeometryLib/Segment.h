@@ -16,7 +16,8 @@ public:
 	double length() const;
 	double length2() const;
 
-	Vector pos() const;
+	Vector getPos() const;
+	void setPos(const Vector &_v);
 
 private:
 };

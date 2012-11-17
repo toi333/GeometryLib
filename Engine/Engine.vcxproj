@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BoxPH.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="PhysicsProcessor.h" />
     <ClInclude Include="CubePH.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoxPH.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="PhysicsProcessor.cpp" />
     <ClCompile Include="CubePH.cpp" />
