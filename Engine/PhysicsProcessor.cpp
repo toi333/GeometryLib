@@ -31,40 +31,7 @@ void PhysicsProcessor::collide(CubePH &a, CubePH &b)
 	if(dz < dx && dz < dy)
 		n = 2;
 
-	double *av = 0, *bv = 0;
-	if(!n)
-	{
-		if(sgn(a.vel.x - b.vel.x) == sgn(a.a.x - b.a.x))
-			return;
-		av = &a.vel.x;
-		bv = &b.vel.x;
-	}
-	else if(n == 1)
-	{
-		if(sgn(a.vel.y - b.vel.y) == sgn(a.a.y - b.a.y))
-			return;
-		av = &a.vel.y;
-		bv = &b.vel.y;
-	}
-	else
-	{
-		if(sgn(a.vel.z - b.vel.z) == sgn(a.a.z - b.a.z))
-			return;
-		av = &a.vel.z;
-		bv = &b.vel.z;
-	}
-	double avt = *av;
-	double bvt = *bv;
-
-	if(!a.frozen && !b.frozen)
-	{
-		*av = (avt * (a.mass - b.mass) + 2. * b.mass * bvt) / (a.mass + b.mass);
-		*bv = (bvt * (b.mass - a.mass) + 2. * a.mass * avt) / (b.mass + a.mass);
-	}
-	else if(a.frozen)
-		*bv = -bvt;
-	else
-		*av = -avt;
+	applyCollisionAA(a, b, n);
 }
 
 void PhysicsProcessor::collide(BoxPH &a, BoxPH &b)
@@ -87,40 +54,7 @@ void PhysicsProcessor::collide(BoxPH &a, BoxPH &b)
 	if(dz < dx && dz < dy)
 		n = 2;
 
-	double *av = 0, *bv = 0;
-	if(!n)
-	{
-		if(sgn(a.vel.x - b.vel.x) == sgn(a.a.x - b.a.x))
-			return;
-		av = &a.vel.x;
-		bv = &b.vel.x;
-	}
-	else if(n == 1)
-	{
-		if(sgn(a.vel.y - b.vel.y) == sgn(a.a.y - b.a.y))
-			return;
-		av = &a.vel.y;
-		bv = &b.vel.y;
-	}
-	else
-	{
-		if(sgn(a.vel.z - b.vel.z) == sgn(a.a.z - b.a.z))
-			return;
-		av = &a.vel.z;
-		bv = &b.vel.z;
-	}
-	double avt = *av;
-	double bvt = *bv;
-
-	if(!a.frozen && !b.frozen)
-	{
-		*av = (avt * (a.mass - b.mass) + 2. * b.mass * bvt) / (a.mass + b.mass);
-		*bv = (bvt * (b.mass - a.mass) + 2. * a.mass * avt) / (b.mass + a.mass);
-	}
-	else if(a.frozen)
-		*bv = -bvt;
-	else
-		*av = -avt;
+	applyCollisionAA(a, b, n);
 }
 
 void PhysicsProcessor::collide(BoxPH &a, CubePH &b)
@@ -143,40 +77,7 @@ void PhysicsProcessor::collide(BoxPH &a, CubePH &b)
 	if(dz < dx && dz < dy)
 		n = 2;
 
-	double *av = 0, *bv = 0;
-	if(!n)
-	{
-		if(sgn(a.vel.x - b.vel.x) == sgn(a.a.x - b.a.x))
-			return;
-		av = &a.vel.x;
-		bv = &b.vel.x;
-	}
-	else if(n == 1)
-	{
-		if(sgn(a.vel.y - b.vel.y) == sgn(a.a.y - b.a.y))
-			return;
-		av = &a.vel.y;
-		bv = &b.vel.y;
-	}
-	else
-	{
-		if(sgn(a.vel.z - b.vel.z) == sgn(a.a.z - b.a.z))
-			return;
-		av = &a.vel.z;
-		bv = &b.vel.z;
-	}
-	double avt = *av;
-	double bvt = *bv;
-
-	if(!a.frozen && !b.frozen)
-	{
-		*av = (avt * (a.mass - b.mass) + 2. * b.mass * bvt) / (a.mass + b.mass);
-		*bv = (bvt * (b.mass - a.mass) + 2. * a.mass * avt) / (b.mass + a.mass);
-	}
-	else if(a.frozen)
-		*bv = -bvt;
-	else
-		*av = -avt;
+	applyCollisionAA(a, b, n);
 }
 
 void PhysicsProcessor::collide(CubePH &a, BoxPH &b)
@@ -186,19 +87,19 @@ void PhysicsProcessor::collide(CubePH &a, BoxPH &b)
 
 void PhysicsProcessor::collide(PhysicsObject *a, PhysicsObject *b)
 {
-	if(CubePH *p = dynamic_cast<CubePH*>(a))
+	if(CubePH *pa = dynamic_cast<CubePH*>(a))
 	{
-		if(CubePH *p1 = dynamic_cast<CubePH*>(b))
-			collide(*p, *p1);
-		else if(SquareAAPH *p1 = dynamic_cast<SquareAAPH*>(b))
-			collide(*p, *p1);
+		if(CubePH *pb = dynamic_cast<CubePH*>(b))
+			collide(*pa, *pb);
+		else if(SquareAAPH *pb = dynamic_cast<SquareAAPH*>(b))
+			collide(*pa, *pb);
 	}
-	else if(BoxPH *p = dynamic_cast<BoxPH*>(a))
+	else if(BoxPH *pa = dynamic_cast<BoxPH*>(a))
 	{
-		if(CubePH *p1 = dynamic_cast<CubePH*>(b))
-			collide(*p, *p1);
-		else if(BoxPH *p1 = dynamic_cast<BoxPH*>(b))
-			collide(*p, *p1);
+		if(CubePH *pb = dynamic_cast<CubePH*>(b))
+			collide(*pa, *pb);
+		else if(BoxPH *pb = dynamic_cast<BoxPH*>(b))
+			collide(*pa, *pb);
 	}
 }
 
@@ -223,9 +124,70 @@ void PhysicsProcessor::updateList(double dt)
 
 	for(list<PhysicsObject*>::iterator it = phList.begin(); it != phList.end(); ++it)
 	{
-		list<PhysicsObject*>::iterator it2 = it;
-		++it2;
-		for(; it2 != phList.end(); ++it2)
-			collide(*it, *it2);
+		list<PhysicsObject*>::iterator jt = it;
+		++jt;
+		for(; jt != phList.end(); ++jt)
+			collide(*it, *jt);
 	}
+}
+
+//normala mora ici od a prema b
+void PhysicsProcessor::applyCollision(PhysicsObject &a, PhysicsObject &b, const Vector &n)
+{
+	double dpa = dotProduct(a.vel, n);
+	double dpb = dotProduct(b.vel, n);
+	if(dpa - dpb > 0)
+		return;
+	Vector van = n * dpa;
+	Vector vbn = n * dpb;
+	Vector vat = a.vel - van;
+	Vector vbt = b.vel - vbn;
+
+	if(!a.frozen && !b.frozen)
+	{
+		a.vel = (van * (a.mass - b.mass) + 2. * b.mass * vbn) / (a.mass + b.mass) + vat;
+		b.vel = (vbn * (a.mass - b.mass) + 2. * b.mass * van) / (a.mass + b.mass) + vbt;
+	}
+	else if(a.frozen)
+		a.vel -= 2. * van;
+	else
+		b.vel -= 2. * vbn;
+}
+
+void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int n)
+{
+	double *av = 0, *bv = 0;
+	if(!n)
+	{
+		if(sgn(a.vel.x - b.vel.x) == sgn(a.pos().x - b.pos().x))
+			return;
+		av = &a.vel.x;
+		bv = &b.vel.x;
+	}
+	else if(n == 1)
+	{
+		if(sgn(a.vel.y - b.vel.y) == sgn(a.pos().y - b.pos().y))
+			return;
+		av = &a.vel.y;
+		bv = &b.vel.y;
+	}
+	else
+	{
+		if(sgn(a.vel.z - b.vel.z) == sgn(a.pos().z - b.pos().z))
+			return;
+		av = &a.vel.z;
+		bv = &b.vel.z;
+	}
+	double avt = *av;
+	double bvt = *bv;
+
+	if(!a.frozen && !b.frozen)
+	{
+		*av = (avt * (a.mass - b.mass) + 2. * b.mass * bvt) / (a.mass + b.mass);
+		*bv = (bvt * (b.mass - a.mass) + 2. * a.mass * avt) / (b.mass + a.mass);
+	}
+	else if(a.frozen)
+		*bv = -bvt;
+	else
+		*av = -avt;
 }

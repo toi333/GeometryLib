@@ -118,6 +118,11 @@ Vector Vector::normalize(void)
 	return *this /= length();
 }
 
+bool Vector::operator==(const Vector &v) const
+{
+	return x == v.x && y == v.y && z == v.z;
+}
+
 double dotProduct(const Vector &a, const Vector &b)
 {
 	return a.x * b.x + a.y * b.y + a.z * b.z;

@@ -104,7 +104,7 @@ void DrawEngine::draw(const SquareAA &a)
 void DrawEngine::draw(const RectangleAA &a)
 {
 	glBegin(GL_QUADS);
-		glColor3f(0.0f, 0.0f, 0.7f);
+		glColor3f(0.7f, 0.7f, 0.0f);
 		const Vector &n = a.normal();
 		glNormal3d(n.x, n.y, n.z);
 		for(int i = 0; i < 4; ++i)

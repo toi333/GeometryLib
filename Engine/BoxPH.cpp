@@ -34,16 +34,8 @@ Vector BoxPH::pos()
 void BoxPH::update(double dt)
 {
 	if(!frozen)
-		a += vel * dt;
+	{
+		a += (vel + gravity * dt) / 2. * dt;
+		vel += gravity * dt;
+	}
 }
-
-//bool BoxPH::collide(const PhysicsObject *p, Vector &n) const
-//{
-//	if(p->phtype() == BoxPH)
-//		return collide((BoxPH*)p, n);
-//}
-//
-//bool BoxPH::collide(const BoxPH *p, Vector &n) const
-//{
-//	
-//}

@@ -6,6 +6,11 @@ CubePH::CubePH(void)
 {
 }
 
+CubePH::CubePH(const Cube &cb)
+	: Cube(cb), PhysicsObject(Vector(), cb.volume(), 0)
+{
+}
+
 CubePH::CubePH(const Cube &cb, const Vector &_vel)
 	: Cube(cb), PhysicsObject(_vel, cb.volume(), 0)
 {
@@ -28,16 +33,8 @@ Vector CubePH::pos()
 void CubePH::update(double dt)
 {
 	if(!frozen)
-		a += vel * dt;
+	{
+		a += (vel + gravity * dt) / 2. * dt;
+		vel += gravity * dt;
+	}
 }
-
-//bool CubePH::collide(const PhysicsObject *p, Vector &n) const
-//{
-//	if(p->phtype() == CUBEPH)
-//		return collide((CubePH*)p, n);
-//}
-//
-//bool CubePH::collide(const CubePH *p, Vector &n) const
-//{
-//	
-//}

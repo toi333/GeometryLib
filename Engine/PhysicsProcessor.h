@@ -22,6 +22,9 @@ public:
 	void collide(SquareAAPH &a, CubePH &b);
 	void collide(SquareAAPH &b, SquareAAPH &a);
 
+	void applyCollision(PhysicsObject &a, PhysicsObject &b, const Vector &n);
+	void applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int n);
+
 	std::list<PhysicsObject*> phList;
 	void updateList(double dt);
 };

@@ -16,4 +16,6 @@ public:
 
 	virtual Vector pos() = 0;
 	virtual void update(double dt) = 0;
+
+	static Vector gravity;
 };
