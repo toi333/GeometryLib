@@ -36,9 +36,13 @@ void Player::update(double t)
 		v.y,
 		v.x * sin(phix) + v.z * cos(phix)
 		);
-	vel += (v.normalized() * 7. * 1.21 * 10 * 3 + gravity) * t;
+	if(flr)
+		vel += v.normalized() * 200. * t;
+	else
+		vel += v.normalized() * 10. * t;
 	p += vel * t;
-	printf("%d\n", flr != 0);
+	vel += gravity * t;
+	//printf("%d\n", flr != 0);
 	transform();
 }
 

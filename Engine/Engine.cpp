@@ -31,6 +31,12 @@ void Engine::nextFrame()
 	glColor3f(0.5, 0., 0.);
 
 	PP.updateList(dt);
+
+	for(list<PhysicsObject*>::iterator it = PP.phList.begin(); it != PP.phList.end(); ++it)
+		if(CubePH *qwe = dynamic_cast<CubePH*>(*it))
+			qwe->blah = (*it)->flr != 0;
+	printf("%d\n", c.flr != 0);
+
 	de.drawBuffer();
 
 	glutSwapBuffers();
