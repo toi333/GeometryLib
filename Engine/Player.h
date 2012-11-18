@@ -15,7 +15,6 @@ public:
 	~Player(void);
 
 	void update(double t);
-	Vector pos();
 	Vector getPos() const;
 	void setPos(const Vector &_v);
 };

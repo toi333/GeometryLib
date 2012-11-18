@@ -9,6 +9,7 @@ public:
 	Vector vel;
 	double mass;
 	bool frozen;
+	PhysicsObject *flr;
 
 	PhysicsObject(void);
 	PhysicsObject(Vector _vel);

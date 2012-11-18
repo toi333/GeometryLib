@@ -12,6 +12,8 @@ Player::Player(void)
 Player::Player(double _d)
 	: d(_d)
 {
+	vel = Vector();
+	mass = 1.;
 }
 
 Player::~Player(void)
@@ -25,8 +27,8 @@ void Player::update(double t)
 	Vector v
 		(
 		dir.x,
-		dir.z * sin(phiy),
-		dir.z * cos(phiy)
+		0,
+		dir.z
 		);
 	v = Vector
 		(
@@ -34,14 +36,14 @@ void Player::update(double t)
 		v.y,
 		v.x * sin(phix) + v.z * cos(phix)
 		);
-	v = (v + Vector(0, dir.y, 0)).normalized() * 7.;
-	p += v * t;
-
-}
-
-Vector Player::pos()
-{
-	throw std::exception("The method or operation is not implemented.");
+	if(flr)
+		vel += v.normalized() * 200. * t;
+	else
+		vel += v.normalized() * 10. * t;
+	p += vel * t;
+	vel += gravity * t;
+	//printf("%d\n", flr != 0);
+	transform();
 }
 
 Vector Player::getPos() const

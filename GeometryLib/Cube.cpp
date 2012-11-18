@@ -23,12 +23,14 @@ const Vector Cube::vertices[8] =
 
 Cube::Cube(void)
 {
+	blah = 0;
 	d = 1.;
 }
 
 Cube::Cube(const Vector &_a, double _d)
 	: a(_a), d(_d)
 {
+	blah = 0;
 }
 
 Cube::~Cube(void)
