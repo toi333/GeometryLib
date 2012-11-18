@@ -13,8 +13,14 @@ DrawEngine::~DrawEngine()
 
 void DrawEngine::draw(const Cube &a)
 {	
+	if(a.blah)
+		glColor3f(0.5, 0.5, 0.7);
+	else
+		glColor3f(0.0, 0.0, 0.7);
+
 	for(int i = 0; i < 6; ++i)
 		draw(a.getSide(i));
+	glColor3f(0.5, 0, 0);
 }
 
 void DrawEngine::draw(const Box &a)
@@ -89,7 +95,6 @@ void DrawEngine::draw(const PointSet &a)
 void DrawEngine::draw(const SquareAA &a)
 {
 	glBegin(GL_QUADS);
-		glColor3f(0.0f, 0.0f, 0.7f);
 		const Vector &n = a.normal();
 		glNormal3d(n.x, n.y, n.z);
 		for(int i = 0; i < 4; ++i)
@@ -97,7 +102,6 @@ void DrawEngine::draw(const SquareAA &a)
 			const Vector &v = a.getVertex(i);
 			glVertex3d(v.x, v.y, v.z);
 		}
-		glColor3f(0.5f, 0.0f, 0.0f);
 	glEnd();
 }
 

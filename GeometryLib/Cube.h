@@ -7,6 +7,8 @@ class Cube :
 	public VolumetricObject
 {
 public:
+	bool blah;
+
 	Vector a;
 	double d;
 

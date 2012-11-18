@@ -28,12 +28,15 @@ void Engine::nextFrame()
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glLoadIdentity();
 
-	c.update(dt);
-	c.transform();
-
 	glColor3f(0.5, 0., 0.);
 
 	PP.updateList(dt);
+
+	for(list<PhysicsObject*>::iterator it = PP.phList.begin(); it != PP.phList.end(); ++it)
+		if(CubePH *qwe = dynamic_cast<CubePH*>(*it))
+			qwe->blah = (*it)->flr != 0;
+	printf("%d\n", c.flr != 0);
+
 	de.drawBuffer();
 
 	glutSwapBuffers();
@@ -95,17 +98,21 @@ void Engine::start(int argc, char **argv)
 	Cube cb(Vector(0., 0., 0.), 1.);
 	SquareAAPH sq(SquareAA(Vector(), 10., XP), Vector(), 1, 1);
 	BoxPH *bx = new BoxPH(Box(Vector(3, 2, 1), Vector(1, 2, 3)));
+	CubePH *bx2 = new CubePH(Cube(Vector(3, -6, 2), 1));
 
 	BoxPH *flr = new BoxPH(Box(Vector(0, -20, 0), Vector(20, 1, 20)), Vector(), 1, 1);
 
+
 	PP.phList.push_back(bx);
+	PP.phList.push_back(bx2);
 	PP.phList.push_back(flr);
-	//PP.phList.push_back(&c);
+	PP.phList.push_back(&c);
 
 	de.addToBuffer(&T);
 	de.addToBuffer(&cb);
 	de.addToBuffer(&sq);
 	de.addToBuffer(bx);
+	de.addToBuffer(bx2);
 	de.addToBuffer(flr);
 
 	for(int i = 0; i < 10; ++i)
@@ -114,6 +121,8 @@ void Engine::start(int argc, char **argv)
 		de.addToBuffer(q);
 		PP.phList.push_back(q);
 	}
+
+	system("pause");
 
 	initRendering(argc, argv);
 }
@@ -146,8 +155,14 @@ void Engine::handleKeyDown(unsigned char key, int x, int y)
 		break;
 	case 'g':
 		PhysicsObject::gravity = Vector(0, -10, 0) - PhysicsObject::gravity;
-		c.vel = Vector();
 		break;
+	case ' ':
+		c.vel.y += 10.;
+		c.flr = 0;
+		break;
+	case 'r':
+		c.p = Vector();
+		c.vel = Vector();
 	}
 }
 
