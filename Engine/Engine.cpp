@@ -89,6 +89,7 @@ void Engine::initRendering(int argc, char **argv)
 	glutMouseFunc(mouseFunc);
 	glutIdleFunc(idle);
 
+	printf("%s\n", glGetString(GL_VERSION));
 	glutMainLoop();
 }
 
