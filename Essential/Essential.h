@@ -20,3 +20,4 @@ double max(double x, double y, double z);
 
 bool isBetween(double x, double a, double b);
 double intervalIntersection(double a1, double a2, double b1, double b2);
+double intervalDistance(double a1, double a2, double b1, double b2);

@@ -32,10 +32,11 @@ void Engine::nextFrame()
 
 	PP.updateList(dt);
 
+	c.transform();
+
 	for(list<PhysicsObject*>::iterator it = PP.phList.begin(); it != PP.phList.end(); ++it)
 		if(CubePH *qwe = dynamic_cast<CubePH*>(*it))
 			qwe->blah = (*it)->flr != 0;
-	printf("%d\n", c.flr != 0);
 
 	de.drawBuffer();
 
@@ -123,8 +124,6 @@ void Engine::start(int argc, char **argv)
 		PP.phList.push_back(q);
 	}
 
-	system("pause");
-
 	initRendering(argc, argv);
 }
 
@@ -158,8 +157,7 @@ void Engine::handleKeyDown(unsigned char key, int x, int y)
 		PhysicsObject::gravity = Vector(0, -10, 0) - PhysicsObject::gravity;
 		break;
 	case ' ':
-		c.vel.y += 10.;
-		c.flr = 0;
+		c.jump();
 		break;
 	case 'r':
 		c.p = Vector();
