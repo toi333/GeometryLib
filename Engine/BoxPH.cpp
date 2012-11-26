@@ -40,8 +40,16 @@ void BoxPH::update(double dt)
 {
 	if(!frozen)
 	{
-		//a += (vel + gravity * dt) / 2. * dt;
+		if(flr)
+		{
+			double fr = 50. * dt;
+			if(fr * fr <= vel.length2() && vel.length2() > EPS)
+				vel -= vel.normalized() * fr;
+			else
+				vel = Vector();
+		}
+		else
+			vel += gravity * dt;
 		a += vel * dt;
-		vel += gravity * dt;
 	}
 }

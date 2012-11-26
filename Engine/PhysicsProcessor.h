@@ -32,5 +32,8 @@ public:
 
 	std::list<PhysicsObject*> phList;
 	void updateList(double dt);
+
+private:
+	double AABBIntersect(const Vector &a1, const Vector &d1, const Vector &a2, const Vector &d2, int &n);
 };
 

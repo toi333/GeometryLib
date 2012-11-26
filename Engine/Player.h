@@ -14,7 +14,9 @@ public:
 	Player(double _d);
 	~Player(void);
 
-	void update(double t);
+	void jump();
+
+	void update(double dt);
 	Vector getPos() const;
 	void setPos(const Vector &_v);
 };

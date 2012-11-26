@@ -8,6 +8,11 @@ Vector::Vector(void)
 	x = y = z = 0.;
 }
 
+Vector::Vector(double t)
+{
+	x = y = z = t;
+}
+
 Vector::Vector(double _x, double _y, double _z)
 {
 	x = _x;

@@ -40,3 +40,8 @@ double intervalIntersection(double a1, double a2, double b1, double b2)
 {
 	return max(min(a2, b2) - max(a1, b1), 0);
 }
+
+double intervalDistance(double a1, double a2, double b1, double b2)
+{
+	return max(a1, b1) - min(a2, b2);
+}
