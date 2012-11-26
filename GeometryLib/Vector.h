@@ -8,6 +8,7 @@ public:
 	double x, y, z;
 
 	Vector(void);
+	Vector(double t);
 	Vector(double _x, double _y, double _z);
 	~Vector(void);
 

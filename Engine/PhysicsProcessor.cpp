@@ -11,116 +11,6 @@ PhysicsProcessor::~PhysicsProcessor(void)
 {
 }
 
-void PhysicsProcessor::collide(CubePH &a, CubePH &b)
-{
-	if(a.frozen && b.frozen)
-		return;
-
-	int n;
-	double d, md = INF;
-	d = intervalIntersection(a.a.x - a.d, a.a.x + a.d, b.a.x - b.d, b.a.x + b.d);
-	if(d <= EPS)
-		return;
-	if(d < md)
-	{
-		n = 0;
-		md = d;
-	}
-	d = intervalIntersection(a.a.y - a.d, a.a.y + a.d, b.a.y - b.d, b.a.y + b.d);
-	if(d <= EPS)
-		return;
-	if(d < md)
-	{
-		n = 1;
-		md = d;
-	}
-	d = intervalIntersection(a.a.z - a.d, a.a.z + a.d, b.a.z - b.d, b.a.z + b.d);
-	if(d <= EPS)
-		return;
-	if(d < md)
-	{
-		n = 2;
-		md = d;
-	}
-
-	applyCollisionAA(a, b, n, md);
-}
-
-void PhysicsProcessor::collide(BoxPH &a, BoxPH &b)
-{
-	if(a.frozen && b.frozen)
-		return;
-
-	int n;
-	double d, md = INF;
-	d = intervalIntersection(a.a.x - a.d.x, a.a.x + a.d.x, b.a.x - b.d.x, b.a.x + b.d.x);
-	if(d <= EPS)
-		return;
-	if(d < md)
-	{
-		n = 0;
-		md = d;
-	}
-	d = intervalIntersection(a.a.y - a.d.y, a.a.y + a.d.y, b.a.y - b.d.y, b.a.y + b.d.y);
-	if(d <= EPS)
-		return;
-	if(d < md)
-	{
-		n = 1;
-		md = d;
-	}
-	d = intervalIntersection(a.a.z - a.d.z, a.a.z + a.d.z, b.a.z - b.d.z, b.a.z + b.d.z);
-	if(d <= EPS)
-		return;
-	if(d < md)
-	{
-		n = 2;
-		md = d;
-	}
-
-	applyCollisionAA(a, b, n, md);
-}
-
-void PhysicsProcessor::collide(BoxPH &a, CubePH &b)
-{
-	if(a.frozen && b.frozen)
-		return;
-
-	int n;
-	double d, md = INF;
-	d = intervalIntersection(a.a.x - a.d.x, a.a.x + a.d.x, b.a.x - b.d, b.a.x + b.d);
-	if(d <= EPS)
-		return;
-	if(d < md)
-	{
-		n = 0;
-		md = d;
-	}
-	d = intervalIntersection(a.a.y - a.d.y, a.a.y + a.d.y, b.a.y - b.d, b.a.y + b.d);
-	if(d <= EPS)
-		return;
-	if(d < md)
-	{
-		n = 1;
-		md = d;
-	}
-	d = intervalIntersection(a.a.z - a.d.z, a.a.z + a.d.z, b.a.z - b.d, b.a.z + b.d);
-	if(d <= EPS)
-		return;
-	if(d < md)
-	{
-		n = 2;
-		md = d;
-	}
-
-	applyCollisionAA(a, b, n, md);
-}
-
-void PhysicsProcessor::collide(CubePH &a, BoxPH &b)
-{
-	collide(b, a);
-}
-
 void PhysicsProcessor::collide(PhysicsObject *a, PhysicsObject *b)
 {
 	if(CubePH *pa = dynamic_cast<CubePH*>(a))
@@ -150,16 +40,69 @@ void PhysicsProcessor::collide(PhysicsObject *a, PhysicsObject *b)
 	}
 }
 
-void PhysicsProcessor::collide(CubePH &a, SquareAAPH &b)
+void PhysicsProcessor::collide(BoxPH &a, BoxPH &b)
 {
+	if(a.frozen && b.frozen)
+		return;
+
+	int n;
+	double d = AABBIntersect(a.a, a.d, b.a, b.d, n);
+	if(d > -EPS)
+	{
+		if(a.flr == &b && d > EPS)
+			a.flr = 0;
+		if(b.flr == &a && d > EPS)
+			b.flr = 0;
+		return;
+	}
+
+	applyCollisionAA(a, b, n, -d);
 }
 
-void PhysicsProcessor::collide(SquareAAPH &a, CubePH &b)
+void PhysicsProcessor::collide(CubePH &a, CubePH &b)
+{
+	if(a.frozen && b.frozen)
+		return;
+
+	int n;
+	double d = AABBIntersect(a.a, Vector(a.d), b.a, Vector(b.d), n);
+	if(d > -EPS)
+	{
+		if(a.flr == &b && d > EPS)
+			a.flr = 0;
+		if(b.flr == &a && d > EPS)
+			b.flr = 0;
+		return;
+	}
+
+	applyCollisionAA(a, b, n, -d);
+}
+
+void PhysicsProcessor::collide(BoxPH &a, CubePH &b)
+{
+	if(a.frozen && b.frozen)
+		return;
+
+	int n;
+	double d = AABBIntersect(a.a, a.d, b.a, Vector(b.d), n);
+	if(d > -EPS)
+	{
+		if(a.flr == &b && d > EPS)
+			a.flr = 0;
+		if(b.flr == &a && d > EPS)
+			b.flr = 0;
+		return;
+	}
+
+	applyCollisionAA(a, b, n, -d);
+}
+
+void PhysicsProcessor::collide(CubePH &a, BoxPH &b)
 {
 	collide(b, a);
 }
 
-void PhysicsProcessor::collide(SquareAAPH &b, SquareAAPH &a)
+void PhysicsProcessor::collide(CubePH &a, SquareAAPH &b)
 {
 }
 
@@ -169,45 +112,17 @@ void PhysicsProcessor::collide(BoxPH &a, Player &b)
 		return;
 
 	int n;
-	double d, md = INF;
-	d = intervalIntersection(a.a.x - a.d.x, a.a.x + a.d.x, b.p.x - b.d, b.p.x + b.d);
-	if(d <= EPS)
+	double d = AABBIntersect(a.a, a.d, b.p, Vector(b.d), n);
+	if(d > -EPS)
 	{
-		if(b.flr == &a)
+		if(a.flr == &b && d > EPS)
+			a.flr = 0;
+		if(b.flr == &a && d > EPS)
 			b.flr = 0;
 		return;
-	}
-	if(d < md)
-	{
-		n = 0;
-		md = d;
-	}
-	d = intervalIntersection(a.a.y - a.d.y, a.a.y + a.d.y, b.p.y - b.d, b.p.y + b.d);
-	if(d <= EPS)
-	{
-		if(b.flr == &a)
-			b.flr = 0;
-		return;
-	}
-	if(d < md)
-	{
-		n = 1;
-		md = d;
-	}
-	d = intervalIntersection(a.a.z - a.d.z, a.a.z + a.d.z, b.p.z - b.d, b.p.z + b.d);
-	if(d <= EPS)
-	{
-		if(b.flr == &a)
-			b.flr = 0;
-		return;
-	}
-	if(d < md)
-	{
-		n = 2;
-		md = d;
 	}
 
-	applyCollisionAA(a, b, n, md);
+	applyCollisionAA(a, b, n, -d);
 }
 
 void PhysicsProcessor::collide(Player &a, BoxPH &b)
@@ -221,45 +136,17 @@ void PhysicsProcessor::collide(CubePH &a, Player &b)
 		return;
 
 	int n;
-	double d, md = INF;
-	d = intervalIntersection(a.a.x - a.d, a.a.x + a.d, b.p.x - b.d, b.p.x + b.d);
-	if(d <= EPS)
+	double d = AABBIntersect(a.a, Vector(a.d), b.p, Vector(b.d), n);
+	if(d > -EPS)
 	{
-		if(b.flr == &a)
+		if(a.flr == &b && d > EPS)
+			a.flr = 0;
+		if(b.flr == &a && d > EPS)
 			b.flr = 0;
 		return;
-	}
-	if(d < md)
-	{
-		n = 0;
-		md = d;
-	}
-	d = intervalIntersection(a.a.y - a.d, a.a.y + a.d, b.p.y - b.d, b.p.y + b.d);
-	if(d <= EPS)
-	{
-		if(b.flr == &a)
-			b.flr = 0;
-		return;
-	}
-	if(d < md)
-	{
-		n = 1;
-		md = d;
-	}
-	d = intervalIntersection(a.a.z - a.d, a.a.z + a.d, b.p.z - b.d, b.p.z + b.d);
-	if(d <= EPS)
-	{
-		if(b.flr == &a)
-			b.flr = 0;
-		return;
-	}
-	if(d < md)
-	{
-		n = 2;
-		md = d;
 	}
 
-	applyCollisionAA(a, b, n, md);
+	applyCollisionAA(a, b, n, -d);
 }
 
 void PhysicsProcessor::collide(Player &a, CubePH &b)
@@ -267,6 +154,15 @@ void PhysicsProcessor::collide(Player &a, CubePH &b)
 	collide(b, a);
 }
 
+
+void PhysicsProcessor::collide(SquareAAPH &a, CubePH &b)
+{
+	collide(b, a);
+}
+
+void PhysicsProcessor::collide(SquareAAPH &b, SquareAAPH &a)
+{
+}
 
 void PhysicsProcessor::updateList(double dt)
 {
@@ -309,8 +205,6 @@ void PhysicsProcessor::applyCollision(PhysicsObject &a, PhysicsObject &b, const 
 
 void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int n, double d)
 {
-	//if(typeid(b) == typeid(Player))
-	//	return;
 	bool neg = 0;
 	double *av = 0, *bv = 0;
 	if(!n)
@@ -346,8 +240,14 @@ void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int 
 		no = -no;
 	if(!a.frozen && !b.frozen && (n != 1 || n == 1 && neg && !b.flr || n == 1 && !neg && !a.flr))
 	{
-		double ca = avt / a.mass;
-		double cb = bvt / b.mass;
+		double ca = 1., cb = 1.;
+		if(abs(avt) > EPS && abs(bvt) > EPS)
+		{
+			ca = abs(avt);
+			cb = abs(bvt);
+		}
+		ca /= a.mass;
+		cb /= b.mass;
 		a.setPos(a.getPos() - no * d * ca / (ca + cb));
 		b.setPos(b.getPos() + no * d * cb / (cb + ca));
 		a.vel *= 1 - PhysicsObject::collisionFriction;
@@ -362,17 +262,53 @@ void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int 
 		b.setPos(b.getPos() + no * d);
 		b.vel *= 1 - PhysicsObject::collisionFriction;
 		*bv = -PhysicsObject::collisionElasticity * bvt;
-		if(n == 1 && *bv < 0.01)
+		if(n == 1 && *bv < 1)
+		{
 			b.flr = &a;
+			b.vel.y = 0;
+		}
 	}
 	else if(b.frozen || b.flr && n == 1 && neg)
 	{
 		a.setPos(a.getPos() - no * d);
 		a.vel *= 1 - PhysicsObject::collisionFriction;
 		*av = -PhysicsObject::collisionElasticity * avt;
-		if(n == 1 && *av < 0.01)
+		if(n == 1 && *av < 1)
+		{
 			a.flr = &b;
+			a.vel.y = 0;
+		}
 	}
 	else
 		printf("omfg!!!!!!!!!!!\n");
+}
+
+double PhysicsProcessor::AABBIntersect(const Vector &a1, const Vector &d1, const Vector &a2, const Vector &d2, int &n)
+{
+	double d, md = -INF;
+	d = intervalDistance(a1.x - d1.x, a1.x + d1.x, a2.x - d2.x, a2.x + d2.x);
+	if(d > -EPS)
+		return d;
+	if(d > md)
+	{
+		n = 0;
+		md = d;
+	}
+	d = intervalDistance(a1.z - d1.z, a1.z + d1.z, a2.z - d2.z, a2.z + d2.z);
+	if(d > -EPS)
+		return d;
+	if(d > md)
+	{
+		n = 2;
+		md = d;
+	}
+	d = intervalDistance(a1.y - d1.y, a1.y + d1.y, a2.y - d2.y, a2.y + d2.y);
+	if(d > -EPS)
+		return d;
+	if(d > md)
+	{
+		n = 1;
+		md = d;
+	}
+	return md;
 }
