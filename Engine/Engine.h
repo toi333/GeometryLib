@@ -4,6 +4,7 @@
 #include "GeometryLib.h"
 #include "Player.h"
 #include "PhysicsProcessor.h"
+#include "World.h"
 
 #include <windows.h>
 #ifdef __APPLE__
@@ -19,10 +20,11 @@ namespace Engine
 	extern DrawEngine de;
 	extern Player c;
 	extern PhysicsProcessor PP;
+	extern World w;
 
 	void start(int argc, char **argv);
+	void initWorld();
 	void nextFrame();
-	void update(double dt);
 	void handleResize(int w, int h);
 	void idle(void);
 	void initRendering(int argc, char **argv);
