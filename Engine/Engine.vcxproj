@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="BoxPH.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="PhysicsObjects.h" />
     <ClInclude Include="PhysicsProcessor.h" />
     <ClInclude Include="CubePH.h" />
     <ClInclude Include="Engine.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SquareAAPH.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoxPH.cpp" />
@@ -101,6 +103,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
