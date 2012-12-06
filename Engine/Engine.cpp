@@ -200,7 +200,17 @@ void Engine::handleMouseMove(int x, int y)
 void Engine::mouseFunc(int button, int state, int x, int y)
 {
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-		fireRay(Ray(c.p, (c.getCameraDirection() + c.p)));
+	{
+		//bounceRay(Ray(c.p, c.getCameraDirection() + c.p));
+		//if(PointSet *p = fireRay(Ray(c.p, c.getCameraDirection() + c.p)))
+		//{
+		//	if(PhysicsObject *po = dynamic_cast<PhysicsObject*>(p))
+		//	{
+		//		po->vel += 2. * c.getCameraDirection() / po->mass;
+		//	}
+		//}
+		splitBox(Ray(c.p, c.getCameraDirection() + c.p));
+	}
 	else if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
 		CubePH *cph = new CubePH(Cube(c.p, 0.3), c.getCameraDirection() * 3);
@@ -210,12 +220,10 @@ void Engine::mouseFunc(int button, int state, int x, int y)
 	}
 }
 
-void Engine::fireRay(const Ray &r, int maxBounces)
+PointSet* Engine::fireRay(const Ray &r)
 {
-	if(maxBounces < 0)
-		return;
 	double mn = INF;
-	Vector n;
+	PointSet* ret = 0;
 	for(list<PointSet*>::const_iterator it = de.PSBuffer.begin(); it != de.PSBuffer.end(); ++it)
 	{
 		if(Surface *sf = dynamic_cast<Surface*>(*it))
@@ -223,8 +231,8 @@ void Engine::fireRay(const Ray &r, int maxBounces)
 			double a = r.hit(sf);
 			if(a < mn && a > EPS)
 			{
-				n = sf->normal();
 				mn = a;
+				ret = *it;
 			}
 		}
 		else if(VolumetricObject *cb = dynamic_cast<VolumetricObject*>(*it))
@@ -233,16 +241,100 @@ void Engine::fireRay(const Ray &r, int maxBounces)
 			if(pdv.first < mn && pdv.first > EPS)
 			{
 				mn = pdv.first;
-				n = pdv.second;
+				ret = *it;
 			}
 		}
 	}
-	if(mn != INF)
+	return ret;
+}
+
+void Engine::bounceRay(const Ray &r, int maxBounces)
+{
+	if(maxBounces < 0)
+		return;
+	if(PointSet *p = fireRay(r))
 	{
-		Vector x(r.a + r.b * mn);
+		double d;
+		Vector n;
+		if(Surface *sf = dynamic_cast<Surface*>(p))
+		{
+			d = r.hit(sf);
+			n = sf->normal();
+		}
+		else if(VolumetricObject *vo = dynamic_cast<VolumetricObject*>(p))
+		{
+			pair<double,Vector> pdv = vo->reflect(r);
+			d = pdv.first;
+			n = pdv.second;
+		}
+		Vector x(r.a + r.b * d);
 		de.addToBuffer(new Segment(r.a, x));
-		fireRay(Ray(x, r.b - 2 * dotProduct(n, r.b) * n + x), maxBounces - 1);
+		bounceRay(Ray(x, r.b - 2 * dotProduct(n, r.b) * n + x), maxBounces - 1);
 	}
 	else
 		de.addToBuffer(new Ray(r));
+}
+
+void Engine::splitBox(const Ray &r)
+{
+	if(PointSet *p = fireRay(r))
+	{
+		if(BoxPH *bx = dynamic_cast<BoxPH*>(p))
+		{
+			if(bx->frozen)
+				return;
+			pair<double, Vector> pdv = bx->reflect(r);
+			Vector v = pdv.first * r.b + r.a;
+			Vector &n = pdv.second;
+			if(
+				n.x && bx->d.y - abs(bx->a.y - v.y) < bx->d.z - abs(bx->a.z - v.z) ||
+			    n.z && bx->d.y - abs(bx->a.y - v.y) < bx->d.x - abs(bx->a.x - v.x))
+			{
+				BoxPH *nbx = new BoxPH(Box(
+					Vector(bx->a.x, (v.y + bx->a.y - bx->d.y) / 2., bx->a.z),
+					Vector(bx->d.x, (bx->d.y + v.y - bx->a.y) / 2., bx->d.z)),
+					bx->vel);
+				de.addToBuffer(nbx);
+				PP.phList.push_back(nbx);
+				*bx = BoxPH(Box(
+					Vector(bx->a.x, (v.y + bx->a.y + bx->d.y) / 2., bx->a.z),
+					Vector(bx->d.x, (bx->d.y + bx->a.y - v.y) / 2., bx->d.z)),
+					bx->vel);
+				nbx->vel.y -= bx->mass / (bx->mass + nbx->mass);
+				bx->vel.y += nbx->mass / (bx->mass + nbx->mass);
+			}
+			else if(
+				n.y && bx->d.x - abs(bx->a.x - v.x) < bx->d.z - abs(bx->a.z - v.z) ||
+				n.z && bx->d.x - abs(bx->a.x - v.x) < bx->d.y - abs(bx->a.y - v.y))
+			{
+				BoxPH *nbx = new BoxPH(Box(
+					Vector((v.x + bx->a.x - bx->d.x) / 2., bx->a.y, bx->a.z),
+					Vector((bx->d.x + v.x - bx->a.x) / 2., bx->d.y, bx->d.z)),
+					bx->vel);
+				de.addToBuffer(nbx);
+				PP.phList.push_back(nbx);
+				*bx = BoxPH(Box(
+					Vector((v.x + bx->a.x + bx->d.x) / 2., bx->a.y, bx->a.z),
+					Vector((bx->d.x + bx->a.x - v.x) / 2., bx->d.y, bx->d.z)),
+					bx->vel);
+				nbx->vel.x -= bx->mass / (bx->mass + nbx->mass);
+				bx->vel.x += nbx->mass / (bx->mass + nbx->mass);
+			}
+			else
+			{
+				BoxPH *nbx = new BoxPH(Box(
+					Vector(bx->a.x, bx->a.y, (v.z + bx->a.z - bx->d.z) / 2.),
+					Vector(bx->d.x, bx->d.y, (bx->d.z + v.z - bx->a.z) / 2.)),
+					bx->vel);
+				de.addToBuffer(nbx);
+				PP.phList.push_back(nbx);
+				*bx = BoxPH(Box(
+					Vector(bx->a.x, bx->a.y, (v.z + bx->a.z + bx->d.z) / 2.),
+					Vector(bx->d.x, bx->d.y, (bx->d.z + bx->a.z - v.z) / 2.)),
+					bx->vel);
+				nbx->vel.z -= bx->mass / (bx->mass + nbx->mass);
+				bx->vel.z += nbx->mass / (bx->mass + nbx->mass);
+			}
+		}
+	}
 }
