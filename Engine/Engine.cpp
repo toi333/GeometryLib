@@ -16,6 +16,7 @@ const GLfloat high_shininess[] = { 100.0f };
 DrawEngine Engine::de;
 Player Engine::c;
 PhysicsProcessor Engine::PP;
+World Engine::w;
 
 void Engine::nextFrame()
 {
@@ -107,7 +108,7 @@ void Engine::start(int argc, char **argv)
 
 	PP.phList.push_back(bx);
 	PP.phList.push_back(bx2);
-	PP.phList.push_back(flr);
+	//PP.phList.push_back(flr);
 	PP.phList.push_back(&c);
 
 	de.addToBuffer(&T);
@@ -115,7 +116,7 @@ void Engine::start(int argc, char **argv)
 	de.addToBuffer(&sq);
 	de.addToBuffer(bx);
 	de.addToBuffer(bx2);
-	de.addToBuffer(flr);
+	//de.addToBuffer(flr);
 
 	for(int i = 0; i < 10; ++i)
 	{
@@ -123,7 +124,7 @@ void Engine::start(int argc, char **argv)
 		de.addToBuffer(q);
 		PP.phList.push_back(q);
 	}
-
+	initWorld();
 	initRendering(argc, argv);
 }
 
@@ -246,4 +247,15 @@ void Engine::fireRay(const Ray &r, int maxBounces)
 	}
 	else
 		de.addToBuffer(new Ray(r));
+}
+
+void Engine::initWorld()
+{
+	//w.~World();
+	//w = World();
+	for(int i = 0; i < w.objCount; ++i)
+	{
+		PP.phList.push_back(w.worldBlock[i]);
+		de.addToBuffer(w.worldBlock[i]);
+	}
 }
