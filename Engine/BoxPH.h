@@ -17,4 +17,6 @@ public:
 	void setPos(const Vector &_v);
 
 	void update(double dt);
+
+	Box getAABB();
 };

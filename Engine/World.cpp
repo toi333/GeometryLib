@@ -4,31 +4,73 @@
 
 World::World(void)
 {
-	generateWorld(20);
-	objCount = 400;
+	frozen = 1;
+	dimx = 20;
+	dimy = 10;
+	dimz = 20;
+	generateWorld();
 }
 
-World::World(int dim)
+World::World(int _dimx, int _dimy, int _dimz)
 {
-	generateWorld(dim);
-	objCount = dim * dim;
+	frozen = 1;
+	dimx = _dimx;
+	dimy = _dimy;
+	dimz = _dimz;
+	generateWorld();
 }
 
 
 World::~World(void)
 {
-	for(int i = 0; i < objCount; ++i)
-		delete worldBlock[i];
 }
 
-void World::generateWorld(int dim)
+void World::generateWorld()
 {
-	double height = -10.;
-	for(int i = 0; i < dim; ++i)
-		for(int j = 0; j < dim; ++j)
-		{
-			worldBlock[dim * i + j] = new CubePH(Cube(Vector((double) i - (double) dim / 2., height, (double) j - (double) dim / 2.), 1.), 
-			Vector(0., 0., 0.), 1., 1);
-			//printf("%.2lf, %.2lf, %.2lf\n", (double) i - dim / 2., (double) j - dim / 2., height);
-		}
+	for(int i = 0; i < dimx; ++i)
+		for(int j = 0; j < dimy; ++j)
+			for(int k = 0; k < dimz; ++k)
+				worldBlock[i][j][k] = (rand() % (dimy * dimy)) <= (dimy - j) * (dimy - j);
+}
+
+Vector World::getPos() const
+{
+	return Vector();
+}
+
+void World::setPos(const Vector &_v)
+{
+}
+
+void World::update(double dt)
+{
+}
+
+Box World::getAABB()
+{
+	return Box(Vector(0., dimy, 0.), Vector(dimx, dimy, dimz));
+}
+
+Cube World::getBlockAtIdx(int i, int j, int k) const
+{
+	                       return ///////////////
+		Cube///////////
+		                (/////////////
+							Vector((double) dimx - i * 2, (///////////////
+double
+)j /////////////
+//1.21
+*
+     /*///////////*/                  2, (
+					   double
+
+		///////////			   //////////////
+
+					   ) 
+dimz - 
+///////////////////
+
+k * 2), 1.				///////////////
+
+		         );;;;;;;;;;;;;;;;;;;;;;
 }
