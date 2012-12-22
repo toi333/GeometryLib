@@ -124,6 +124,8 @@ void DrawEngine::draw(PointSet *a)
 {
 	if(Vector *p = dynamic_cast<Vector*>(a))
 		draw(*p);
+	else if(World *p = dynamic_cast<World*>(a))
+		draw(*p);
 	else if(Line *p = dynamic_cast<Line*>(a))
 		draw(*p);
 	else if(Ray *p = dynamic_cast<Ray*>(a))
@@ -144,6 +146,15 @@ void DrawEngine::draw(PointSet *a)
 		draw(*p);
 	else if(RectangleAA *p = dynamic_cast<RectangleAA*>(a))
 		draw(*p);
+}
+
+void DrawEngine::draw(const World &a)
+{
+	for(int i = 0; i < a.dimx; ++i)
+		for(int j = 0; j < a.dimy; ++j)
+			for(int k = 0; k < a.dimz; ++k)
+				if(a.worldBlock[i][j][k])
+					draw(a.getBlockAtIdx(i, j, k));
 }
 
 void DrawEngine::addToBuffer(PointSet *a)

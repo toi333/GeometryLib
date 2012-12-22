@@ -70,6 +70,7 @@ void Engine::initRendering(int argc, char **argv)
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_NORMALIZE);
+	glEnable(GL_CULL_FACE);
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
@@ -91,38 +92,37 @@ void Engine::initRendering(int argc, char **argv)
 	glutMouseFunc(mouseFunc);
 	glutIdleFunc(idle);
 
+	printf("%s\n", glGetString(GL_VERSION));
 	glutMainLoop();
 }
 
 void Engine::start(int argc, char **argv)
 {
-	Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
-	Cube cb(Vector(0., 0., 0.), 1.);
-	SquareAAPH sq(SquareAA(Vector(), 10., XP), Vector(), 1, 1);
-	BoxPH *bx = new BoxPH(Box(Vector(3, 2, 1), Vector(1, 2, 3)));
-	CubePH *bx2 = new CubePH(Cube(Vector(3, -6, 2), 1));
+	//Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
+	//Cube cb(Vector(0., 0., 0.), 1.);
+	////BoxPH *bx = new BoxPH(Box(Vector(3, 2, 1), Vector(1, 2, 3)));
+	//CubePH *bx2 = new CubePH(Cube(Vector(3, -6, 2), 1));
 
-	BoxPH *flr = new BoxPH(Box(Vector(0, -20, 0), Vector(20, 1, 20)), Vector(), 1, 1);
+	//BoxPH *flr = new BoxPH(Box(Vector(0, -20, 0), Vector(20, 1, 20)), Vector(), 1, 1);
 
 
-	PP.phList.push_back(bx);
-	PP.phList.push_back(bx2);
+	////PP.phList.push_back(bx);
+	//PP.phList.push_back(bx2);
 	//PP.phList.push_back(flr);
 	PP.phList.push_back(&c);
 
-	de.addToBuffer(&T);
-	de.addToBuffer(&cb);
-	de.addToBuffer(&sq);
-	de.addToBuffer(bx);
-	de.addToBuffer(bx2);
+	//de.addToBuffer(&T);
+	//de.addToBuffer(&cb);
+	////de.addToBuffer(bx);
+	//de.addToBuffer(bx2);
 	//de.addToBuffer(flr);
 
-	for(int i = 0; i < 10; ++i)
-	{
-		CubePH *q = new CubePH(Cube(Vector(10, 0, i), 0.3));
-		de.addToBuffer(q);
-		PP.phList.push_back(q);
-	}
+	//for(int i = 0; i < 10; ++i)
+	//{
+	//	CubePH *q = new CubePH(Cube(Vector(10, 0, i), 0.3));
+	//	de.addToBuffer(q);
+	//	PP.phList.push_back(q);
+	//}
 	initWorld();
 	initRendering(argc, argv);
 }
@@ -250,11 +250,6 @@ void Engine::fireRay(const Ray &r, int maxBounces)
 
 void Engine::initWorld()
 {
-	//w.~World();
-	//w = World();
-	for(int i = 0; i < w.objCount; ++i)
-	{
-		PP.phList.push_back(w.worldBlock[i]);
-		de.addToBuffer(w.worldBlock[i]);
-	}
+	PP.phList.push_back(&w);
+	de.addToBuffer(&w);
 }

@@ -91,9 +91,6 @@
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DrawEngine\DrawEngine.vcxproj">
-      <Project>{ff3c8b14-3ef9-4c2e-b8af-e96fcfa93ed6}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{680b9890-27ac-4472-a901-c94cbd08cd56}</Project>
     </ProjectReference>

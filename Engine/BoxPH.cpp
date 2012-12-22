@@ -53,3 +53,8 @@ void BoxPH::update(double dt)
 		a += vel * dt;
 	}
 }
+
+Box BoxPH::getAABB()
+{
+	return *this;
+}

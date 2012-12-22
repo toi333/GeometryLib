@@ -2,6 +2,7 @@
 
 #include "PhysicsObject.h"
 #include "Cube.h"
+#include "Box.h"
 
 class CubePH :
 	public PhysicsObject, public Cube
@@ -17,4 +18,6 @@ public:
 	void setPos(const Vector &_v);
 
 	void update(double dt);
+
+	Box getAABB();
 };

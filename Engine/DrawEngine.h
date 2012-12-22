@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include "GeometryLib.h"
+#include "World.h"
 #include <list>
 
 #ifdef __APPLE__
@@ -20,6 +21,7 @@ public:
 	~DrawEngine();
 
 	void draw(PointSet *a);
+	void draw(const World &a);
 	void draw(const Cube &a);
 	void draw(const Box &a);
 	void draw(const SquareAA &a);
