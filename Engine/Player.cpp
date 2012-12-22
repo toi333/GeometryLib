@@ -1,19 +1,14 @@
 #include "StdAfx.h"
 #include "Player.h"
 
+Vector Player::d = Vector(0.794016819, 1.21 * 1.21 * 1.21, 0.794016819);//1.21^-1.21
+double Player::pmass = 1.21;
 
 Player::Player(void)
 {
+	mass = pmass;
 	vel = Vector();
-	d = 1.;
-	mass = 1.;
-}
-
-Player::Player(double _d)
-	: d(_d)
-{
-	vel = Vector();
-	mass = 1.;
+	p = Vector(0, 30, 0);
 }
 
 Player::~Player(void)
@@ -97,4 +92,9 @@ Vector Player::getPos() const
 void Player::setPos(const Vector &_v)
 {
 	p = _v;
+}
+
+Box Player::getAABB()
+{
+	return Box(p, d);
 }

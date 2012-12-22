@@ -39,9 +39,6 @@
     <ClInclude Include="PhysicsProcessor.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="SquareAAPH.h">
-      <Filter>Header Files\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="BoxPH.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
@@ -53,6 +50,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsObjects.h">
       <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawEngine.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +74,6 @@
     <ClCompile Include="PhysicsProcessor.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="SquareAAPH.cpp">
-      <Filter>Source Files\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="BoxPH.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
@@ -84,6 +81,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
