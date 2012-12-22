@@ -52,3 +52,8 @@ void CubePH::update(double dt)
 		a += vel * dt;
 	}
 }
+
+Box CubePH::getAABB()
+{
+	return Box(a, Vector(d));
+}

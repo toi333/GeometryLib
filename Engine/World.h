@@ -4,16 +4,23 @@
 #include "PhysicsObjects.h"
 #include <list>
 
-class World
+class World : public PhysicsObject, public PointSet
 {
 public:
 	World(void);
-	World(int dim);
+	World(int _dimx, int _dimy, int _dimz);
 	~World(void);
 
-	void generateWorld(int dim);
+	void generateWorld();
 
-	int objCount;
-	CubePH *worldBlock[100000];
+	Vector getPos() const;
+	void setPos(const Vector &_v);
+	void update(double dt);
+
+	Cube getBlockAtIdx(int i, int j, int k) const;
+	Box getAABB();
+
+	int dimx, dimy, dimz;
+	bool worldBlock[100][20][100];
 };
 

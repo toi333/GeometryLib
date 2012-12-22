@@ -24,11 +24,11 @@ const Vector RectangleAA::normals[6] =
 const Vector RectangleAA::vertices[6][4] =
 {
 	{Vector( 0.,  1.,  1.), Vector( 0., -1.,  1.), Vector( 0., -1., -1.), Vector( 0.,  1., -1.)},
-	{Vector( 1.,  0.,  1.), Vector(-1.,  0.,  1.), Vector(-1.,  0., -1.), Vector( 1.,  0., -1.)},
+	{Vector( 1.,  0., -1.), Vector(-1.,  0., -1.), Vector(-1.,  0.,  1.), Vector( 1.,  0.,  1.)},
 	{Vector( 1.,  1.,  0.), Vector(-1.,  1.,  0.), Vector(-1., -1.,  0.), Vector( 1., -1.,  0.)},
-	{Vector( 0., -1., -1.), Vector( 0.,  1., -1.), Vector( 0.,  1.,  1.), Vector( 0., -1.,  1.)},
+	{Vector( 0., -1.,  1.), Vector( 0.,  1.,  1.), Vector( 0.,  1., -1.), Vector( 0., -1., -1.)},
 	{Vector(-1.,  0., -1.), Vector( 1.,  0., -1.), Vector( 1.,  0.,  1.), Vector(-1.,  0.,  1.)},
-	{Vector(-1., -1.,  0.), Vector( 1., -1.,  0.), Vector( 1.,  1.,  0.), Vector(-1.,  1.,  0.)}
+	{Vector(-1.,  1.,  0.), Vector( 1.,  1.,  0.), Vector( 1., -1.,  0.), Vector(-1., -1.,  0.)}
 };
 
 RectangleAA::RectangleAA(void) :

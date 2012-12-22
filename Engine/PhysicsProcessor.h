@@ -2,10 +2,8 @@
 
 #include "Vector.h"
 #include "Player.h"
-#include "CubePH.h"
-#include "BoxPH.h"
-#include "SquareAAPH.h"
-#include "PhysicsObject.h"
+#include "World.h"
+#include "PhysicsObjects.h"
 #include <list>
 
 class PhysicsProcessor
@@ -15,17 +13,7 @@ public:
 	~PhysicsProcessor(void);
 
 	void collide(PhysicsObject *a, PhysicsObject *b);
-	void collide(CubePH &a, CubePH &b);
-	void collide(BoxPH &a, BoxPH &b);
-	void collide(BoxPH &a, CubePH &b);
-	void collide(CubePH &a, BoxPH &b);
-	void collide(CubePH &a, SquareAAPH &b);
-	void collide(SquareAAPH &a, CubePH &b);
-	void collide(SquareAAPH &b, SquareAAPH &a);
-	void collide(Player &b, BoxPH &a);
-	void collide(Player &b, CubePH &a);
-	void collide(BoxPH &b, Player &a);
-	void collide(CubePH &b, Player &a);
+	void collide(PhysicsObject *a, World &b);
 
 	void applyCollision(PhysicsObject &a, PhysicsObject &b, const Vector &n);
 	void applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int n, double d);
@@ -34,6 +22,7 @@ public:
 	void updateList(double dt);
 
 private:
-	double AABBIntersect(const Vector &a1, const Vector &d1, const Vector &a2, const Vector &d2, int &n);
+	double AABBIntersect(const Box &a, const Box &b, int &n);
+	double AABBCollide(PhysicsObject *a, PhysicsObject *b);
 };
 
