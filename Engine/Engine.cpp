@@ -38,6 +38,7 @@ void Engine::nextFrame()
 	for(list<PhysicsObject*>::iterator it = PP.phList.begin(); it != PP.phList.end(); ++it)
 		if(CubePH *qwe = dynamic_cast<CubePH*>(*it))
 			qwe->blah = (*it)->flr != 0;
+	printf("%d\n", c.flr != 0);
 
 	de.drawBuffer();
 
@@ -215,7 +216,6 @@ void Engine::mouseFunc(int button, int state, int x, int y)
 	else if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
 		CubePH *cph = new CubePH(Cube(c.p, 0.3), c.getCameraDirection() * 3);
-		//SquareAAPH *sph = new SquareAAPH(SquareAA(c.p, 0.3, XP), c.getCameraDirection() * 3);
 		PP.phList.push_back(cph);
 		de.addToBuffer(cph);
 	}
@@ -340,7 +340,8 @@ void Engine::splitBox(const Ray &r)
 	}
 }
 
-void Engine::initWorld()
+
+void Engine::initWorld()
 {
 	PP.phList.push_back(&w);
 	de.addToBuffer(&w);

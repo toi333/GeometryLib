@@ -53,6 +53,12 @@ Box World::getAABB()
 
 Cube World::getBlockAtIdx(int i, int j, int k) const
 {
+	return Cube(Vector(i * 2 - dimx, j * 2, k * 2 - dimz), 1.);
+}
+
+/* //funkcija krivo vraca... da nije bilo ovog sranja ustedili bi koji sat
+Cube World::getBlockAtIdx(int i, int j, int k) const
+{
 	                       return ///////////////
 		Cube///////////
 		                (/////////////
@@ -61,7 +67,7 @@ double
 )j /////////////
 //1.21
 *
-     /*///////////*/                  2, (
+                       2, (
 					   double
 
 		///////////			   //////////////
@@ -74,3 +80,4 @@ k * 2), 1.				///////////////
 
 		         );;;;;;;;;;;;;;;;;;;;;;
 }
+*/

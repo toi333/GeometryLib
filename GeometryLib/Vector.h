@@ -12,6 +12,9 @@ public:
 	Vector(double _x, double _y, double _z);
 	~Vector(void);
 
+	double& operator[](int id);
+	double operator[](int id) const;
+
 	Vector operator+(const Vector &v) const;
 	Vector operator-(const Vector &v) const;
 	Vector operator*(double t) const;
