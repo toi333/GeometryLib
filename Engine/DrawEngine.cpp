@@ -167,3 +167,21 @@ void DrawEngine::drawBuffer()
 	for(list<PointSet*>::iterator i = PSBuffer.begin(); i != PSBuffer.end(); ++i)
 		draw(*i);
 }
+
+void DrawEngine::drawText(double x, double y, void *font, char *text, int w, int h) 
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0.0, w, 0.0, h);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_LIGHTING);
+
+	glRasterPos2f(x, y);
+	glutBitmapString(font, (const unsigned char*) text);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+}

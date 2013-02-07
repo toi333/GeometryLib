@@ -17,6 +17,10 @@ DrawEngine Engine::de;
 Player Engine::c;
 PhysicsProcessor Engine::PP;
 World Engine::w;
+const double Engine::updateInterval = 1. / 60.;
+double Engine::updateTimeLeft = 0.;
+int Engine::windowHeight = 500, Engine::windowWidth = 800;
+
 
 void Engine::nextFrame()
 {
@@ -25,13 +29,19 @@ void Engine::nextFrame()
 	double dt = t - lt;
 	lt = t;
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0, (double)windowWidth / windowHeight, 0.55, 200.0);
+	glMatrixMode(GL_MODELVIEW);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glLoadIdentity();
 
 	glColor3f(0.5, 0., 0.);
 
-	PP.updateList(dt);
+
+	for(updateTimeLeft += dt; updateTimeLeft > updateInterval; updateTimeLeft -= updateInterval)
+		PP.updateList(updateInterval);
 
 	c.transform();
 
@@ -42,15 +52,20 @@ void Engine::nextFrame()
 
 	de.drawBuffer();
 
+	glColor4f(1., 0., 0., 0.5);
+	de.drawText(100., 199., GLUT_BITMAP_HELVETICA_18, "trololo", windowWidth, windowHeight);
+
 	glutSwapBuffers();
 }
 
 void Engine::handleResize(int w, int h)
 {
+	windowWidth = w;
+	windowHeight = h;
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45.0, (double)w / (double)h, 1.0, 200.0);
+	gluPerspective(45.0, (double)w / h, 0.55, 200.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -63,7 +78,7 @@ void Engine::initRendering(int argc, char **argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(800, 500);
+	glutInitWindowSize(windowWidth, windowHeight);
 	glutCreateWindow("Test");
 
 	glEnable(GL_DEPTH_TEST);
@@ -72,6 +87,8 @@ void Engine::initRendering(int argc, char **argv)
 	glEnable(GL_LIGHT0);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
@@ -101,22 +118,22 @@ void Engine::start(int argc, char **argv)
 {
 	//Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
 	//Cube cb(Vector(0., 0., 0.), 1.);
-	////BoxPH *bx = new BoxPH(Box(Vector(3, 2, 1), Vector(1, 2, 3)));
+	//BoxPH *bx = new BoxPH(Box(Vector(3, 2, 1), Vector(1, 2, 3)));
 	//CubePH *bx2 = new CubePH(Cube(Vector(3, -6, 2), 1));
 
-	//BoxPH *flr = new BoxPH(Box(Vector(0, -20, 0), Vector(20, 1, 20)), Vector(), 1, 1);
+	BoxPH *flr = new BoxPH(Box(Vector(0, -30, 0), Vector(20, 1, 20)), Vector(), 1, 1);
 
 
 	////PP.phList.push_back(bx);
 	//PP.phList.push_back(bx2);
-	//PP.phList.push_back(flr);
+	PP.phList.push_back(flr);
 	PP.phList.push_back(&c);
 
 	//de.addToBuffer(&T);
 	//de.addToBuffer(&cb);
 	////de.addToBuffer(bx);
 	//de.addToBuffer(bx2);
-	//de.addToBuffer(flr);
+	de.addToBuffer(flr);
 
 	//for(int i = 0; i < 10; ++i)
 	//{
@@ -215,7 +232,7 @@ void Engine::mouseFunc(int button, int state, int x, int y)
 	}
 	else if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
-		CubePH *cph = new CubePH(Cube(c.p, 0.3), c.getCameraDirection() * 3);
+		CubePH *cph = new CubePH(Cube(c.p + c.getCameraDirection() * 1.8, 0.3), c.getCameraDirection() * 3 + c.vel);
 		PP.phList.push_back(cph);
 		de.addToBuffer(cph);
 	}

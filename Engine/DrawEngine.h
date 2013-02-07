@@ -7,9 +7,9 @@
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
-#include <GLUT/glut.h>
+#include <GLUT/freeglut.h>
 #else
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #endif
 
 class DrawEngine
@@ -37,4 +37,6 @@ public:
 
 	void addToBuffer(PointSet *a);
 	void drawBuffer();
+
+	void drawText(double x, double y, void *font, char *text, int w, int h);
 };

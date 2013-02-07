@@ -5,9 +5,9 @@
 #include <math.h>
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
-#include <GLUT/glut.h>
+#include <GLUT/freeglut.h>
 #else
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #endif
 
 
@@ -15,7 +15,7 @@ void Camera::transform(void) const
 {
 	glRotated(pitch, 1., 0., 0.);
 	glRotated(yaw, 0., 1., 0.);
-	glTranslated(-p.x, -p.y, -p.z);
+	glTranslated(-p.x, -p.y - 1.6, -p.z);
 }
 
 void Camera::update(double t)
