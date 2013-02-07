@@ -17,6 +17,7 @@ Player::~Player(void)
 
 void Player::jump()
 {
+	printf("jmp %d\n", flr != 0);
 	if(flr)
 	{
 		vel.y += 10.;

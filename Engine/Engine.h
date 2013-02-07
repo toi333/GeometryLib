@@ -34,5 +34,7 @@ namespace Engine
 	void handleMouseMove(int x, int y);
 	void mouseFunc(int button, int state, int x, int y);
 
-	void fireRay(const Ray &r, int maxBounces = 100);
+	PointSet* fireRay(const Ray &r);
+	void bounceRay(const Ray &r, int maxBounces = 100);
+	void splitBox(const Ray &r);
 }

@@ -30,7 +30,8 @@ void PhysicsProcessor::collide(PhysicsObject *a, PhysicsObject *b)
 
 	int n;
 	double d = AABBIntersect(a->getAABB(), b->getAABB(), n);
-	if(d > -EPS)
+	//if(d > -EPS)
+	if(d > EPS)
 	{
 		if(a->flr == b && d > EPS)
 			a->flr = 0;
@@ -44,19 +45,29 @@ void PhysicsProcessor::collide(PhysicsObject *a, PhysicsObject *b)
 void PhysicsProcessor::collide(PhysicsObject *a, World &b)
 {
 	Box bx = a->getAABB();
-	bx.a += Vector((double) b.dimx, 0, (double) b.dimz);
-	//printf("%.2lf %.2lf %.2lf\n", bx.a.x, bx.a.y, bx.a.z);
-	for(int i = (int) (bx.a.x - bx.d.x); i >= 0 && i < b.dimx && i <= (int) (bx.a.x + bx.d.x); ++i)
-		for(int j = (int) (bx.a.y - bx.d.y); j >= 0 && j < b.dimy &&  j <= (int) (bx.a.y + bx.d.y); ++j)
-			for(int k = (int) (bx.a.z - bx.d.z); k >= 0 && k < b.dimz &&  k <= (int) (bx.a.z + bx.d.z); ++k)
-			{
+	bx.a += Vector((double)b.dimx, 0., (double)b.dimz);
+
+	Vector v1 = (bx.a - bx.d) / 2. - Vector(1);
+	Vector v2 = (bx.a + bx.d) / 2. + Vector(2);
+	v1.x = max(v1.x, 0.);
+	v1.y = max(v1.y, 0.);
+	v1.z = max(v1.z, 0.);
+	v2.x = min(v2.x, (double)b.dimx);
+	v2.y = min(v2.y, (double)b.dimy);
+	v2.z = min(v2.z, (double)b.dimz);
+
+	if(a->flr == &b)
+		a->flr = 0;
+	for(int i = (int)v1.x; i < (int)v2.x; ++i)
+		for(int j = (int)v1.y; j < (int)v2.y; ++j)
+			for(int k = (int)v1.z; k < (int)v2.z; ++k)
 				if(b.worldBlock[i][j][k])
 				{
-					printf("%d %d %d\n", i, j, k);
 					CubePH t(b.getBlockAtIdx(i, j, k), Vector(), 1., 1);
 					collide(a, &t);
+					if(a->flr == &t)
+						a->flr = &b;
 				}
-			}
 }
 
 void PhysicsProcessor::updateList(double dt)
@@ -102,31 +113,13 @@ void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int 
 {
 	bool neg = 0;
 	double *av = 0, *bv = 0;
-	if(!n)
-	{
-		if(sgn(a.vel.x - b.vel.x) == sgn(a.getPos().x - b.getPos().x))
-			return;
-		av = &a.vel.x;
-		bv = &b.vel.x;
-		neg = b.getPos().x < a.getPos().x;
 
-	}
-	else if(n == 1)
-	{
-		if(sgn(a.vel.y - b.vel.y) == sgn(a.getPos().y - b.getPos().y))
-			return;
-		av = &a.vel.y;
-		bv = &b.vel.y;
-		neg = b.getPos().y < a.getPos().y;
-	}
-	else
-	{
-		if(sgn(a.vel.z - b.vel.z) == sgn(a.getPos().z - b.getPos().z))
-			return;
-		av = &a.vel.z;
-		bv = &b.vel.z;
-		neg = b.getPos().z < a.getPos().z;
-	}
+	if(sgn(a.vel[n] - b.vel[n]) == sgn(a.getPos()[n] - b.getPos()[n]))
+		return;
+	av = &a.vel[n];
+	bv = &b.vel[n];
+	neg = b.getPos()[n] < a.getPos()[n];
+
 	double avt = *av;
 	double bvt = *bv;
 
@@ -178,30 +171,18 @@ void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int 
 
 double PhysicsProcessor::AABBIntersect(const Box &a, const Box &b, int &n)
 {
-	double d, md = -INF;
-	d = intervalDistance(a.a.x - a.d.x, a.a.x + a.d.x, b.a.x - b.d.x, b.a.x + b.d.x);
-	if(d > -EPS)
-		return d;
-	if(d > md)
+	double md = -INF;
+	for(int i = 0; i < 3; ++i)
 	{
-		n = 0;
-		md = d;
-	}
-	d = intervalDistance(a.a.z - a.d.z, a.a.z + a.d.z, b.a.z - b.d.z, b.a.z + b.d.z);
-	if(d > -EPS)
-		return d;
-	if(d > md)
-	{
-		n = 2;
-		md = d;
-	}
-	d = intervalDistance(a.a.y - a.d.y, a.a.y + a.d.y, b.a.y - b.d.y, b.a.y + b.d.y);
-	if(d > -EPS)
-		return d;
-	if(d > md)
-	{
-		n = 1;
-		md = d;
+		double d = intervalDistance(a.a[i] - a.d[i], a.a[i] + a.d[i], b.a[i] - b.d[i], b.a[i] + b.d[i]);
+		//if(d > -EPS)
+		if(d > EPS)
+			return d;
+		if(d > md)
+		{
+			n = i;
+			md = d;
+		}
 	}
 	return md;
 }

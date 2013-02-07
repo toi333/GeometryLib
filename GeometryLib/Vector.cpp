@@ -24,6 +24,16 @@ Vector::~Vector(void)
 {
 }
 
+double& Vector::operator[](int id)
+{
+	return *(&x+id);
+}
+
+double Vector::operator[](int id) const
+{
+	return *(&x+id);
+}
+
 Vector Vector::operator+(const Vector &v) const
 {
 	return Vector(x + v.x, y + v.y, z + v.z);
