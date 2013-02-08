@@ -4,33 +4,71 @@
 
 World::World(void)
 {
+	qacnt = 0;
 	frozen = 1;
 	dimx = 20;
 	dimy = 10;
 	dimz = 20;
-	generateWorld();
+	//generateWorld();
 }
 
 World::World(int _dimx, int _dimy, int _dimz)
 {
+	qacnt = 0;
 	frozen = 1;
 	dimx = _dimx;
 	dimy = _dimy;
 	dimz = _dimz;
-	generateWorld();
+	//generateWorld();
 }
 
 
 World::~World(void)
 {
+	delete [] quadArray;
 }
 
 void World::generateWorld()
 {
+	static const int dx[] = {1, 0, 0, -1, 0, 0};
+	static const int dy[] = {0, 1, 0, 0, -1, 0};
+	static const int dz[] = {0, 0, 1, 0, 0, -1};
+
+	int t = 0;
 	for(int i = 0; i < dimx; ++i)
 		for(int j = 0; j < dimy; ++j)
 			for(int k = 0; k < dimz; ++k)
+			{
 				worldBlock[i][j][k] = (rand() % (dimy * dimy)) <= (dimy - j) * (dimy - j);
+				t += worldBlock[i][j][k];
+			}
+	quadArray = new double[t * 6 * 4 * 3];
+	for(int i = 0; i < dimx; ++i)
+		for(int j = 0; j < dimy; ++j)
+			for(int k = 0; k < dimz; ++k)
+				if(worldBlock[i][j][k])
+				{
+					Cube cb = getBlockAtIdx(i, j, k);
+					for(int d = 0; d < 6; ++d)
+					{
+						int ni = i + dx[d];
+						int nj = j + dy[d];
+						int nk = k + dz[d];
+						if(!(ni >= 0 && nj >= 0 && nk >= 0 && ni < dimx && nj < dimy && nk < dimz) ||
+							!worldBlock[ni][nj][nk])
+						{
+							SquareAA sqr = cb.getSide(d);
+							for(int l = 0; l < 4; ++l)
+							{
+								Vector vert = sqr.getVertex(l);
+								quadArray[qacnt++] = vert.x;
+								quadArray[qacnt++] = vert.y;
+								quadArray[qacnt++] = vert.z;
+							}
+						}
+					}
+				}
+	return;
 }
 
 Vector World::getPos() const
