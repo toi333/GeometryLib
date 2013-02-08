@@ -3,6 +3,7 @@
 #include <math.h>
 #include "GeometryLib.h"
 #include "World.h"
+#include "TextObject.h"
 #include <list>
 
 #ifdef __APPLE__
@@ -15,7 +16,8 @@
 class DrawEngine
 {
 public:
-	std::list<PointSet*> PSBuffer; 
+	std::list<PointSet*> PSBuffer;
+	std::list<TextObject*> textBuffer;
 
 	DrawEngine();
 	~DrawEngine();
@@ -38,5 +40,7 @@ public:
 	void addToBuffer(PointSet *a);
 	void drawBuffer();
 
-	void drawText(double x, double y, void *font, char *text, int w, int h);
+	void addToTextBuffer(TextObject *a);
+	void drawTextBuffer(int w, int h);
+	void drawText(TextObject *t);
 };

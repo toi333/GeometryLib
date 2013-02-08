@@ -17,7 +17,7 @@
 namespace Engine
 {
 	extern DrawEngine de;
-	extern Player c;
+	extern Player ply;
 	extern PhysicsProcessor PP;
 	extern World w;
 	extern const double updateInterval;

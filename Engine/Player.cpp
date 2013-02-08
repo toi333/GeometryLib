@@ -28,8 +28,8 @@ void Player::jump()
 void Player::update(double dt)
 {
 	Vector a;
-	double phix = yaw * M_PI / 180.;
-	double phiy = pitch * M_PI / 180.;
+	double phix = cam.yaw * M_PI / 180.;
+	double phiy = cam.pitch * M_PI / 180.;
 	if(gravity != Vector())
 	{
 		a = Vector
@@ -87,6 +87,8 @@ void Player::update(double dt)
 		vel = a * 121 * 12.1 / 1.21 * dt;
 
 	p += vel * dt;
+	cam.p = p;
+	cam.p.y += 1.6;
 }
 
 Vector Player::getPos() const
@@ -102,4 +104,9 @@ void Player::setPos(const Vector &_v)
 Box Player::getAABB()
 {
 	return Box(p, d);
+}
+
+void Player::move(const Vector &_dir)
+{
+	dir += _dir;
 }

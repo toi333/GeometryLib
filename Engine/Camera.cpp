@@ -15,7 +15,7 @@ void Camera::transform(void) const
 {
 	glRotated(pitch, 1., 0., 0.);
 	glRotated(yaw, 0., 1., 0.);
-	glTranslated(-p.x, -p.y - 1.6, -p.z);
+	glTranslated(-p.x, -p.y, -p.z);
 }
 
 void Camera::update(double t)

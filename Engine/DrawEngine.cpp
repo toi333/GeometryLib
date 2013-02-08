@@ -150,11 +150,12 @@ void DrawEngine::draw(PointSet *a)
 
 void DrawEngine::draw(const World &a)
 {
-	for(int i = 0; i < a.dimx; ++i)
-		for(int j = 0; j < a.dimy; ++j)
-			for(int k = 0; k < a.dimz; ++k)
-				if(a.worldBlock[i][j][k])
-					draw(a.getBlockAtIdx(i, j, k));
+	//for(int i = 0; i < a.dimx; ++i)
+	//	for(int j = 0; j < a.dimy; ++j)
+	//		for(int k = 0; k < a.dimz; ++k)
+	//			if(a.worldBlock[i][j][k])
+	//				draw(a.getBlockAtIdx(i, j, k));
+	glDrawArrays(GL_QUADS, 0, a.qacnt);
 }
 
 void DrawEngine::addToBuffer(PointSet *a)
@@ -168,7 +169,19 @@ void DrawEngine::drawBuffer()
 		draw(*i);
 }
 
-void DrawEngine::drawText(double x, double y, void *font, char *text, int w, int h) 
+void DrawEngine::drawText(TextObject *t) 
+{
+	glRasterPos2f(t->x, t->y);
+	glColor3d(t->clr.r, t->clr.g, t->clr.b);
+	glutBitmapString(t->font, (const unsigned char*) t->text.c_str());
+}
+
+void DrawEngine::addToTextBuffer(TextObject *a)
+{
+	textBuffer.push_back(a);
+}
+
+void DrawEngine::drawTextBuffer(int w, int h)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -179,8 +192,8 @@ void DrawEngine::drawText(double x, double y, void *font, char *text, int w, int
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
 
-	glRasterPos2f(x, y);
-	glutBitmapString(font, (const unsigned char*) text);
+	for(list<TextObject*>::iterator i = textBuffer.begin(); i != textBuffer.end(); ++i)
+		drawText(*i);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);

@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="BoxPH.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="DrawEngine.h" />
     <ClInclude Include="PhysicsObjects.h" />
     <ClInclude Include="PhysicsProcessor.h" />
@@ -88,11 +89,13 @@
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="TextObject.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoxPH.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="DrawEngine.cpp" />
     <ClCompile Include="PhysicsProcessor.cpp" />
     <ClCompile Include="CubePH.cpp" />
@@ -103,6 +106,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -14,7 +14,7 @@ const GLfloat mat_specular[]   = { 0.7f, 0.7f, 0.7f, 1.0f };
 const GLfloat high_shininess[] = { 100.0f };
 
 DrawEngine Engine::de;
-Player Engine::c;
+Player Engine::ply;
 PhysicsProcessor Engine::PP;
 World Engine::w;
 const double Engine::updateInterval = 1. / 60.;
@@ -43,18 +43,17 @@ void Engine::nextFrame()
 	for(updateTimeLeft += dt; updateTimeLeft > updateInterval; updateTimeLeft -= updateInterval)
 		PP.updateList(updateInterval);
 
-	c.transform();
+	ply.cam.transform();
 
 	for(list<PhysicsObject*>::iterator it = PP.phList.begin(); it != PP.phList.end(); ++it)
 		if(CubePH *qwe = dynamic_cast<CubePH*>(*it))
 			qwe->blah = (*it)->flr != 0;
-	printf("%d\n", c.flr != 0);
 
 	de.drawBuffer();
 
-	glColor4f(1., 0., 0., 0.5);
-	de.drawText(100., 199., GLUT_BITMAP_HELVETICA_18, "trololo", windowWidth, windowHeight);
-
+	(*de.textBuffer.begin())->text = (ply.flr ? "1" : "0");
+	de.drawTextBuffer(windowWidth, windowHeight);
+	
 	glutSwapBuffers();
 }
 
@@ -89,6 +88,8 @@ void Engine::initRendering(int argc, char **argv)
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_DOUBLE, 0, w.quadArray);
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
@@ -122,12 +123,14 @@ void Engine::start(int argc, char **argv)
 	//CubePH *bx2 = new CubePH(Cube(Vector(3, -6, 2), 1));
 
 	BoxPH *flr = new BoxPH(Box(Vector(0, -30, 0), Vector(20, 1, 20)), Vector(), 1, 1);
+	TextObject *txt = new TextObject("We Rulz!!", 1.0, 1.0);
 
+	de.addToTextBuffer(txt);
 
 	////PP.phList.push_back(bx);
 	//PP.phList.push_back(bx2);
 	PP.phList.push_back(flr);
-	PP.phList.push_back(&c);
+	PP.phList.push_back(&ply);
 
 	//de.addToBuffer(&T);
 	//de.addToBuffer(&cb);
@@ -154,32 +157,32 @@ void Engine::handleKeyDown(unsigned char key, int x, int y)
 		exit(0);
 		break;
 	case 'w':
-		c.move(Vector(0, 0, -1));
+		ply.move(Vector(0, 0, -1));
 		break;
 	case 's':
-		c.move(Vector(0, 0, 1));
+		ply.move(Vector(0, 0, 1));
 		break;
 	case 'a':
-		c.move(Vector(-1, 0, 0));
+		ply.move(Vector(-1, 0, 0));
 		break;
 	case 'd':
-		c.move(Vector(1, 0, 0));
+		ply.move(Vector(1, 0, 0));
 		break;
 	case 'q':
-		c.move(Vector(0, -1, 0));
+		ply.move(Vector(0, -1, 0));
 		break;
 	case 'e':
-		c.move(Vector(0, 1, 0));
+		ply.move(Vector(0, 1, 0));
 		break;
 	case 'g':
 		PhysicsObject::gravity = Vector(0, -10, 0) - PhysicsObject::gravity;
 		break;
 	case ' ':
-		c.jump();
+		ply.jump();
 		break;
 	case 'r':
-		c.p = Vector();
-		c.vel = Vector();
+		ply.p = Vector();
+		ply.vel = Vector();
 	}
 }
 
@@ -188,22 +191,22 @@ void Engine::handleKeyUp(unsigned char key, int x, int y)
 	switch(key)
 	{
 	case 'w':
-		c.move(Vector(0, 0, 1));
+		ply.move(Vector(0, 0, 1));
 		break;
 	case 's':
-		c.move(Vector(0, 0, -1));
+		ply.move(Vector(0, 0, -1));
 		break;
 	case 'a':
-		c.move(Vector(1, 0, 0));
+		ply.move(Vector(1, 0, 0));
 		break;
 	case 'd':
-		c.move(Vector(-1, 0, 0));
+		ply.move(Vector(-1, 0, 0));
 		break;
 	case 'q':
-		c.move(Vector(0, 1, 0));
+		ply.move(Vector(0, 1, 0));
 		break;
 	case 'e':
-		c.move(Vector(0, -1, 0));
+		ply.move(Vector(0, -1, 0));
 		break;
 	}
 }
@@ -212,7 +215,7 @@ void Engine::handleMouseMove(int x, int y)
 {
 	if(x == glutGet(GLUT_WINDOW_WIDTH) / 2 && y == glutGet(GLUT_WINDOW_HEIGHT) / 2)
 		return;
-	c.rotate(x - glutGet(GLUT_WINDOW_WIDTH) / 2, y - glutGet(GLUT_WINDOW_HEIGHT) / 2);
+	ply.cam.rotate(x - glutGet(GLUT_WINDOW_WIDTH) / 2, y - glutGet(GLUT_WINDOW_HEIGHT) / 2);
 	SetCursorPos(glutGet(GLUT_WINDOW_X) + glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_Y) + glutGet(GLUT_WINDOW_HEIGHT) / 2);
 }
 
@@ -220,19 +223,19 @@ void Engine::mouseFunc(int button, int state, int x, int y)
 {
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		//bounceRay(Ray(c.p, c.getCameraDirection() + c.p));
-		//if(PointSet *p = fireRay(Ray(c.p, c.getCameraDirection() + c.p)))
-		//{
-		//	if(PhysicsObject *po = dynamic_cast<PhysicsObject*>(p))
-		//	{
-		//		po->vel += 2. * c.getCameraDirection() / po->mass;
-		//	}
-		//}
-		splitBox(Ray(c.p, c.getCameraDirection() + c.p));
+		bounceRay(Ray(ply.cam.p, ply.cam.getCameraDirection() + ply.cam.p));
+		if(PointSet *p = fireRay(Ray(ply.cam.p, ply.cam.getCameraDirection() + ply.cam.p)))
+		{
+			if(PhysicsObject *po = dynamic_cast<PhysicsObject*>(p))
+			{
+				po->vel += 2. * ply.cam.getCameraDirection() / po->mass;
+			}
+		}
+		//splitBox(Ray(ply.cam.p, ply.cam.getCameraDirection() + ply.cam.p));
 	}
 	else if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
-		CubePH *cph = new CubePH(Cube(c.p + c.getCameraDirection() * 1.8, 0.3), c.getCameraDirection() * 3 + c.vel);
+		CubePH *cph = new CubePH(Cube(ply.cam.p + ply.cam.getCameraDirection() * 1.8, 0.3), ply.cam.getCameraDirection() * 3 + ply.vel);
 		PP.phList.push_back(cph);
 		de.addToBuffer(cph);
 	}
@@ -360,6 +363,7 @@ void Engine::splitBox(const Ray &r)
 
 void Engine::initWorld()
 {
+	w.generateWorld();
 	PP.phList.push_back(&w);
 	de.addToBuffer(&w);
 }
