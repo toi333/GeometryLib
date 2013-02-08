@@ -30,6 +30,7 @@ public:
 	bool operator<=(const Vector &v) const;
 	bool operator>=(const Vector &v) const;
 	bool operator==(const Vector &v) const;
+	bool operator!=(const Vector &v) const;
 
 	Vector operator-(void) const;
 	double length(void) const;

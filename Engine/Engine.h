@@ -9,18 +9,20 @@
 #include <windows.h>
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
-#include <GLUT/glut.h>
+#include <GLUT/freeglut.h>
 #else
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #endif
-
 
 namespace Engine
 {
 	extern DrawEngine de;
-	extern Player c;
+	extern Player ply;
 	extern PhysicsProcessor PP;
 	extern World w;
+	extern const double updateInterval;
+	extern double updateTimeLeft;
+	extern int windowHeight, windowWidth;
 
 	void start(int argc, char **argv);
 	void initWorld();

@@ -3,19 +3,21 @@
 #include <math.h>
 #include "GeometryLib.h"
 #include "World.h"
+#include "TextObject.h"
 #include <list>
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
-#include <GLUT/glut.h>
+#include <GLUT/freeglut.h>
 #else
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #endif
 
 class DrawEngine
 {
 public:
-	std::list<PointSet*> PSBuffer; 
+	std::list<PointSet*> PSBuffer;
+	std::list<TextObject*> textBuffer;
 
 	DrawEngine();
 	~DrawEngine();
@@ -37,4 +39,8 @@ public:
 
 	void addToBuffer(PointSet *a);
 	void drawBuffer();
+
+	void addToTextBuffer(TextObject *a);
+	void drawTextBuffer(int w, int h);
+	void drawText(TextObject *t);
 };

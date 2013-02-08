@@ -5,7 +5,7 @@
 #include "PhysicsObject.h"
 
 class Player
-	: public Camera, public PhysicsObject
+	: public PhysicsObject, public PointSet
 {
 public:
 	Player(void);
@@ -14,11 +14,14 @@ public:
 	void jump();
 
 	void update(double dt);
+	void move(const Vector &_dir);
 	Vector getPos() const;
 	void setPos(const Vector &_v);
 
 	Box getAABB();
 
+	Camera cam;
+	Vector p, dir;
 	static Vector d;
 	static double pmass;
 };
