@@ -39,7 +39,6 @@ void Engine::nextFrame()
 
 	glColor3f(0.5, 0., 0.);
 
-
 	for(updateTimeLeft += dt; updateTimeLeft > updateInterval; updateTimeLeft -= updateInterval)
 		PP.updateList(updateInterval);
 
@@ -89,7 +88,6 @@ void Engine::initRendering(int argc, char **argv)
 	glEnable(GL_BLEND);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_DOUBLE, 0, w.quadArray);
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);

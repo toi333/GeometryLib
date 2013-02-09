@@ -26,7 +26,6 @@ public:
 
 	std::pair<double, Vector> reflect(const Ray &r) const;
 
-private:
 	static const Vector normals[6];
 	static const Vector vertices[8];
 };

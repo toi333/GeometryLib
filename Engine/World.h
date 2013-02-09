@@ -12,17 +12,20 @@ public:
 	~World(void);
 
 	void generateWorld();
+	void generateList();
 
 	Vector getPos() const;
 	void setPos(const Vector &_v);
 	void update(double dt);
 
+	bool isValidIdx(int i, int j, int k) const;
 	Cube getBlockAtIdx(int i, int j, int k) const;
 	Box getAABB();
 
 	int dimx, dimy, dimz;
 	bool worldBlock[100][20][100];
-	double *quadArray;
-	int qacnt;
+	int blockCount;
+	double *quadArray[6];
+	int qacnt[6];
 };
 
