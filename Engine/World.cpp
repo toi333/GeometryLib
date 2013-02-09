@@ -5,16 +5,20 @@
 World::World(void)
 {
 	memset(qacnt, 0, sizeof qacnt);
+	memset(quadArray, 0, sizeof quadArray);
+	blockCount = 0;
 	frozen = 1;
-	dimx = 20;
-	dimy = 10;
-	dimz = 20;
+	dimx = 50;
+	dimy = 20;
+	dimz = 50;
 	//generateWorld();
 }
 
 World::World(int _dimx, int _dimy, int _dimz)
 {
 	memset(qacnt, 0, sizeof qacnt);
+	memset(quadArray, 0, sizeof quadArray);
+	blockCount = 0;
 	frozen = 1;
 	dimx = _dimx;
 	dimy = _dimy;
@@ -31,21 +35,29 @@ World::~World(void)
 
 void World::generateWorld()
 {
-	static const int dx[] = {1, 0, 0, -1, 0, 0};
-	static const int dy[] = {0, 1, 0, 0, -1, 0};
-	static const int dz[] = {0, 0, 1, 0, 0, -1};
-
-	int t = 0;
+	blockCount = 0;
 	for(int i = 0; i < dimx; ++i)
 		for(int j = 0; j < dimy; ++j)
 			for(int k = 0; k < dimz; ++k)
 			{
 				worldBlock[i][j][k] = (rand() % (dimy * dimy)) <= (dimy - j) * (dimy - j);
-				t += worldBlock[i][j][k];
+				++blockCount;
 			}
 
+	generateList();
+}
+
+void World::generateList()
+{
+	static const int dx[] = {1, 0, 0, -1, 0, 0};
+	static const int dy[] = {0, 1, 0, 0, -1, 0};
+	static const int dz[] = {0, 0, 1, 0, 0, -1};
+
 	for(int i = 0; i < 6; ++i)
-		quadArray[i] = new double[t * 4 * 3];
+	{
+		delete [] quadArray[i];
+		quadArray[i] = new double[blockCount * 4 * 3];
+	}
 	for(int i = 0; i < dimx; ++i)
 		for(int j = 0; j < dimy; ++j)
 			for(int k = 0; k < dimz; ++k)
@@ -57,8 +69,7 @@ void World::generateWorld()
 						int ni = i + dx[d];
 						int nj = j + dy[d];
 						int nk = k + dz[d];
-						if(!(ni >= 0 && nj >= 0 && nk >= 0 && ni < dimx && nj < dimy && nk < dimz) ||
-							!worldBlock[ni][nj][nk])
+						if(!isValidIdx(ni, nj, nk) || !worldBlock[ni][nj][nk])
 						{
 							SquareAA sqr = cb.getSide(d);
 							for(int l = 0; l < 4; ++l)
@@ -71,6 +82,11 @@ void World::generateWorld()
 						}
 					}
 				}
+}
+
+bool World::isValidIdx(int i, int j, int k) const
+{
+	return i >= 0 && j >= 0 && k >= 0 && i < dimx && j < dimy && k < dimz;
 }
 
 Vector World::getPos() const
