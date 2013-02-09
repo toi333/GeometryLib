@@ -1,10 +1,10 @@
 #include "StdAfx.h"
 #include "World.h"
-
+#include <cstring>
 
 World::World(void)
 {
-	qacnt = 0;
+	memset(qacnt, 0, sizeof qacnt);
 	frozen = 1;
 	dimx = 20;
 	dimy = 10;
@@ -14,7 +14,7 @@ World::World(void)
 
 World::World(int _dimx, int _dimy, int _dimz)
 {
-	qacnt = 0;
+	memset(qacnt, 0, sizeof qacnt);
 	frozen = 1;
 	dimx = _dimx;
 	dimy = _dimy;
@@ -25,7 +25,8 @@ World::World(int _dimx, int _dimy, int _dimz)
 
 World::~World(void)
 {
-	delete [] quadArray;
+	for(int i = 0; i < 6; ++i)
+		delete [] quadArray[i];
 }
 
 void World::generateWorld()
@@ -42,7 +43,9 @@ void World::generateWorld()
 				worldBlock[i][j][k] = (rand() % (dimy * dimy)) <= (dimy - j) * (dimy - j);
 				t += worldBlock[i][j][k];
 			}
-	quadArray = new double[t * 6 * 4 * 3];
+
+	for(int i = 0; i < 6; ++i)
+		quadArray[i] = new double[t * 4 * 3];
 	for(int i = 0; i < dimx; ++i)
 		for(int j = 0; j < dimy; ++j)
 			for(int k = 0; k < dimz; ++k)
@@ -61,14 +64,13 @@ void World::generateWorld()
 							for(int l = 0; l < 4; ++l)
 							{
 								Vector vert = sqr.getVertex(l);
-								quadArray[qacnt++] = vert.x;
-								quadArray[qacnt++] = vert.y;
-								quadArray[qacnt++] = vert.z;
+								quadArray[d][qacnt[d]++] = vert.x;
+								quadArray[d][qacnt[d]++] = vert.y;
+								quadArray[d][qacnt[d]++] = vert.z;
 							}
 						}
 					}
 				}
-	return;
 }
 
 Vector World::getPos() const

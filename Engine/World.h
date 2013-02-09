@@ -22,7 +22,7 @@ public:
 
 	int dimx, dimy, dimz;
 	bool worldBlock[100][20][100];
-	double *quadArray;
-	int qacnt;
+	double *quadArray[6];
+	int qacnt[6];
 };
 

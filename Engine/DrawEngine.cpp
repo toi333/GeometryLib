@@ -14,9 +14,9 @@ DrawEngine::~DrawEngine()
 void DrawEngine::draw(const Cube &a)
 {	
 	if(a.blah)
-		glColor3f(0.5, 0.5, 0.7);
+		glColor3d(0.5, 0.5, 0.7);
 	else
-		glColor3f(0.0, 0.0, 0.7);
+		glColor3d(0.0, 0.0, 0.7);
 
 	for(int i = 0; i < 6; ++i)
 		draw(a.getSide(i));
@@ -33,7 +33,7 @@ void DrawEngine::draw(const Vector &a)
 {
 	glPushMatrix();
 		glTranslated(a.x, a.y, a.z);
-		glutSolidSphere(.1, 10., 10.);
+		glutSolidSphere(.1, 10, 10);
 	glPopMatrix();
 }
 
@@ -155,7 +155,13 @@ void DrawEngine::draw(const World &a)
 	//		for(int k = 0; k < a.dimz; ++k)
 	//			if(a.worldBlock[i][j][k])
 	//				draw(a.getBlockAtIdx(i, j, k));
-	glDrawArrays(GL_QUADS, 0, a.qacnt);
+	glColor3d(0., 0., .7);
+	for(int i = 0; i < 6; ++i)
+	{
+		glNormal3dv((double*)&Cube::normals[i]);
+		glVertexPointer(3, GL_DOUBLE, 0, a.quadArray[i]);
+		glDrawArrays(GL_QUADS, 0, a.qacnt[i] / 3);
+	}
 }
 
 void DrawEngine::addToBuffer(PointSet *a)
@@ -171,7 +177,7 @@ void DrawEngine::drawBuffer()
 
 void DrawEngine::drawText(TextObject *t) 
 {
-	glRasterPos2f(t->x, t->y);
+	glRasterPos2d(t->x, t->y);
 	glColor3d(t->clr.r, t->clr.g, t->clr.b);
 	glutBitmapString(t->font, (const unsigned char*) t->text.c_str());
 }
