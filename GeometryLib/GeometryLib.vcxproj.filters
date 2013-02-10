@@ -97,7 +97,7 @@
       <Filter>Header Files\Primitives\VolumetricObjects</Filter>
     </ClInclude>
     <ClInclude Include="Surfaces.h">
-      <Filter>Source Files\Primitives\Surfaces</Filter>
+      <Filter>Header Files\Primitives\Surfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
