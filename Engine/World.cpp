@@ -4,89 +4,72 @@
 
 World::World(void)
 {
-	memset(qacnt, 0, sizeof qacnt);
-	memset(quadArray, 0, sizeof quadArray);
 	blockCount = 0;
 	frozen = 1;
-	dimx = 50;
-	dimy = 20;
-	dimz = 50;
-	//generateWorld();
+	dimx = 8;
+	dimy = 8;
+	for(int i = 0; i < dimx; ++i)
+		for(int j = 0; j < dimy; ++j)
+		{
+			worldChunk[i][j] = new WorldChunk(
+				Vector((2 * i + 1 - dimx) * WorldChunk::dimx, 0, (2 * j + 1 - dimy) * WorldChunk::dimz));
+		}
+	generateWorld();
 }
 
-World::World(int _dimx, int _dimy, int _dimz)
+World::World(int _dimx, int _dimy)
 {
-	memset(qacnt, 0, sizeof qacnt);
-	memset(quadArray, 0, sizeof quadArray);
 	blockCount = 0;
 	frozen = 1;
 	dimx = _dimx;
 	dimy = _dimy;
-	dimz = _dimz;
-	//generateWorld();
+	for(int i = 0; i < dimx; ++i)
+		for(int j = 0; j < dimy; ++j)
+		{
+			worldChunk[i][j] = new WorldChunk(
+				Vector((2 * i + 1 - dimx) * WorldChunk::dimx, 0, (2 * j + 1 - dimy) * WorldChunk::dimz));
+		}
+	generateWorld();
 }
 
 
 World::~World(void)
 {
-	for(int i = 0; i < 6; ++i)
-		delete [] quadArray[i];
+	for(int i = 0; i < dimx; ++i)
+		for(int j = 0; j < dimy; ++j)
+			delete worldChunk[i][j];
 }
 
 void World::generateWorld()
 {
-	blockCount = 0;
+	//for(int i = 0; i < dimx; ++i)
+	//	for(int j = 0; j < dimy; ++j)
+	//	{
+	//		worldChunk[i][j]->generateChunk();
+	//		blockCount += worldChunk[i][j]->blockCount;
+	//	}
+	//	generateList();
+
 	for(int i = 0; i < dimx; ++i)
 		for(int j = 0; j < dimy; ++j)
-			for(int k = 0; k < dimz; ++k)
-			{
-				worldBlock[i][j][k] = (rand() % (dimy * dimy)) <= (dimy - j) * (dimy - j);
-				++blockCount;
-			}
-
+			worldChunk[i][j]->blockCount = 0;
+	f(0, dimx * WorldChunk::dimx - 1, 0, dimy * WorldChunk::dimz - 1);
+	for(int i = 0; i < dimx; ++i)
+		for(int j = 0; j < dimy; ++j)
+			blockCount += worldChunk[i][j]->blockCount;
 	generateList();
 }
 
 void World::generateList()
 {
-	static const int dx[] = {1, 0, 0, -1, 0, 0};
-	static const int dy[] = {0, 1, 0, 0, -1, 0};
-	static const int dz[] = {0, 0, 1, 0, 0, -1};
-
-	for(int i = 0; i < 6; ++i)
-	{
-		delete [] quadArray[i];
-		quadArray[i] = new double[blockCount * 4 * 3];
-	}
 	for(int i = 0; i < dimx; ++i)
 		for(int j = 0; j < dimy; ++j)
-			for(int k = 0; k < dimz; ++k)
-				if(worldBlock[i][j][k])
-				{
-					Cube cb = getBlockAtIdx(i, j, k);
-					for(int d = 0; d < 6; ++d)
-					{
-						int ni = i + dx[d];
-						int nj = j + dy[d];
-						int nk = k + dz[d];
-						if(!isValidIdx(ni, nj, nk) || !worldBlock[ni][nj][nk])
-						{
-							SquareAA sqr = cb.getSide(d);
-							for(int l = 0; l < 4; ++l)
-							{
-								Vector vert = sqr.getVertex(l);
-								quadArray[d][qacnt[d]++] = vert.x;
-								quadArray[d][qacnt[d]++] = vert.y;
-								quadArray[d][qacnt[d]++] = vert.z;
-							}
-						}
-					}
-				}
+			worldChunk[i][j]->generateList();
 }
 
-bool World::isValidIdx(int i, int j, int k) const
+bool World::isValidIdx(int i, int j) const
 {
-	return i >= 0 && j >= 0 && k >= 0 && i < dimx && j < dimy && k < dimz;
+	return i >= 0 && j >= 0 && i < dimx && j < dimy;
 }
 
 Vector World::getPos() const
@@ -104,36 +87,41 @@ void World::update(double dt)
 
 Box World::getAABB()
 {
-	return Box(Vector(0., dimy, 0.), Vector(dimx, dimy, dimz));
+	return Box(Vector(0., WorldChunk::dimy, 0.), 
+		Vector(dimx * WorldChunk::dimx, WorldChunk::dimy, dimy * WorldChunk::dimz));
 }
 
 Cube World::getBlockAtIdx(int i, int j, int k) const
 {
-	return Cube(Vector(i * 2 - dimx, j * 2, k * 2 - dimz), 1.);
+	return Cube(Vector(i * 2 - dimx * WorldChunk::dimx, j * 2, k * 2 - dimy * WorldChunk::dimz), 1.);
 }
 
-/* //funkcija krivo vraca... da nije bilo ovog sranja ustedili bi koji sat
-Cube World::getBlockAtIdx(int i, int j, int k) const
+WorldChunk* World::getChunkAtIdx(int i, int j) const
 {
-	                       return ///////////////
-		Cube///////////
-		                (/////////////
-							Vector((double) dimx - i * 2, (///////////////
-double
-)j /////////////
-//1.21
-*
-                       2, (
-					   double
-
-		///////////			   //////////////
-
-					   ) 
-dimz - 
-///////////////////
-
-k * 2), 1.				///////////////
-
-		         );;;;;;;;;;;;;;;;;;;;;;
+	return worldChunk[i][j];
 }
-*/
+
+bool World::existsAtIdx(int i, int j, int k) const
+{
+	return worldChunk[i/WorldChunk::dimx][k/WorldChunk::dimz]->
+		chunkBlock[i%WorldChunk::dimx][j][k%WorldChunk::dimz];
+}
+
+void World::f(int x1, int x2, int z1, int z2, int h)
+{
+	if(x1 > x2 || z1 > z2)
+		return;
+	if(x1 == x2 && z1 == z2)
+	{
+		for(int i = 0; i < h; ++i)
+			worldChunk[x1/WorldChunk::dimx][z1/WorldChunk::dimz]->
+			chunkBlock[x2%WorldChunk::dimx][i][z2%WorldChunk::dimz] = 1;
+		worldChunk[x1/WorldChunk::dimx][z1/WorldChunk::dimz]->blockCount += h;
+		return;
+	}
+
+	f(x1, (x2 + x1) / 2, z1, (z1 + z2) / 2, h + rand() % 2);
+	f((x2 + x1) / 2 + 1, x2, z1, (z1 + z2) / 2, h + rand() % 2);
+	f(x1, (x2 + x1) / 2, (z1 + z2) / 2 + 1, z2, h + rand() % 2);
+	f((x2 + x1) / 2 + 1, x2,  (z1 + z2) / 2 + 1, z2, h + rand() % 2);
+}

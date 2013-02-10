@@ -45,23 +45,23 @@ void PhysicsProcessor::collide(PhysicsObject *a, PhysicsObject *b)
 void PhysicsProcessor::collide(PhysicsObject *a, World &b)
 {
 	Box bx = a->getAABB();
-	bx.a += Vector((double)b.dimx, 0., (double)b.dimz);
+	bx.a += Vector((double)b.dimx * WorldChunk::dimx, 0., (double)b.dimy * WorldChunk::dimz);
 
 	Vector v1 = (bx.a - bx.d) / 2. - Vector(1);
 	Vector v2 = (bx.a + bx.d) / 2. + Vector(2);
 	v1.x = max(v1.x, 0.);
 	v1.y = max(v1.y, 0.);
 	v1.z = max(v1.z, 0.);
-	v2.x = min(v2.x, (double)b.dimx);
-	v2.y = min(v2.y, (double)b.dimy);
-	v2.z = min(v2.z, (double)b.dimz);
+	v2.x = min(v2.x, (double)b.dimx * WorldChunk::dimx);
+	v2.y = min(v2.y, (double)WorldChunk::dimy);
+	v2.z = min(v2.z, (double)b.dimy * WorldChunk::dimz);
 
 	if(a->flr == &b)
 		a->flr = 0;
 	for(int i = (int)v1.x; i < (int)v2.x; ++i)
 		for(int j = (int)v1.y; j < (int)v2.y; ++j)
 			for(int k = (int)v1.z; k < (int)v2.z; ++k)
-				if(b.worldBlock[i][j][k])
+				if(b.existsAtIdx(i, j, k))
 				{
 					CubePH t(b.getBlockAtIdx(i, j, k), Vector(), 1., 1);
 					collide(a, &t);

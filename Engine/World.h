@@ -1,14 +1,15 @@
 #pragma once
 
 #include "Primitives.h"
+#include "WorldChunk.h"
 #include "PhysicsObjects.h"
-#include <list>
 
-class World : public PhysicsObject, public PointSet
+class World : 
+	public PhysicsObject, public PointSet
 {
 public:
 	World(void);
-	World(int _dimx, int _dimy, int _dimz);
+	World(int _dimx, int _dimy);
 	~World(void);
 
 	void generateWorld();
@@ -18,14 +19,17 @@ public:
 	void setPos(const Vector &_v);
 	void update(double dt);
 
-	bool isValidIdx(int i, int j, int k) const;
+	bool existsAtIdx(int i, int j, int k) const;
+	bool isValidIdx(int i, int j) const;
 	Cube getBlockAtIdx(int i, int j, int k) const;
+	WorldChunk* getChunkAtIdx(int i, int j) const;
+
 	Box getAABB();
 
-	int dimx, dimy, dimz;
-	bool worldBlock[100][20][100];
+	int dimx, dimy;
+	WorldChunk *worldChunk[16][16];
 	int blockCount;
-	double *quadArray[6];
-	int qacnt[6];
-};
 
+private:
+	void f(int x1, int x2, int z1, int z2, int h = 1);
+};

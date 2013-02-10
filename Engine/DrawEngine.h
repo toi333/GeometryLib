@@ -24,6 +24,7 @@ public:
 
 	void draw(PointSet *a);
 	void draw(const World &a);
+	void draw(const WorldChunk &a);
 	void draw(const Cube &a);
 	void draw(const Box &a);
 	void draw(const SquareAA &a);

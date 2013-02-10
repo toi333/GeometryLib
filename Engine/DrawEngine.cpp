@@ -150,12 +150,14 @@ void DrawEngine::draw(PointSet *a)
 
 void DrawEngine::draw(const World &a)
 {
-	//for(int i = 0; i < a.dimx; ++i)
-	//	for(int j = 0; j < a.dimy; ++j)
-	//		for(int k = 0; k < a.dimz; ++k)
-	//			if(a.worldBlock[i][j][k])
-	//				draw(a.getBlockAtIdx(i, j, k));
-	glColor3d(0., 0., .7);
+	glColor3d(1., 0.1, .5);
+	for(int i = 0; i < a.dimx; ++i)
+		for(int j = 0; j < a.dimy; ++j)
+			draw(*a.worldChunk[i][j]);
+}
+
+void DrawEngine::draw(const WorldChunk &a)
+{
 	for(int i = 0; i < 6; ++i)
 	{
 		glNormal3dv((double*)&Cube::normals[i]);
