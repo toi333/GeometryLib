@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Engine.h"
+#include <ctime>
 
 using namespace std;
 
@@ -115,6 +116,7 @@ void Engine::initRendering(int argc, char **argv)
 
 void Engine::start(int argc, char **argv)
 {
+	srand(time(0));
 	//Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
 	//Cube cb(Vector(0., 0., 0.), 1.);
 	//BoxPH *bx = new BoxPH(Box(Vector(3, 2, 1), Vector(1, 2, 3)));
@@ -361,7 +363,6 @@ void Engine::splitBox(const Ray &r)
 
 void Engine::initWorld()
 {
-	w.generateWorld();
 	PP.phList.push_back(&w);
 	de.addToBuffer(&w);
 }
