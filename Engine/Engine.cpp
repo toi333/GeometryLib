@@ -51,8 +51,13 @@ void Engine::nextFrame()
 
 	de.drawBuffer();
 
-	(*de.textBuffer.begin())->text = (ply.flr ? "1" : "0");
+	char s[20];
+	sprintf(s, "%lf", ply.vel.length());
+	TextObject txt(s, 5, 5);
+	de.addToTextBuffer(&txt);
+
 	de.drawTextBuffer(windowWidth, windowHeight);
+	de.textBuffer.clear();
 	
 	glutSwapBuffers();
 }
@@ -116,16 +121,13 @@ void Engine::initRendering(int argc, char **argv)
 
 void Engine::start(int argc, char **argv)
 {
-	srand(time(0));
+	srand((int)time(0));
 	//Triangle T(Vector(-3, 0, 3), Vector(3, 0, 0), Vector(-3, 0, -3));
 	//Cube cb(Vector(0., 0., 0.), 1.);
 	//BoxPH *bx = new BoxPH(Box(Vector(3, 2, 1), Vector(1, 2, 3)));
 	//CubePH *bx2 = new CubePH(Cube(Vector(3, -6, 2), 1));
 
 	BoxPH *flr = new BoxPH(Box(Vector(0, -30, 0), Vector(20, 1, 20)), Vector(), 1, 1);
-	TextObject *txt = new TextObject("We Rulz!!", 1.0, 1.0);
-
-	de.addToTextBuffer(txt);
 
 	////PP.phList.push_back(bx);
 	//PP.phList.push_back(bx2);
@@ -175,7 +177,7 @@ void Engine::handleKeyDown(unsigned char key, int x, int y)
 		ply.move(Vector(0, 1, 0));
 		break;
 	case 'g':
-		PhysicsObject::gravity = Vector(0, -10, 0) - PhysicsObject::gravity;
+		PhysicsObject::gravity = Vector(0, -25, 0) - PhysicsObject::gravity;
 		break;
 	case ' ':
 		ply.jump();
@@ -225,12 +227,8 @@ void Engine::mouseFunc(int button, int state, int x, int y)
 	{
 		bounceRay(Ray(ply.cam.p, ply.cam.getCameraDirection() + ply.cam.p));
 		if(PointSet *p = fireRay(Ray(ply.cam.p, ply.cam.getCameraDirection() + ply.cam.p)))
-		{
 			if(PhysicsObject *po = dynamic_cast<PhysicsObject*>(p))
-			{
 				po->vel += 2. * ply.cam.getCameraDirection() / po->mass;
-			}
-		}
 		//splitBox(Ray(ply.cam.p, ply.cam.getCameraDirection() + ply.cam.p));
 	}
 	else if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
@@ -363,6 +361,7 @@ void Engine::splitBox(const Ray &r)
 
 void Engine::initWorld()
 {
+	w.generateWorld();
 	PP.phList.push_back(&w);
 	de.addToBuffer(&w);
 }

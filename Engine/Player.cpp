@@ -19,7 +19,7 @@ void Player::jump()
 {
 	if(flr)
 	{
-		vel.y += 10.;
+		vel.y += 17.;
 		flr = 0;
 	}
 }
@@ -79,12 +79,12 @@ void Player::update(double dt)
 		}
 		else
 		{
-			vel += a * 10. * dt;
+			vel += a * 2. * dt;
 			vel += gravity * dt;
 		}
 	}
 	else
-		vel = a * 121 * 12.1 / 1.21 * dt;
+		vel = a * 1210. * dt;
 
 	p += vel * dt;
 	cam.p = p;

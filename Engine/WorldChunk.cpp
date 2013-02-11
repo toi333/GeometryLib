@@ -7,6 +7,7 @@ WorldChunk::WorldChunk(void)
 	p = Vector();
 	memset(qacnt, 0, sizeof qacnt);
 	memset(quadArray, 0, sizeof quadArray);
+	memset(chunkBlock, 0, sizeof chunkBlock);
 	blockCount = 0;
 	frozen = 1;
 }
@@ -16,6 +17,7 @@ WorldChunk::WorldChunk(const Vector &_p)
 	p = _p;
 	memset(qacnt, 0, sizeof qacnt);
 	memset(quadArray, 0, sizeof quadArray);
+	memset(chunkBlock, 0, sizeof chunkBlock);
 	blockCount = 0;
 	frozen = 1;
 }

@@ -14,7 +14,6 @@ World::World(void)
 			worldChunk[i][j] = new WorldChunk(
 				Vector((2 * i + 1 - dimx) * WorldChunk::dimx, 0, (2 * j + 1 - dimy) * WorldChunk::dimz));
 		}
-	generateWorld();
 }
 
 World::World(int _dimx, int _dimy)
@@ -29,7 +28,6 @@ World::World(int _dimx, int _dimy)
 			worldChunk[i][j] = new WorldChunk(
 				Vector((2 * i + 1 - dimx) * WorldChunk::dimx, 0, (2 * j + 1 - dimy) * WorldChunk::dimz));
 		}
-	generateWorld();
 }
 
 
@@ -53,7 +51,8 @@ void World::generateWorld()
 	for(int i = 0; i < dimx; ++i)
 		for(int j = 0; j < dimy; ++j)
 			worldChunk[i][j]->blockCount = 0;
-	f(0, dimx * WorldChunk::dimx - 1, 0, dimy * WorldChunk::dimz - 1);
+	f(0, dimx * WorldChunk::dimx - 1, 0, dimy * WorldChunk::dimz - 1, 1);
+	blockCount = 0;
 	for(int i = 0; i < dimx; ++i)
 		for(int j = 0; j < dimy; ++j)
 			blockCount += worldChunk[i][j]->blockCount;
@@ -115,7 +114,7 @@ void World::f(int x1, int x2, int z1, int z2, int h)
 	{
 		for(int i = 0; i < h; ++i)
 			worldChunk[x1/WorldChunk::dimx][z1/WorldChunk::dimz]->
-			chunkBlock[x2%WorldChunk::dimx][i][z2%WorldChunk::dimz] = 1;
+			chunkBlock[x1%WorldChunk::dimx][i][z1%WorldChunk::dimz] = 1;
 		worldChunk[x1/WorldChunk::dimx][z1/WorldChunk::dimz]->blockCount += h;
 		return;
 	}

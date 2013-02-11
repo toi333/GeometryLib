@@ -103,25 +103,24 @@ void PhysicsProcessor::applyCollision(PhysicsObject &a, PhysicsObject &b, const 
 		b.vel = (PhysicsObject::collisionElasticity * a.mass * (van - vbn) + b.mass * vbn + a.mass * van) / (b.mass + a.mass)
 			+ PhysicsObject::collisionFriction * vbt;
 	}
-	else if(a.frozen)
+	else if(!b.frozen)
 		b.vel = PhysicsObject::collisionFriction * vbt - PhysicsObject::collisionElasticity * vbn;
-	else
+	else if(!a.frozen)
 		a.vel = PhysicsObject::collisionFriction * vat - PhysicsObject::collisionElasticity * van;
 }
 
 void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int n, double d)
 {
 	bool neg = 0;
-	double *av = 0, *bv = 0;
 
 	if(sgn(a.vel[n] - b.vel[n]) == sgn(a.getPos()[n] - b.getPos()[n]))
 		return;
-	av = &a.vel[n];
-	bv = &b.vel[n];
+	double &av = a.vel[n];
+	double &bv = b.vel[n];
 	neg = b.getPos()[n] < a.getPos()[n];
 
-	double avt = *av;
-	double bvt = *bv;
+	double avt = av;
+	double bvt = bv;
 
 	Vector no(n == 0, n == 1, n == 2);
 	if(neg)
@@ -140,31 +139,39 @@ void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int 
 		b.setPos(b.getPos() + no * d * cb / (cb + ca));
 		a.vel *= 1 - PhysicsObject::collisionFriction;
 		b.vel *= 1 - PhysicsObject::collisionFriction;
-		*av = (PhysicsObject::collisionElasticity * b.mass * (bvt - avt) + a.mass * avt + b.mass * bvt) / (a.mass + b.mass);
-		*bv = (PhysicsObject::collisionElasticity * a.mass * (avt - bvt) + b.mass * bvt + a.mass * avt) / (b.mass + a.mass);
+		av = (PhysicsObject::collisionElasticity * b.mass * (bvt - avt) + a.mass * avt + b.mass * bvt) / (a.mass + b.mass);
+		bv = (PhysicsObject::collisionElasticity * a.mass * (avt - bvt) + b.mass * bvt + a.mass * avt) / (b.mass + a.mass);
 		if(n == 1)
 			a.flr = b.flr = 0;
 	}
 	else if(a.frozen || a.flr && n == 1 && !neg)
 	{
 		b.setPos(b.getPos() + no * d);
-		b.vel *= 1 - PhysicsObject::collisionFriction;
-		*bv = -PhysicsObject::collisionElasticity * bvt;
-		if(n == 1 && *bv < 1)
+		if(n == 1 && !neg && bv > -1.)
 		{
+			printf("%lf\n", bv);
 			b.flr = &a;
-			b.vel.y = 0;
+			bv = 0;
+		}
+		else
+		{
+			b.vel *= 1 - PhysicsObject::collisionFriction;
+			bv = -PhysicsObject::collisionElasticity * bvt;
 		}
 	}
 	else if(b.frozen || b.flr && n == 1 && neg)
 	{
 		a.setPos(a.getPos() - no * d);
-		a.vel *= 1 - PhysicsObject::collisionFriction;
-		*av = -PhysicsObject::collisionElasticity * avt;
-		if(n == 1 && *av < 1)
+		if(n == 1 && neg && av > -1.)
 		{
+			printf("%lf\n", av);
 			a.flr = &b;
-			a.vel.y = 0;
+			av = 0;
+		}
+		else
+		{
+			a.vel *= 1 - PhysicsObject::collisionFriction;
+			av = -PhysicsObject::collisionElasticity * avt;
 		}
 	}
 }
