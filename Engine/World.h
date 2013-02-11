@@ -31,5 +31,5 @@ public:
 	int blockCount;
 
 private:
-	void f(int x1, int x2, int z1, int z2, int h = 1);
+	void f(int x1, int x2, int z1, int z2, int h);
 };

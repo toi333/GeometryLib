@@ -19,11 +19,10 @@ TextObject::TextObject(const std::string &_text, double _x, double _y, const Col
 }
 
 TextObject::TextObject(const std::string &_text, double _x, double _y)
-	: text(_text), x(_x), y(_y), clr(Color(0.7, 0.2, 0.2)), font(GLUT_BITMAP_HELVETICA_10)
+	: text(_text), x(_x), y(_y), clr(Color(0.0, 0.0, 0.0)), font(GLUT_BITMAP_HELVETICA_12)
 {
 
 }
-
 
 TextObject::~TextObject(void)
 {
