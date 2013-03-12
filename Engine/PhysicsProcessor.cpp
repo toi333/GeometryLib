@@ -149,14 +149,18 @@ void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int 
 		b.setPos(b.getPos() + no * d);
 		if(n == 1 && !neg && bv > -1.)
 		{
-			printf("%lf\n", bv);
 			b.flr = &a;
 			bv = 0;
 		}
 		else
 		{
-			b.vel *= 1 - PhysicsObject::collisionFriction;
-			bv = -PhysicsObject::collisionElasticity * bvt;
+			if(typeid(b) != typeid(Player))
+			{
+				b.vel *= 1 - PhysicsObject::collisionFriction;
+				bv = -PhysicsObject::collisionElasticity * bvt;
+			}
+			else
+				bv = 0.;
 		}
 	}
 	else if(b.frozen || b.flr && n == 1 && neg)
@@ -164,14 +168,18 @@ void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int 
 		a.setPos(a.getPos() - no * d);
 		if(n == 1 && neg && av > -1.)
 		{
-			printf("%lf\n", av);
 			a.flr = &b;
 			av = 0;
 		}
 		else
 		{
-			a.vel *= 1 - PhysicsObject::collisionFriction;
-			av = -PhysicsObject::collisionElasticity * avt;
+			if(typeid(a) != typeid(Player))
+			{
+				a.vel *= 1 - PhysicsObject::collisionFriction;
+				av = -PhysicsObject::collisionElasticity * avt;
+			}
+			else
+				av = 0.;
 		}
 	}
 }
