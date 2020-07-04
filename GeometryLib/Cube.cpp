@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Cube.h"
 
 using namespace std;

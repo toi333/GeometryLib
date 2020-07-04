@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "DrawEngine.h"
 
 using namespace std;

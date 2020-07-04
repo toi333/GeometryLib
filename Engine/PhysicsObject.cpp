@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PhysicsObject.h"
 
 PhysicsObject::PhysicsObject(void)

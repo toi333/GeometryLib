@@ -1,5 +1,6 @@
-#include "StdAfx.h"
 #include "Intersection.h"
+
+#include <typeinfo>
 
 Intersection::Intersection(void)
 {

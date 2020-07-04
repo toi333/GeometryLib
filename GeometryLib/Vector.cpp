@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Vector.h"
 
 using namespace std;

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Line.h"
 
 Line::Line(void)

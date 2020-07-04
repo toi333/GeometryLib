@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PhysicsProcessor.h"
 
 using namespace std;
@@ -154,7 +153,7 @@ void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int 
 		}
 		else
 		{
-			if(typeid(b) != typeid(Player))
+			if(dynamic_cast<Player*>(&b))
 			{
 				b.vel *= 1 - PhysicsObject::collisionFriction;
 				bv = -PhysicsObject::collisionElasticity * bvt;
@@ -173,7 +172,7 @@ void PhysicsProcessor::applyCollisionAA(PhysicsObject &a, PhysicsObject &b, int 
 		}
 		else
 		{
-			if(typeid(a) != typeid(Player))
+			if (dynamic_cast<Player*>(&a))
 			{
 				a.vel *= 1 - PhysicsObject::collisionFriction;
 				av = -PhysicsObject::collisionElasticity * avt;

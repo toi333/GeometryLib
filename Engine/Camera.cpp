@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Camera.h"
 
 #define _USE_MATH_DEFINES

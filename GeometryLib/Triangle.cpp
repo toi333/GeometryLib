@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Triangle.h"
 #include "Essential.h"
 #include "Plane.h"

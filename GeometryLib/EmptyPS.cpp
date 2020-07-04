@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "EmptyPS.h"
 
 EmptyPS::EmptyPS(void)

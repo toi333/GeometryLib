@@ -1,5 +1,6 @@
-#include "StdAfx.h"
 #include "Player.h"
+
+#include <cmath>
 
 Vector Player::d = Vector(0.794016819, 1.8, 0.794016819);//1.21^-1.21
 double Player::pmass = 1.21;
@@ -28,8 +29,8 @@ void Player::jump()
 void Player::update(double dt)
 {
 	Vector a;
-	double phix = cam.yaw * M_PI / 180.;
-	double phiy = cam.pitch * M_PI / 180.;
+	double phix = cam.yaw * 3.14159265 / 180.;
+	double phiy = cam.pitch * 3.14159265 / 180.;
 	if(gravity != Vector())
 	{
 		a = Vector

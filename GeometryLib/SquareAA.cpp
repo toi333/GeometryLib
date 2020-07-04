@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "SquareAA.h"
 
 const Vector SquareAA::normals[6] = 

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "TextObject.h"
 
 #ifdef __APPLE__

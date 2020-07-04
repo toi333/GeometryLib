@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "WorldChunk.h"
 #include <cstring>
 
